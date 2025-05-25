@@ -112,6 +112,7 @@ ggplot() +
 
 ```{r and bathymetry}
 head(bathymetry)
+plot(bathymetry)
 
 ggplot() + 
   geom_sf(data = land, fill = '#EFDD8D') + 
