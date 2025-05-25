@@ -127,7 +127,8 @@ mis <- st_crop(mis, bb) |>
 
 land <- bind_rows(cntr, mis) |>
   group_by(Name) |>
-  reframe(geometry = st_union(geometry))
+  reframe(geometry = st_union(geometry)) |>
+  st_as_sf()
 
 format(object.size(land), units = 'MB')
 usethis::use_data(land, overwrite = TRUE)

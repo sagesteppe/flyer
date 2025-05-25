@@ -60,5 +60,32 @@ Obviously we need some context for these data.
 Other wise they just... look the way they do above. 
 We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?)
 
+```{r}
+data(land)
+head(land)
 
+
+ggplot() + 
+  geom_sf(data = land) + 
+  geom_sf(data = places) + 
+  geom_sf(data = route, aes(color = date_arrive)) 
+
+```
+
+Now let's add some topography to make the land seem more natural. 
+We'll also ignore the administrative borders. 
+
+```{r}
+
+land <- st_union(land)
+
+head(topography)
+
+ggplot() + 
+#  geom_sf(data = land) + 
+  geom_sf(data = topography) + 
+  geom_sf(data = places) + 
+  geom_sf(data = route, aes(color = date_arrive)) 
+
+```
 
