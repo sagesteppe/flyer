@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 
-```{r install package}
+```{r install package, eval = F}
 devtools::install_github('sagesteppe/cortez')
 ```
 
