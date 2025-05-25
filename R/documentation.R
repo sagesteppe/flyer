@@ -76,6 +76,7 @@
 #' }
 #'
 #' @examples
+#' library(flyer)
 #' data(bathymetry)
 #' plot(bathymetry)
 

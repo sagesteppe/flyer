@@ -4,6 +4,8 @@ library(sf)
 library(terra)
 library(tidyverse)
 library(smoothr)
+library(rnaturalearth)
+
 
 p <- '~/Documents/DEM4flyr'
 f <- file.path(p, list.files(p, pattern = '.bil$'))
@@ -65,7 +67,6 @@ rm(sf_ver, r, sf_ver_1, topography, v, f, p)
 
 #################################################
 
-library(rnaturalearth)
 # now perform similar process for the bathymetry.
 p <- '~/Documents/bathym4flyr'
 r <- rast(file.path(p, list.files(p, recursive = T, pattern = 'tif$')))
@@ -94,15 +95,15 @@ sf_ver <- st_as_sf(v) |>
 
 bathymetry <- sf_ver[ st_length(sf_ver) > units::set_units(15, 'km'), ] |>
   select(-ID) |>
-  rename(Elevation = level)
+  rename(Elevation = level) |>
+  st_as_sf()
 
-format(object.size(sf_ver), units = 'MB')
+format(object.size(bathymetry), units = 'MB')
 usethis::use_data(bathymetry, overwrite = TRUE)
 
 
 ######################################################
 
-library(rnaturalearth)
 cntr <- ne_countries(type = "countries", scale = "large")
 cntr <- st_make_valid(cntr)
 
