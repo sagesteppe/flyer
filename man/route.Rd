@@ -20,7 +20,7 @@ Note that the route is fictionalized from the book, and modified to be aesthetic
 }
 \examples{
 data(route)
-plot(route[,'date_arrive'])
+plot(route)
 
 places <- st_drop_geometry(places)
 route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
@@ -28,7 +28,7 @@ route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'loca
 plot(route[,6])
 
 library(ggplot2)
-ggplot() + 
+ggplot() +
  geom_sf(data = route, aes(color = date_arrive))
 
 }

@@ -22,4 +22,13 @@ places
 A dataset with place names provided both following the text, and more modern Mexican place names in Spanish.
 Note that several of the book place names seem somewhat peculiar, but the localities seem well matched to the current names in spanish.
 }
+\examples{
+data(places)
+plot(places['location.espanol'])
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = places, aes(color = date_arrive))
+
+}
 \keyword{datasets}

@@ -94,7 +94,7 @@ sf_ver <- st_as_sf(v) |>
 
 bathymetry <- sf_ver[ st_length(sf_ver) > units::set_units(15, 'km'), ] |>
   select(-ID) |>
-  rename(Depth = level)
+  rename(Elevation = level)
 
 format(object.size(sf_ver), units = 'MB')
 usethis::use_data(bathymetry, overwrite = TRUE)

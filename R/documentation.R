@@ -11,7 +11,14 @@
 #'	\item{date_depart}{The date the Western flyer departed, or passed the place.}
 #'	\item{geometry}{The geometry of the place, not 100% accurate, and often slightly off shore.}
 #'	}
-
+#' @examples
+#' data(places)
+#' plot(places['location.espanol'])
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = places, aes(color = date_arrive))
+#'
 "places"
 
 #' A stylized route of the Western Flyer on Ricketts and Steinbecks journey to the sea of Cortez.
@@ -26,7 +33,7 @@
 #'
 #' @examples
 #' data(route)
-#' plot(route[,'date_arrive'])
+#' plot(route)
 #'
 #' places <- st_drop_geometry(places)
 #' route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
@@ -86,7 +93,10 @@
 #'  \item{reserve.type}{A locally created type categorizing reserves into four categories. 'Marine' and 'Terrestrial' (only) for area with 100% of their land surface categorized as either category, 'Primarily Marine' for areas with MORE marine than terrestrial areas and 'Primarily Terrestrial' for areas with MORE terrestrial than marine areas.}
 #'  \item{geometry}{A simplified multipolygon geometry.}
 #' }
-
+#'
+#' @examples
+#' data(protected)
+#' plot(protected)
 "protected"
 
 #' Major landcover classes of Western Mexico
