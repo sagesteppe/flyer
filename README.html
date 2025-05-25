@@ -352,11 +352,25 @@ display: none;
 </div>
 
 
-<div id="cortez" class="section level1">
-<h1>cortez</h1>
-<p>Geographic data from Steinbeck and Ricketts 1940 trip. This is the
-original R package, which includes the data cleaning, while the python
-package just includes the data.</p>
+<div id="flyer" class="section level1">
+<h1>flyer</h1>
+<p>Geographic data from Steinbeck and Ricketts 1940 trip to the Sea of
+Cortez. This is the original R package, which includes the data
+cleaning, while the python package just includes the data.</p>
+</div>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
+<p>flyer is available only on github. It can be installed using remotes
+or devtools like so:</p>
+<pre><code>install.packages(&#39;devtools&#39;)
+devtools::install_github(&#39;sagesteppe/flyer&#39;)
+
+# remotes is very similar and a good alternative for this use case.
+install.packages(&#39;remotes&#39;) 
+remotes::install_github(&#39;sagesteppe/flyer&#39;)</code></pre>
+<p>Once installed it can be attached for use like any other package from
+github or CRAN</p>
+<pre><code>library(flyer)</code></pre>
 <div id="data-accuracy" class="section level2">
 <h2>Data Accuracy</h2>
 <p>The original author is not a marine ecologist, nor nautically
@@ -366,32 +380,25 @@ exploration of ecology.</p>
 for cartographic activities. In particular, a data set composed of
 point, and linestring geometries, rather than polygons for typical
 chloropleth applications - such as the North Carolina SIDS data set
-which comes with sf. Additional advantages of the data set is that it
-follows a sequential series of events, allowing for intelligent use of
-story map, interactive, or animations.</p>
+which comes with <code>sf</code>. Additional advantages of the data set
+is that it follows a sequential series of events, allowing for
+intelligent use of story maps, interactive, or animations.</p>
 <p>Consider the package very alive, which is to say I am very happy to
 merge increasingly accurate collection localities, or routes. I have
 only read the <em>Log form the Sea of Cortez</em>, and not <em>Sea of
 Cortez: A Leisurely Journal of Travel and Research</em>, or any of the
-other true catalogs from the voyage. I have quickly poked through
-Sagarin et al. 2008 <em>Remembering the Gulf: changes to the marine
-communities of the Sea of Cortez since the Steinbeck and Ricketts
-expedition of 1940</em>, locations which they were able to verify are
-included (see their Supplemental Information 1), locations they could
-not relocate I came up with on my own. The latter are not intended to be
-accurate.</p>
+other true catalogs from the voyage. I have quickly poked through Brusca
+2020, a wonderful read, this served as the definitive source for
+locations.</p>
 <p>The ‘route’ of the Western Flyer is liberally digitized and redrawn
-from Penguin Classics 1995 edition of <em>The Log from the</em> Sea of
-Cortez; of which I am not sure of the actual accuracy of. I further
+from Penguin Classics 1995 edition of <em>The Log from the Sea of
+Corte</em>z; of which I am not sure of the actual accuracy of. I further
 embellished curvatures and shapes to make the data set aesthetically
 appealing. If you think you know the real route, as I guess would have
-been supplied by the <em>Flyer</em>, let me know and I am happy to try
-and digitize it when I can find the time. However, if that happens, I
-will maintain both the aesthetic, and the authentic routes as data sets
-in the package.</p>
-<p>Note that (Amanda Chengs delightful story map)[<a href="https://storymaps.arcgis.com/stories/a65d2eacff1d4bd7b59796edff1f2211" class="uri">https://storymaps.arcgis.com/stories/a65d2eacff1d4bd7b59796edff1f2211</a>]
-helped me pinpoint some general localities, although we differ slightly
-on some aspects.</p>
+been supplied by the <em>Flyer</em> (actual nautical book), let me know
+and I am happy to try and digitize it when I can find the time. However,
+if that happens, I will maintain both the aesthetic, and the authentic
+routes as data sets in the package.</p>
 </div>
 <div id="contributing" class="section level2">
 <h2>Contributing</h2>
@@ -403,16 +410,16 @@ incorporate your perspectives.</p>
 </div>
 <div id="works-cited" class="section level2">
 <h2>Works Cited</h2>
-<p>Brusca, Richard C. <em>The 1940 Ricketts-Steinbeck Sea of Cortez
-Expedition, with annotated lists of species and collection sites</em>
-Journal of the Southwest 62, no. 2 (2020): 218-334.</p>
+<p>Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
+Expedition, with annotated lists of species and collection sites””
+<em>Journal of the Southwest</em> 62, no. 2 (2020): 218-334.</p>
 <p><a href="https://naturalhistory.si.edu/sites/default/files/media/file/brusca2020seaofcortezexpeditionwithjswfrontmatter.pdf">freely
 available here</a></p>
 <p>Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy
-Burnett, and Jon Christensen. <em>Remembering the Gulf: changes to the
+Burnett, and Jon Christensen. “Remembering the Gulf: changes to the
 marine communities of the Sea of Cortez since the Steinbeck and Ricketts
-expedition of 1940</em> Frontiers in Ecology and the Environment 6, no.
-7 (2008): 372-379.</p>
+expedition of 1940” <em>Frontiers in Ecology and the Environment</em> 6,
+no. 7 (2008): 372-379.</p>
 <p><a href="https://www.geo.arizona.edu/rcncrd/documents/Remembering_the_Gulf_Pub_Fe_08.pdf">An
 open-access <em>nearly</em> final version is here</a></p>
 <p>Steinbeck, John. <em>The log from the Sea of Cortez</em> Penguin,
@@ -421,6 +428,17 @@ open-access <em>nearly</em> final version is here</a></p>
 from your local library</a>, <a href="https://www.theindependentbookseller.com/bookstore-map.html">an
 independent bookstore</a>, or a <a href="https://stores.barnesandnoble.com/?view=map">Barnes &amp;
 Noble</a> near you.</p>
+</div>
+<div id="spatial-data-sources" class="section level2">
+<h2>Spatial Data Sources</h2>
+<p>CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of
+Mexico, September 2024’, National Commission for the Knowledge and Use
+of Biodiversity. Mexico City, Mexico.</p>
+<p>GEBCO Compilation Group (2024) GEBCO 2024 Grid (<a href="doi:10.5285/1c44ce99-0a0d-5f4f-" class="uri">doi:10.5285/1c44ce99-0a0d-5f4f-</a> e063-7086abc0ea0f).</p>
+<p>Robinson, N., Regetz, J., and Guralnick, R. P. (2014).
+EarthEnv-DEM90: A nearly-global, void-free, multi-scale smoothed, 90m
+digital elevation model from fused ASTER and SRTM data. ISPRS Journal of
+Photogrammetry and Remote Sensing, 87:2014, 57-67. Available at <a href="http://www.sciencedirect.com/science/article/pii/S0924271613002360" class="uri">http://www.sciencedirect.com/science/article/pii/S0924271613002360</a></p>
 </div>
 </div>
 
