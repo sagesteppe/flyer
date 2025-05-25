@@ -24,6 +24,5 @@ Based on visual inspection the match is good; any mismatch is not my intention -
 \examples{
 data(land)
 plot(land)
-use a palette included with the package for a quick aesthetic mapping... TODO.
 }
 \keyword{datasets}
