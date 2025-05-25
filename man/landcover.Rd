@@ -21,6 +21,5 @@ Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover product for 
 \examples{
 data(landcover)
 plot(landcover)
-use a palette included with the package for a quick aesthetic mapping... TODO.
 }
 \keyword{datasets}

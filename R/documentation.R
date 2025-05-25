@@ -111,7 +111,6 @@
 #' @examples
 #' data(landcover)
 #' plot(landcover)
-#' use a palette included with the package for a quick aesthetic mapping... TODO.
 "landcover"
 
 
