@@ -13,7 +13,6 @@
 #'	}
 #' @examples
 #' data(places)
-#' plot(places['location.espanol'])
 #'
 #' library(ggplot2)
 #' ggplot() +
@@ -35,10 +34,9 @@
 #' data(route)
 #' plot(route)
 #'
-#' places <- st_drop_geometry(places)
-#' route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
+#' places <- sf::st_drop_geometry(places)
+#' route <- dplyr::left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
 #'
-#' plot(route[,6])
 #'
 #' library(ggplot2)
 #' ggplot() +
@@ -60,7 +58,10 @@
 #'
 #' @examples
 #' data(topography)
-#' plot(topography)
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = topography, aes(color = Elevation))
 
 "topography"
 
@@ -77,7 +78,10 @@
 #'
 #' @examples
 #' data(bathymetry)
-#' #plot(bathymetry)
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = bathymetry, aes(color = Elevation))
 
 "bathymetry"
 
@@ -96,7 +100,10 @@
 #'
 #' @examples
 #' data(protected)
-#' plot(protected)
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = protected, aes(fill = reserve.type))
 "protected"
 
 #' Major landcover classes of Western Mexico
@@ -110,7 +117,10 @@
 #' }
 #' @examples
 #' data(landcover)
-#' plot(landcover)
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = protected, aes(fill = class))
 "landcover"
 
 
@@ -128,5 +138,8 @@
 #' }
 #' @examples
 #' data(land)
-#' plot(land)
+#'
+#' library(ggplot2)
+#' ggplot() +
+#'	 geom_sf(data = land, aes(fill = Name))
 "land"
