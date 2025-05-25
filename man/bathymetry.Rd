@@ -21,6 +21,6 @@ The contours were generated from GEBCO Compilation Group (2024) GEBCO 2024 Grid 
 }
 \examples{
 data(bathymetry)
-plot(bathymetry)
+#plot(bathymetry)
 }
 \keyword{datasets}
