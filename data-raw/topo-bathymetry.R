@@ -59,7 +59,8 @@ object.size(topography) / object.size(sf_ver)
 format(object.size(topography), units = 'MB')
 
 topography <- select(topography, -ID) |>
-  rename(Elevation = level)
+  rename(Elevation = level) |>
+  st_as_sf()
 usethis::use_data(topography, overwrite = TRUE)
 
 rm(sf_ver, r, sf_ver_1, topography, v, f, p)

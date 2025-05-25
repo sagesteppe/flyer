@@ -78,7 +78,7 @@ Basically, too much data would make the package too cumbersome to fit on CRAN.
 ```{r}
 
 bb <- st_bbox(
-  c(xmin = -113.5, xmax = -108.5, ymin = 22.5, ymax = 30.5),
+  c(xmin = -114, xmax = -108.5, ymin = 22.5, ymax = 30.5),
   crs = st_crs(4326)
 )
 
@@ -98,7 +98,7 @@ We'll also ignore the administrative borders.
 ```{r add topography}
 
 land <- st_union(land)
-head(topography)
+plot(topography)
 
 ggplot() + 
   geom_sf(data = land) + 

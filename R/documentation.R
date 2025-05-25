@@ -77,7 +77,7 @@
 #'
 #' @examples
 #' data(bathymetry)
-#' plot(bathymetry)
+#' #plot(bathymetry)
 
 "bathymetry"
 
