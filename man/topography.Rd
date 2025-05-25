@@ -21,6 +21,9 @@ The contours were generated from Robinson, N., Regetz, J., and Guralnick, R. P. 
 }
 \examples{
 data(topography)
-plot(topography)
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = topography, aes(color = Elevation))
 }
 \keyword{datasets}

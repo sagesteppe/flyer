@@ -23,6 +23,9 @@ Based on visual inspection the match is good; any mismatch is not my intention -
 }
 \examples{
 data(land)
-plot(land)
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = land, aes(fill = Name))
 }
 \keyword{datasets}

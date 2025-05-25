@@ -24,7 +24,6 @@ Note that several of the book place names seem somewhat peculiar, but the locali
 }
 \examples{
 data(places)
-plot(places['location.espanol'])
 
 library(ggplot2)
 ggplot() +

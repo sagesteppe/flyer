@@ -20,6 +20,9 @@ Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover product for 
 }
 \examples{
 data(landcover)
-plot(landcover)
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = protected, aes(fill = class))
 }
 \keyword{datasets}

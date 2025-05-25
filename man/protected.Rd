@@ -22,6 +22,9 @@ From CONABIO CONANP, (09/2024). 'Federal Protected Natural Areas of Mexico, Sept
 }
 \examples{
 data(protected)
-plot(protected)
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = protected, aes(fill = reserve.type))
 }
 \keyword{datasets}

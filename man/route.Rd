@@ -22,10 +22,9 @@ Note that the route is fictionalized from the book, and modified to be aesthetic
 data(route)
 plot(route)
 
-places <- st_drop_geometry(places)
-route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
+places <- sf::st_drop_geometry(places)
+route <- dplyr::left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
 
-plot(route[,6])
 
 library(ggplot2)
 ggplot() +

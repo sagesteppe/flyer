@@ -21,6 +21,9 @@ The contours were generated from GEBCO Compilation Group (2024) GEBCO 2024 Grid 
 }
 \examples{
 data(bathymetry)
-#plot(bathymetry)
+
+library(ggplot2)
+ggplot() +
+ geom_sf(data = bathymetry, aes(color = Elevation))
 }
 \keyword{datasets}
