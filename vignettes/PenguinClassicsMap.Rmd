@@ -47,7 +47,7 @@ data(route)
 route <- left_join(
   route,
   st_drop_geometry(places),
-  by = c('Destination' = 'location.english')
+  by = c('destination' = 'location_english')
   )
 
 ggplot() + 
