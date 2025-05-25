@@ -14,7 +14,7 @@ LazyData: true
 Suggests: 
     sf, 
     dplyr,
-    ggplot2
+    ggplot2,
     knitr,
     rmarkdown,
     devtools
