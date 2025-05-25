@@ -16,13 +16,13 @@ knitr::opts_chunk$set(
 
 
 ```{r install package, eval = F}
-devtools::install_github('sagesteppe/cortez')
+devtools::install_github('sagesteppe/flyer')
 ```
 
 The Penguin Classics map has many wonderful attributes worth emulating. 
 
 ```{r setup}
-library(cortez)
+library(flyer)
 library(sf)
 library(tidyverse)
 ```
