@@ -23,6 +23,6 @@ data(landcover)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = protected, aes(fill = class))
+ geom_sf(data = landcover, aes(fill = class))
 }
 \keyword{datasets}

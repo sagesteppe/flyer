@@ -73,17 +73,17 @@ rm(segs, sample_points, chai_route)
 # identify route directions from the route-ls-chai data set. we do this by
 # identifying the nearest 'trip-part' points
 
-route_dates <- places[4:25,'location.english'] |>
+route_dates <- places[4:25,'location_english'] |>
   st_drop_geometry() |>
-  rename(Destination = location.english) |>
+  rename(destination = location_english) |>
   mutate(
-    End = st_nearest_feature(places[4:25,], split_lines)
+    end = st_nearest_feature(places[4:25,], split_lines)
   ) |>
   mutate(
-    Start = lag(End, n = 1L)+1, .before = End,
-    Start = case_when(
-      Destination == 'Magdalena Bay' ~ 1,
-      .default = as.numeric(Start)
+    start = lag(end, n = 1L)+1, .before = end,
+    start = case_when(
+      destination == 'Magdalena Bay' ~ 1,
+      .default = as.numeric(start)
       )
   )
 
@@ -91,24 +91,16 @@ split_lines <- data.table(split_lines)
 route_dates <- data.table(route_dates)
 
 setkey(split_lines, ID)
-setkey(route_dates, Start)
-
+setkey(route_dates, start)
 
 route <- route_dates[split_lines, roll = T] |>
-  mutate(Destination = if_else(Start > 2814, 'San Diego', Destination)) |>
-  select(Destination, geometry = result) |>
+  mutate(destination = if_else(start > 2814, 'San Diego', destination)) |>
+  select(destination, geometry = result) |>
   st_as_sf() |>
-  group_by(Destination) |>
+  group_by(destination) |>
   summarize(geometry = st_union(geometry))
 
 st_write(route, 'route.gpkg', append = FALSE)
 rm(split_lines)
 
 usethis::use_data(route, overwrite = TRUE)
-
-
-##### Markers
-
-# these are points discussed in the book, generally in passing.
-
-dat <- read.csv('./species/Site4.csv')

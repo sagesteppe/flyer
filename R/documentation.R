@@ -123,7 +123,7 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = protected, aes(fill = reserve_type))
+#'	 geom_sf(data = landcover, aes(fill = class))
 "landcover"
 
 

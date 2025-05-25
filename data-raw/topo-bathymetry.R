@@ -59,7 +59,7 @@ object.size(topography) / object.size(sf_ver)
 format(object.size(topography), units = 'MB')
 
 topography <- select(topography, -ID) |>
-  rename(Elevation = level) |>
+  rename(elevation = level) |>
   st_as_sf()
 usethis::use_data(topography, overwrite = TRUE)
 
@@ -96,7 +96,7 @@ sf_ver <- st_as_sf(v) |>
 
 bathymetry <- sf_ver[ st_length(sf_ver) > units::set_units(15, 'km'), ] |>
   select(-ID) |>
-  rename(Elevation = level) |>
+  rename(elevation = level) |>
   st_as_sf()
 
 format(object.size(bathymetry), units = 'MB')
@@ -129,6 +129,7 @@ mis <- st_crop(mis, bb) |>
 
 land <- bind_rows(cntr, mis) |>
   group_by(Name) |>
+  rename(name = Name) |>
   reframe(geometry = st_union(geometry)) |>
   st_as_sf()
 

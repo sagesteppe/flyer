@@ -25,6 +25,6 @@ data(protected)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = protected, aes(fill = reserve.type))
+ geom_sf(data = protected, aes(fill = reserve_type))
 }
 \keyword{datasets}

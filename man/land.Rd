@@ -26,6 +26,6 @@ data(land)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = land, aes(fill = Name))
+ geom_sf(data = land, aes(fill = name))
 }
 \keyword{datasets}

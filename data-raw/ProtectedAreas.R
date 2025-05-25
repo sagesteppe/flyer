@@ -15,7 +15,7 @@ mx <- st_read( file.path(p, 'anpmx/anpmx.shp')) |>
     S_TERRES < S_MARINA ~ 'Primarily Marine',
     )
   ) |>
-  select(name = NOMBRE, date.established = PRIM_DEC, reserve.type) |>
+  select(name = NOMBRE, date_established = PRIM_DEC, reserve_type = reserve.type) |>
   st_make_valid()
 
 mx <- st_crop(mx, bb)
@@ -31,6 +31,6 @@ format(object.size(mx), units = 'MB')
 
 protected <- mx
 
-usethis::use_data(protected)
+usethis::use_data(protected, overwrite = TRUE)
 
 rm(mx, bb, p, protected)

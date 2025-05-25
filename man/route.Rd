@@ -20,10 +20,13 @@ Note that the route is fictionalized from the book, and modified to be aesthetic
 }
 \examples{
 data(route)
-plot(route)
 
 places <- sf::st_drop_geometry(places)
-route <- dplyr::left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
+route <- dplyr::left_join(
+  route,
+  sf::st_drop_geometry(places),
+  by = c('destination' = 'location_english')
+  )
 
 
 library(ggplot2)
