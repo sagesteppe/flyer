@@ -7,7 +7,7 @@ html_preview: false
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml)  
 ```{r, echo = FALSE, results='asis'}
 cat(
 	badger::badge_codefactor('sagesteppe/flyer'), 
