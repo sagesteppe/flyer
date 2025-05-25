@@ -1,0 +1,27 @@
+location-espanol,location-english,collect,real_site,latitude,longitude,date_arrive,date_depart
+Monterey,Monterey,F,NA,36.6046,-121.89259,03-01-1940,03-11-1940
+Santa Barbara Channel,Santa Barbara Channel,F,NA,34.261066,-119.871714,03-12-1940,03-12-1940
+San Diego,San Diego,F,NA,32.71662,-117.18523,03-13-1940,03-14-1940
+Bahía de Magdalena,Magdalena Bay,F,NA,24.58293,-111.99883,03-16-1940,03-16-1940
+Cabo San Lucas,Cape San Lucas,T,T,22.88,-109.903,03-17-1940,03-18-1940
+Bahia Pulmo Reef,Cabo Pulmo,T,F,23.437786,-109.424271,03-19-1940,03-18-1940
+Punta Pescadero,Punta Pescadero,F,T,23.7965,-109.6971,03-19-1940,03-20-1940
+"Punta Lobos, Isla Espiritu Santo","Punta Lobos, Isla Espiritu Santo",T,T,24.459,-110.293,03-20-1940,03-20-1940
+"Caimancito, La Paz","Caimancito, La Paz",T,T,24.207,-110.3,03-21-1940,03-22-1940
+"Isolote Cayo, Isla San José","Amatorajada, San José Island",F,T,24.876,-110.604,03-23-1940,03-23-1940
+Punta San Marcial,Marcial Reef,T,T,25.505,-111.014,03-23-1940,03-24-1940
+Puerto Escondido,Puerto Escondido,T,T,25.813,-111.306,03-25-1940,03-26-1940
+Isla Coronado,Coronado Island,T,T,26.11,-111.281,03-27-1940,03-27-1940
+Bahia Concepion,Concepción Bay,T,F,26.71289,-111.835413,03-28-1940,03-28-1940
+Cabo San Lucas,San Lucas Cove,T,F,27.218907,-112.197035,03-29-1940,03-30-1940
+Bahía de San Carlos,San Carlos Bay,F,T,27.824,-112.72,03-31-1940,03-31-1940
+Bahía San Francisquito,San Francisquito Bay,F,T,28.451,-112.88,03-31-1940,03-31-1940
+Bahía del Los Angeles,Angeles Bay,T,F,28.942569,-113.516088,04-01-1940,04-01-1940
+Puerto Refugio,Puerto Refugio,F,T,29.542,-113.535,04-02-1940,04-03-1940
+Isla Tiburón,Tiburón Island,F,T,28.763,-112.354,04-03-1940,04-03-1940
+Puerto San Carlos,Puerto San Carlos,F,T,27.941,-111.063,04-04-1940,04-04-1940
+Guyamas,Guyamas,F,NA,27.911067,-110.859074,04-05-1940,04-08-1940
+Esterio de la Luna,Esterio de la Luna,F,F,27.043057,-109.930298,04-09-1940,04-10-1940
+Agiabampo,Agiabampo,T,F,26.356397,-109.220129,04-11-1940,04-11-1940
+Bahia de San Gabriel,San Gabriel Bay,T,F,24.424178,-110.360678,04-12-1940,04-12-1940
+Isla de Cedros,Cedros Island,F,NA,28.064877,-115.1066,04-13-1940,04-13-1940

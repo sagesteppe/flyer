@@ -1,0 +1,17 @@
+Package: flyer
+Title: Example geospatial data for cartography.
+Version: 0.0.1.00
+Authors@R: 
+    person("Reed", "Benkendorf", , "reedbenkendorf2021@u.northwestern.edu", role = c("aut", "cre"))
+Description: I often find that I need new geospatial data for playing around with cartographic tricks. A normal challenge for me is plotting points and linestrings on large geographic expanses. Here I digitize the locations from The Log from the Sea of Cortez, Ed Ricketts and John Steinbecks legendary collection trip. 
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 3.5)
+LazyData: true
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
