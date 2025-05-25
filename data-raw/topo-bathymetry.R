@@ -1,4 +1,4 @@
-setwd('~/Documents/cortez/data-raw')
+setwd('~/Documents/flyer/data-raw')
 
 library(sf)
 library(terra)
@@ -99,3 +99,37 @@ bathymetry <- sf_ver[ st_length(sf_ver) > units::set_units(15, 'km'), ] |>
 format(object.size(sf_ver), units = 'MB')
 usethis::use_data(bathymetry, overwrite = TRUE)
 
+
+######################################################
+
+library(rnaturalearth)
+cntr <- ne_countries(type = "countries", scale = "large")
+cntr <- st_make_valid(cntr)
+
+bb <-st_as_sfc(
+  st_bbox(
+    c(xmin = -121, xmax = -103, ymin = 19, ymax = 35.3),  crs = st_crs(4326)
+  )
+)
+
+cntr <- st_crop(cntr, bb) |>
+  select(Name = name_sort)
+
+plot(cntr)
+
+mis <- ne_download(scale = 10, type = "minor_islands", category = "physical")
+mis <- st_crop(mis, bb) |>
+  select(geometry)  %>%
+  mutate(
+    Name = st_nearest_feature(., cntr),
+    Name = if_else(Name == 2, 'Mexico', 'United States of America'), .before = geometry,
+    )
+
+land <- bind_rows(cntr, mis) |>
+  group_by(Name) |>
+  reframe(geometry = st_union(geometry))
+
+format(object.size(land), units = 'MB')
+usethis::use_data(land, overwrite = TRUE)
+
+rm(mis, cntr)

@@ -32,17 +32,32 @@ The places visited by the collectors can be loaded using `places`, and the route
 ```{r}
 data(places)
 head(places)
+
+ggplot() + 
+  geom_sf(data = places)
 ```
 
 Because the package is attached we can also just start using the data, which is currently held as a promise. 
 
 ```{r}
 data(route)
-plot(route[,'date_arrive'])
+plot(route)
 
-route <- left_join(route, st_drop_geometry(places), by = c('Destination' = 'location.english'))
+route <- left_join(
+  route,
+  st_drop_geometry(places),
+  by = c('Destination' = 'location.english')
+  )
+
 ggplot() + 
-  geom_sf(data = route, aes(color = date_arrive))
+  geom_sf(data = places) + 
+  geom_sf(data = route, aes(color = date_arrive)) 
+
 ```
+
+Obviously we need some context for these data. 
+Other wise they just... look the way they do above. 
+We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?)
+
 
 

@@ -103,3 +103,22 @@
 #' plot(landcover)
 #' use a palette included with the package for a quick aesthetic mapping... TODO.
 "landcover"
+
+
+#' Land and islands of Western Mexico
+#'
+#' A simplified data set of land, and nations, (for global usage) from Natural Earth.
+#' Basically, combined the high res land data set with the minor islands data set.
+#' Islands, which do not contain administrative info from Natural Earth were assigned by being 'nearest' feature to a nation.
+#' Based on visual inspection the match is good; any mismatch is not my intention - *viva la Mexico* and god bless the USA.
+#' "Made with Natural Earth. Free vector and raster map data @ naturalearthdata.com."
+#' @format sf/tibble/dataframe, with two multipolygons, one for each of the countries in the area.
+#' \describe{
+#'  \item{Name}{Name of the country.}
+#'  \item{geometry}{A simplified multipolygon geometry.}
+#' }
+#' @examples
+#' data(land)
+#' plot(land)
+#' use a palette included with the package for a quick aesthetic mapping... TODO.
+"land"

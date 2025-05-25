@@ -3,7 +3,7 @@ library(sf)
 library(rnaturalearth)
 library(tidyverse)
 
-setwd('~/Documents/cortez/data-raw')
+setwd('~/Documents/flyer/data-raw')
 bb <- st_as_sfc(
   st_bbox(c(xmin = -121, xmax = -103, ymin = 19, ymax = 35.3),
           crs = st_crs(4326)

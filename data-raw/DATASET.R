@@ -1,4 +1,4 @@
-setwd('~/Documents/cortez/data-raw')
+setwd('~/Documents/flyer/data-raw')
 
 library(sf)
 library(tidyverse)
