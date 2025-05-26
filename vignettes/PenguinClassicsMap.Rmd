@@ -51,11 +51,28 @@ route <- left_join(
   by = c('destination' = 'location_english')
   )
 
-m <- m + 
+m + 
   geom_sf(data = route, aes(color = date_arrive)) 
 
-m
 ```
+
+by default ggplot2 does not seem to order date the way I would, in the legend. 
+
+```{r}
+m + 
+  geom_sf(data = route, aes(color = date_arrive)) + 
+  scale_color_continuous(direction = -1)
+
+
+route$date_arrive <- as.Date(route$date_arrive, format = "%m/%d%/Y")
+
+m + 
+  geom_sf(data = route, aes(color = date_arrive)) 
+
+
+str(route)
+```
+
 
 Obviously we need some context for these data. 
 Other wise they just... look the way they do above. 
@@ -86,16 +103,18 @@ m <- m  +
 m
 ```
 
-
 Now let's add some topography to make the land seem more natural. 
 We'll also ignore the administrative borders. 
+
+Note that we are going to go back to the drawing board to control the order which layers are added to the map.
+We'll still overwrite the variable m. 
 
 ```{r add topography}
 
 land <- st_union(land)
 plot(topography)
 
-ggplot() + 
+m <- ggplot() + 
   geom_sf(data = land) + 
   geom_sf(data = topography, lwd = 0.1) + 
   geom_sf(data = places) + 
@@ -128,3 +147,6 @@ I could see another *very* cool interpretation of using a continuous and countin
 
 ```
 
+
+Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
+With darker areas being deeper hues of blue. 
