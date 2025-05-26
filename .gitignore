@@ -39,8 +39,6 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 
-# pkgdown site
-docs/
 
 # translation temp files
 po/*~
@@ -56,3 +54,4 @@ inst/doc
 anpmx/
 protected_areas/
 landcover/
+docs
