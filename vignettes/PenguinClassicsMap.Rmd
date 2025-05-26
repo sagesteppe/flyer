@@ -42,7 +42,7 @@ Because the package is attached we can also just start using the data, which is 
 
 ```{r show the routes}
 
-data(route)
+head(route)
 
 route <- left_join(
   route,
@@ -61,7 +61,6 @@ Other wise they just... look the way they do above.
 We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?)
 
 ```{r add land}
-data(land)
 head(land)
 
 ggplot() + 
@@ -74,8 +73,7 @@ ggplot() +
 While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
 Basically, too much data would make the package too cumbersome to fit on CRAN. 
 
-
-```{r}
+```{r subset bounding box}
 
 bb <- st_bbox(
   c(xmin = -114, xmax = -108.5, ymin = 22.5, ymax = 30.5),
