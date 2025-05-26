@@ -1,3 +1,14 @@
-url: ~
+url: https://sagesteppe.github.io/flyer/
 template:
   bootstrap: 5
+reference:
+- title: Data sets
+  desc: All data sets included in the package. 
+  contents:
+  - places
+  - route
+  - topography
+  - bathymetry
+  - protected
+  - landcover
+  - land

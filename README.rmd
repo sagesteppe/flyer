@@ -12,7 +12,6 @@ html_preview: false
 
 ```{r, echo = FALSE, results='asis'}
 cat(
-	badger::badge_codefactor('sagesteppe/flyer'), 
 	badger::badge_repostatus("Active")
 )
 ```
