@@ -69,7 +69,10 @@ brks <- graticNo(polygon = places, nx = 4, ny = 5)
 
 # the data sets 
 
-The places visited by the collectors can be loaded using `places`, and the route they took (which I made up) can be loaded via `routes``. 
+The places visited by the collectors can be loaded using `places`, and the route they took can be loaded via `routes`.
+These are really the whole point of the package!
+And spoiler alert... 
+are very simple!
 
 ```{r plot the places}
 data(places)

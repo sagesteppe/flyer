@@ -17,5 +17,7 @@ Suggests:
     ggplot2,
     knitr,
     rmarkdown,
-    devtools
+    devtools,
+    ggnewscale,
+    ggrepel
 VignetteBuilder: knitr
