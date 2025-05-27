@@ -226,10 +226,26 @@ ggplot() +
 And we can combine the scale for topography and bathymetry together like this... I will use a divergent scale which makes sense to me... 
 I could see another *very* cool interpretation of using a continuous and counting everything from 0 at 4300 feet and adding the difference to the 'topography' data set. 
 
-```{r}
-
-```
-
-
 Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
 With darker areas being deeper hues of blue. 
+
+
+## putting it all together
+
+We can make an OK map using some of the details below. 
+
+```{r}
+
+ggplot() + 
+  geom_sf(data = land, fill = '#EFDD8D') + 
+  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
+  geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
+  geom_sf(data = places) +  
+ # geom_sf(data = route, aes(color = date_arrive)) +
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
+  annotation_scale()  + 
+  annotation_north_arrow(which_north = "true", style = north_arrow_minimal)
+
+  north_arrow_minimal()
+```
+
