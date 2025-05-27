@@ -1,8 +1,8 @@
 ---
-title: "PenguinClassicsMap"
+title: "Exploring the Data sets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{PenguinClassicsMap}
+  %\VignetteIndexEntry{DataSetsExpose}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,19 +14,60 @@ knitr::opts_chunk$set(
 )
 ```
 
+# Introduction and quick start 
+
+flyer is available on github, and should go to CRAN sometime. 
+It can be installed via either of  the following commands. 
 
 ```{r install package, eval = F}
+install.packages('devtools')
 devtools::install_github('sagesteppe/flyer')
+
+# remotes is very similar and a good alternative for this use case.
+install.packages('remotes') 
+remotes::install_github('sagesteppe/flyer')
 ```
 
-The Penguin Classics map has many wonderful attributes worth emulating. 
+To explore the data we will load a couple packages for interacting with the data (sf, dplyr), and a whole slew of packages for plotting the data using ggplot2 (ggnewscale, ggrepel). 
+It might seem onerous to be installing all of these packages, but I bet once you see what they do you'll be quite excited to have them. 
 
 ```{r setup}
 library(flyer)
 library(sf)
 library(dplyr)
 library(ggplot2)
+library(ggnewscale)
+library(ggrepel)
 ```
+
+We'll modify the number of graticules right off the bat, note that the `pretty` function does not always return the requested `n`, so... 
+
+```{r define a carto ggplot theme}
+
+graticNo <- function(polygon, nx, ny){
+  
+  bb <- round(st_bbox(polygon), 1)
+  if(all(missing(nx) & missing(ny))) {nx <- 5;ny <- 5} else {
+    if(all(missing(nx) & ! missing(ny))) {nx <- ny} else {
+      if(all(missing(ny) & ! missing(nx))) {ny <- nx}
+    } 
+  } 
+
+  xbreaks <- pretty(seq(bb[1], bb[3], length.out = nx), nx)
+  ybreaks <- pretty(seq(bb[2], bb[4], length.out = ny), ny)
+  
+  return(
+    list(
+      x = xbreaks, y = ybreaks
+    )
+  )
+}
+
+brks <- graticNo(polygon = places, nx = 4, ny = 5)
+
+```
+
+# the data sets 
 
 The places visited by the collectors can be loaded using `places`, and the route they took (which I made up) can be loaded via `routes``. 
 
@@ -36,13 +77,32 @@ head(places)
 
 m <- ggplot() + 
   geom_sf(data = places)
+```
+
+The places seem like they will be better treated as text labels - we can apply them with `ggrepel::geom_text_repel` which will move them to avoid conflicts with other plot elements. 
+
+```{r}
+m <- ggplot() +
+  
+  ggrepel::geom_text_repel(
+    data = places,
+    aes(label = location_espanol, geometry = geometry),
+    stat = "sf_coordinates",
+    size = 3
+    ) + 
+  
+  # now let's add in our customized graticules too. 
+  scale_x_continuous('Longitude', breaks = brks$x) +
+  scale_y_continuous('Latitude', breaks = brks$y) + 
+  theme_linedraw()
+
 m
 ```
 
 Because the package is attached we can also just start using the data, which is currently held as a promise. 
+In other words we don't need to call `data(object)` on the data sets, we can just use them directly - such as viewing them by calling `head(object)`. 
 
 ```{r show the routes}
-
 head(route)
 
 route <- left_join(
@@ -53,26 +113,15 @@ route <- left_join(
 
 m + 
   geom_sf(data = route, aes(color = date_arrive)) 
-
 ```
 
-by default ggplot2 does not seem to order date the way I would, in the legend. 
+By default ggplot2 does not seem to order Date variables the way I would. 
+We can convert the dates to factor to enforce this. 
 
 ```{r}
 m + 
-  geom_sf(data = route, aes(color = date_arrive)) + 
-  scale_color_continuous(direction = -1)
-
-
-route$date_arrive <- as.Date(route$date_arrive, format = "%m/%d%/Y")
-
-m + 
-  geom_sf(data = route, aes(color = date_arrive)) 
-
-
-str(route)
+  geom_sf(data = route, aes(color = date_arrive))
 ```
-
 
 Obviously we need some context for these data. 
 Other wise they just... look the way they do above. 
@@ -110,7 +159,6 @@ Note that we are going to go back to the drawing board to control the order whic
 We'll still overwrite the variable m. 
 
 ```{r add topography}
-
 land <- st_union(land)
 plot(topography)
 
@@ -121,6 +169,7 @@ m <- ggplot() +
   geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
+m
 ```
 
 
@@ -132,10 +181,10 @@ plot(bathymetry)
 
 ggplot() + 
   geom_sf(data = land, fill = '#EFDD8D') + 
-  geom_sf(data = bathymetry, lwd = 0.1) + 
-  geom_sf(data = topography, lwd = 0.1) + 
+  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
+  geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = places) +  
-  geom_sf(data = route, aes(color = date_arrive)) +
+ # geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
 ```
