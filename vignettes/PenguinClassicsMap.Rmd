@@ -33,11 +33,13 @@ It might seem onerous to be installing all of these packages, but I bet once you
 
 ```{r setup}
 library(flyer)
-library(sf)
-library(dplyr)
-library(ggplot2)
-library(ggnewscale)
-library(ggrepel)
+library(dplyr) # for general data handling
+library(sf) # for spatial data
+
+library(ggplot2) # all for plotting the data 
+library(ggnewscale) # for mapping multiple variables to an aesthetic. 
+library(ggrepel) # for text based labels which move to minimize overlaps. 
+library(ggspatial) # compasses and scale bars. 
 ```
 
 We'll modify the number of graticules right off the bat, note that the `pretty` function does not always return the requested `n`, so... 
@@ -84,7 +86,7 @@ m <- ggplot() +
 
 The places seem like they will be better treated as text labels - we can apply them with `ggrepel::geom_text_repel` which will move them to avoid conflicts with other plot elements. 
 
-```{r}
+```{r plot places as text, warning=F}
 m <- ggplot() +
   
   ggrepel::geom_text_repel(
@@ -97,15 +99,16 @@ m <- ggplot() +
   # now let's add in our customized graticules too. 
   scale_x_continuous('Longitude', breaks = brks$x) +
   scale_y_continuous('Latitude', breaks = brks$y) + 
-  theme_linedraw()
+  theme_minimal()
 
 m
 ```
 
-Because the package is attached we can also just start using the data, which is currently held as a promise. 
+Also, because the package is attached we can also just start using the data, which is currently held as a promise. 
 In other words we don't need to call `data(object)` on the data sets, we can just use them directly - such as viewing them by calling `head(object)`. 
+We are going to use this direct approach for the remainder of the vignette. 
 
-```{r show the routes}
+```{r show the routes, warning=F}
 head(route)
 
 route <- left_join(
@@ -118,25 +121,34 @@ m +
   geom_sf(data = route, aes(color = date_arrive)) 
 ```
 
-By default ggplot2 does not seem to order Date variables the way I would. 
-We can convert the dates to factor to enforce this. 
+By default ggplot2 does not seem to order date variables the way I would. 
+We can convert the dates to factor to enforce this... TODO
 
-```{r}
+```{r, warning=F}
 m + 
   geom_sf(data = route, aes(color = date_arrive))
 ```
 
 Obviously we need some context for these data. 
 Other wise they just... look the way they do above. 
-We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?)
+We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
+Anyways, we have duped the natural earth land surfaces into this package - but there are ton's of other products you may want to use from there, check out the [R Open Sci page for more info](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html). 
 
 ```{r add land}
 head(land)
 
-m <- m + 
-  geom_sf(data = route, aes(color = date_arrive)) 
+ggplot() + 
+  geom_sf(data = land)
+```
 
-m
+For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
+
+```{r union land}
+land <- st_union(land)
+
+ggplot() + 
+  geom_sf(data = land) + 
+  theme_minimal()
 ```
 
 While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
@@ -149,7 +161,14 @@ bb <- st_bbox(
   crs = st_crs(4326)
 )
 
-m <- m  +
+# we have to crop the places data set or ggrepel will move places outside the
+# coord_sf down into the plot anyways
+
+places <- st_crop(places, bb)
+
+m <- ggplot()  +
+  geom_sf(data = land) + 
+  
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
 m
@@ -162,15 +181,27 @@ Note that we are going to go back to the drawing board to control the order whic
 We'll still overwrite the variable m. 
 
 ```{r add topography}
-land <- st_union(land)
+
 plot(topography)
 
 m <- ggplot() + 
   geom_sf(data = land) + 
   geom_sf(data = topography, lwd = 0.1) + 
-  geom_sf(data = places) + 
   geom_sf(data = route, aes(color = date_arrive)) +
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
+
+  
+  ggrepel::geom_text_repel(
+    data = places,
+    aes(label = location_espanol, geometry = geometry),
+    stat = "sf_coordinates",
+    size = 2.5
+    ) + 
+  
+  # now let's add in our customized graticules too. 
+  scale_x_continuous('Longitude', breaks = brks$x) +
+  scale_y_continuous('Latitude', breaks = brks$y) + 
+  theme_linedraw()
 
 m
 ```
