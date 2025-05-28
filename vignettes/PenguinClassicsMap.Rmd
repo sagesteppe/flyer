@@ -115,14 +115,18 @@ route <- left_join(
   route,
   st_drop_geometry(places),
   by = c('destination' = 'location_english')
-  )
+  ) |>
+  relocate(geometry, .after = last_col())
 
-m + 
-  geom_sf(data = route, aes(color = date_arrive)) 
+```
+
+the route object itself is pretty minimal, but relevant attributes can be brought in by joining it to places. 
+```{r show the routes, warning=F}
+head(route)
 ```
 
 By default ggplot2 does not seem to order date variables the way I would. 
-We can convert the dates to factor to enforce this... TODO
+We can convert the dates to factor to enforce data to be plotted in actual order. 
 
 ```{r, warning=F}
 m + 
@@ -225,12 +229,23 @@ ggplot() +
 
 And we can combine the scale for topography and bathymetry together like this... I will use a divergent scale which makes sense to me... 
 I could see another *very* cool interpretation of using a continuous and counting everything from 0 at 4300 feet and adding the difference to the 'topography' data set. 
-
 Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
 With darker areas being deeper hues of blue. 
 
 
-## putting it all together
+## tangential data 
+
+While some of the last data sets are loosely related to the book, these two are... not at all related, but can be useful for cartography. 
+
+A simple landcover classification data set is available as ``. 
+
+```{r}
+
+ggplot() + 
+  geom_sf(data = landcover, aes(fill = class))
+```
+
+# putting it all together
 
 We can make an OK map using some of the details below. 
 

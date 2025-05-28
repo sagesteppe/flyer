@@ -10,7 +10,9 @@ bb <- st_as_sfc(
           )
   )
 cntr <- ne_countries(type = "countries", scale = "large") |>
-  st_make_valid()
+  st_make_valid() |>
+  st_crop(bb) |>
+  st_union()
 
 lkp_tab <- data.frame(
   class = c('Evergreen Deciduous Needleleaf Forest', 'Evergreen Broadleaf Forest',
@@ -25,7 +27,6 @@ lkp_tab <- data.frame(
 r <- rast(file.path('./landcover', list.files('./landcover')))
 r <- crop(r, bb)
 r <- mask(r, cntr)
-
 
 r <- subset(r,'consensus_full_class_10', negate= TRUE )
 r_summary <- app(r, which.max)
