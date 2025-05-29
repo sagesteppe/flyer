@@ -19,5 +19,6 @@ Suggests:
     rmarkdown,
     devtools,
     ggnewscale,
-    ggrepel
+    ggrepel,
+    ggspatial
 VignetteBuilder: knitr
