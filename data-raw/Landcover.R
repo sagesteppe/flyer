@@ -74,5 +74,4 @@ landcover <- nc_simp |>
 
 row.names(landcover) <- 1:nrow(landcover)
 
-st_write(landcover, 'no_change.gpkg', append = FALSE)
 usethis::use_data(landcover, overwrite = TRUE)

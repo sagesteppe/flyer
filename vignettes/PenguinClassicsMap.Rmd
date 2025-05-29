@@ -121,7 +121,7 @@ route <- left_join(
 ```
 
 the route object itself is pretty minimal, but relevant attributes can be brought in by joining it to places. 
-```{r show the routes, warning=F}
+```{r route head, warning=F}
 head(route)
 ```
 
