@@ -17,16 +17,18 @@ cntr <- ne_countries(type = "countries", scale = "large") |>
 lkp_tab <- data.frame(
   class = c('Evergreen Deciduous Needleleaf Forest', 'Evergreen Broadleaf Forest',
             'Deciduous Broadleaf Forest', 'Mixed/Other Forest',
-            'Shrubs', 'Herbaceous Vegetation',
+            'Desert & Shrublands', 'Herbaceous Vegetation',
             'Cultivated and Managed Vegetation', 'Regularly Flooded Vegetation',
-            'Urban/Developed', 'Snow/Ice',
+            'Urban/Developed', # 'Snow/Ice',
             'Barren', 'Open Water'),
-  number = 1:12
+  number = 1:11
 ) # we will want to reduce a few of these... classes. Ice obviously, regularly flooded, http://127.0.0.1:45169/graphics/af09a149-99d8-4082-a5a4-16af460b0d3f.pngand collapse other trees?
 
-r <- rast(file.path('./landcover', list.files('./landcover')))
-r <- crop(r, bb)
-r <- mask(r, cntr)
+f <- list.files('./landcover')
+f <- f[order(as.numeric(gsub('[a-z]|_|[.]', '', f)))]
+r <- rast(file.path('./landcover', f))
+r <- crop(r, vect(bb))
+r <- mask(r, vect(cntr))
 
 r <- subset(r,'consensus_full_class_10', negate= TRUE )
 r_summary <- app(r, which.max)
@@ -39,7 +41,6 @@ v <- as.polygons(f) |>
   st_cast('MULTIPOLYGON')
 
 st_is_valid(v)
-st_write(v, 'no_change.gpkg', append = TRUE)
 
 format(object.size(v), units = 'MB')
 nc_simp <- rmapshaper::ms_simplify(v, keep = 0.5) |>
@@ -50,17 +51,21 @@ nc_simp <- rmapshaper::ms_simplify(v, keep = 0.5) |>
 
 format(object.size(nc_simp), 'MB')
 
+ggplot() +
+  geom_sf(data = nc_simp)
+
 nc_simp <- st_intersection(nc_simp, cntr)
 nc_simp <- nc_simp[!st_is_empty(nc_simp),]
+nc_simp <- st_collection_extract(nc_simp, type = 'POLYGON')
 nc_simp <- nc_simp[ st_geometry_type(nc_simp) %in% c('POLYGON', 'MULTIPOLYGON'), ]
-
+nc_simp <- st_make_valid(nc_simp)
 
 nc_simp %>%
   filter(st_is_valid(.)) %>%
-  ggplot(., aes(fill = factor(focal_modal))) +
+  ggplot(., aes(fill = focal_modal)) +
   geom_sf(, color = NA)
 
-any(st_is_valid(nc_simp)==F) # SO EVERYTHING IS GOOD SO FAR !!!
+all(st_is_valid(nc_simp))# SO EVERYTHING IS GOOD SO FAR !!!
 
 landcover <- nc_simp |>
   select(number = focal_modal) |>
@@ -69,4 +74,5 @@ landcover <- nc_simp |>
 
 row.names(landcover) <- 1:nrow(landcover)
 
+st_write(landcover, 'no_change.gpkg', append = FALSE)
 usethis::use_data(landcover, overwrite = TRUE)

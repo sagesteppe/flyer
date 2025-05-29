@@ -237,12 +237,23 @@ With darker areas being deeper hues of blue.
 
 While some of the last data sets are loosely related to the book, these two are... not at all related, but can be useful for cartography. 
 
-A simple landcover classification data set is available as ``. 
+A simple landcover classification data set is available as `landcover`. 
 
 ```{r}
 
 ggplot() + 
   geom_sf(data = landcover, aes(fill = class))
+
+# SOMETHING WRONG WITH THIS ITERATION OF LANDCOVER. 
+```
+
+Additionally, information on protected areas of Mexico are also included. 
+
+```{r}
+ggplot() + 
+  geom_sf(data = land) + 
+  geom_sf(data = protected, aes(fill = reserve_type))
+
 ```
 
 # putting it all together
