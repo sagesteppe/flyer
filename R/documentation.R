@@ -146,3 +146,17 @@
 #' ggplot() +
 #'	 geom_sf(data = land, aes(fill = name))
 "land"
+
+
+#' Color palette for landcover data
+#'
+#' Colors from coolors, hand selected by me, to look OK.
+#' @examples
+#' data(lc_pal)
+#'
+#'library(ggplot2)
+#' ggplot() +
+#' geom_sf(data = landcover, aes(fill = class)) +
+#'  scale_fill_manual(values = lc_pal) +
+#'  theme_minimal()
+"lc_pal"

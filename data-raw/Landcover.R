@@ -24,6 +24,7 @@ lkp_tab <- data.frame(
   number = 1:11
 ) # we will want to reduce a few of these... classes. Ice obviously, regularly flooded, http://127.0.0.1:45169/graphics/af09a149-99d8-4082-a5a4-16af460b0d3f.pngand collapse other trees?
 
+
 f <- list.files('./landcover')
 f <- f[order(as.numeric(gsub('[a-z]|_|[.]', '', f)))]
 r <- rast(file.path('./landcover', f))
@@ -75,3 +76,20 @@ landcover <- nc_simp |>
 row.names(landcover) <- 1:nrow(landcover)
 
 usethis::use_data(landcover, overwrite = TRUE)
+
+
+
+class = c('Evergreen Deciduous Needleleaf Forest', 'Evergreen Broadleaf Forest',
+          'Deciduous Broadleaf Forest', 'Mixed/Other Forest',
+          'Desert & Shrublands', 'Herbaceous Vegetation',
+          'Cultivated and Managed Vegetation', 'Regularly Flooded Vegetation',
+          'Urban/Developed',  'Snow/Ice',
+          'Barren', 'Open Water')
+
+lc_pal <- c(
+  '#023B0A', '#4B6C4D', '#709775', '#1B512D', '#E2D4BA',  '#8FB996',
+  '#069E2D',  '#95E06C', '#8D8EA5',  '#FFFBFE', '#CBC0D3', '#37718E')
+names(lc_pal) <- class
+
+
+usethis::use_data(lc_pal, overwrite = TRUE)

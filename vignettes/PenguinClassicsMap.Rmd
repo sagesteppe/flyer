@@ -172,7 +172,7 @@ places <- st_crop(places, bb)
 
 m <- ggplot()  +
   geom_sf(data = land) + 
-  
+  theme_minimal() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
 m
@@ -210,8 +210,22 @@ m <- ggplot() +
 m
 ```
 
+We can plot the bathymetry data like this. 
 
-We can the bathymetry data like this. 
+```{r}
+
+ggplot() + 
+  geom_sf(data = land, fill = '#EFDD8D') + 
+  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4)  +
+  theme_minimal() + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+```
+And obviously we can rename it something like depth... :)
+
+On the other hand, the same scale can be used for topography and bathymetry together like this... I will use a divergent scale which makes sense to me... 
+I could see another *very* cool interpretation of using a continuous and counting everything from 0 at 4300 feet and adding the difference to the 'topography' data set. 
+Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
+With darker areas being deeper hues of blue. 
 
 ```{r and bathymetry}
 head(bathymetry)
@@ -219,18 +233,18 @@ plot(bathymetry)
 
 ggplot() + 
   geom_sf(data = land, fill = '#EFDD8D') + 
-  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
-  geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
+  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4) + 
+  geom_sf(data = topography, aes(color = elevation), lwd = 0.4) + 
+  scale_color_distiller(palette = "Spectral") +
+  
+  ggnewscale::new_scale_color() + 
+
   geom_sf(data = places) +  
- # geom_sf(data = route, aes(color = date_arrive)) +
+  geom_sf(data = route, aes(color = date_arrive)) +
+  theme_minimal() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
 ```
-
-And we can combine the scale for topography and bathymetry together like this... I will use a divergent scale which makes sense to me... 
-I could see another *very* cool interpretation of using a continuous and counting everything from 0 at 4300 feet and adding the difference to the 'topography' data set. 
-Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
-With darker areas being deeper hues of blue. 
 
 
 ## tangential data 
@@ -238,13 +252,16 @@ With darker areas being deeper hues of blue.
 While some of the last data sets are loosely related to the book, these two are... not at all related, but can be useful for cartography. 
 
 A simple landcover classification data set is available as `landcover`. 
+We also include some quick colors to help with mapping these classes. 
 
 ```{r}
 
-ggplot() + 
-  geom_sf(data = landcover, aes(fill = class))
 
-# SOMETHING WRONG WITH THIS ITERATION OF LANDCOVER. 
+ggplot() + 
+  geom_sf(data = landcover, aes(fill = class)) + 
+  scale_fill_manual(values = lc_pal) + 
+  theme_minimal()
+
 ```
 
 Additionally, information on protected areas of Mexico are also included. 
