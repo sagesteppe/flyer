@@ -71,14 +71,15 @@ brks <- graticNo(polygon = places, nx = 4, ny = 4)
 theme_nautical <- function() {
   theme(
     
+    aspect.ratio = 4/3,
     axis.title = element_text(colour = "#222823", family = "Times New Roman"),
     axis.text = element_text(colour = "#575A5E", face = "italic", family = "Optima"),
+    axis.text.x = element_text(hjust= 1, angle=45),
     axis.ticks = element_line(colour = "#575A5E"),
     
-    plot.title = element_text(hjust = 0.5),
-    plot.subtitle = element_text(hjust = 1),
+    plot.title = element_text(hjust = 0.5, family = 'Optima'),
+    plot.subtitle = element_text(hjust = 1, family = 'Optima'),
     
-    plot.background = element_rect(fill = "transparent", colour = NA),
     panel.background = element_rect(fill = "#F4F7F5"),
     panel.border = element_rect(colour = NA, fill = NA),
     panel.grid.major = element_line(colour = "#A7A2A9", linetype = 'dotted', linewidth = 0.25),
@@ -155,7 +156,9 @@ m <- m +
   scale_y_continuous('Latitude', breaks = brks$y) + 
   theme_nautical() + 
   
-  labs(title = 'geom_text_repel(places)', subtitle = 'land + places')
+  labs(
+    title = 'geom_text_repel(places)', 
+    subtitle = 'land + places')
 
 m
 ```
@@ -224,8 +227,6 @@ We'll still overwrite the variable m.
 
 ```{r add topography}
 
-plot(topography)
-
 m <- ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = topography, lwd = 0.1) + 
@@ -280,7 +281,7 @@ ggplot() +
 
   geom_sf(data = places) +  
   geom_sf(data = route, aes(color = date_arrive)) +
-  theme_minimal() + 
+  theme_nautical() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
 ```
@@ -317,7 +318,7 @@ ggplot() +
     size = 1.5
     ) + 
 
-  theme_minimal()
+  theme_nautical()
 ```
 
 # putting it all together
@@ -335,6 +336,6 @@ ggplot() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
   annotation_scale()  + 
   annotation_north_arrow(which_north = "true", style = north_arrow_minimal) + 
-  theme_minimal() 
+  theme_nautical() 
 ```
 
