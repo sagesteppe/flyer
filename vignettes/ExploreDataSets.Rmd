@@ -77,8 +77,8 @@ theme_nautical <- function() {
     
     plot.title = element_text(hjust = 0.5),
     plot.subtitle = element_text(hjust = 1),
-
     
+    plot.background = element_rect(fill = "transparent", colour = NA),
     panel.background = element_rect(fill = "#F4F7F5"),
     panel.border = element_rect(colour = NA, fill = NA),
     panel.grid.major = element_line(colour = "#A7A2A9", linetype = 'dotted', linewidth = 0.25),
@@ -295,9 +295,9 @@ We also include some quick colors to help with mapping these classes.
 
 ```{r}
 ggplot() + 
-  geom_sf(data = landcover, aes(fill = class)) + 
-  scale_fill_manual(values = lc_pal) + 
-  theme_minimal()
+  geom_sf(data = landcover, aes(fill = class), color = NA) + 
+  scale_fill_manual('Class', values = lc_pal) + 
+  theme_nautical()
 ```
 
 Additionally, information on protected areas of Mexico are also included. 
