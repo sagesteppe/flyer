@@ -61,7 +61,7 @@ However, if that happens, I will maintain both the aesthetic, and the authentic 
 ## Contributing
 
 As mentioned, I use this data set for testing our cartographic approaches. 
-If you are a marine biologist, into data viz, or mariner and think you have some insight - but are hesitant about this whole Github thing - shoot me an email and we'll try and figure out how to incorporate your perspectives. 
+If you are a marine biologist, into data viz, or mariner and think you have some insight - but are hesitant about this whole Github thing - shoot me an email and we can try and figure out how to incorporate your perspectives. 
 
 ## Works Cited
 
@@ -84,3 +84,5 @@ CONABIO CONANP, (09/2024). 'Federal Protected Natural Areas of Mexico, September
 GEBCO Compilation Group (2024) GEBCO 2024 Grid (doi:10.5285/1c44ce99-0a0d-5f4f- e063-7086abc0ea0f).
 
 Robinson, N., Regetz, J., and Guralnick, R. P. (2014). EarthEnv-DEM90: A nearly-global, void-free, multi-scale smoothed, 90m digital elevation model from fused ASTER and SRTM data. ISPRS Journal of Photogrammetry and Remote Sensing, 87:2014, 57-67. Available at http://www.sciencedirect.com/science/article/pii/S0924271613002360
+
+Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover product for biodiversity and ecosystem modeling. Global Ecology and Biogeography 23(9): 1031-1045.

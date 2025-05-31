@@ -216,7 +216,7 @@ We can plot the bathymetry data like this.
 ```{r}
 
 ggplot() + 
-  geom_sf(data = land, fill = '#EFDD8D') + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4)  +
   theme_minimal() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
@@ -233,7 +233,7 @@ head(bathymetry)
 plot(bathymetry)
 
 ggplot() + 
-  geom_sf(data = land, fill = '#EFDD8D') + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4) + 
   geom_sf(data = topography, aes(color = elevation), lwd = 0.4) + 
   scale_color_distiller(palette = "Spectral") +
@@ -256,22 +256,30 @@ A simple landcover classification data set is available as `landcover`.
 We also include some quick colors to help with mapping these classes. 
 
 ```{r}
-
 ggplot() + 
   geom_sf(data = landcover, aes(fill = class)) + 
   scale_fill_manual(values = lc_pal) + 
   theme_minimal()
-
 ```
 
 Additionally, information on protected areas of Mexico are also included. 
 
 ```{r}
 ggplot() + 
-  geom_sf(data = land) + 
-  geom_sf(data = protected, aes(fill = reserve_type)) + 
-  theme_minimal()
+  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(
+    data = protected, 
+    aes(color = reserve_type, fill = reserve_type), 
+    alpha = 0.4) + 
+  
+  ggrepel::geom_text_repel(
+    data = protected,
+    aes(label = name, geometry = geometry),
+    stat = "sf_coordinates",
+    size = 1.5
+    ) + 
 
+  theme_minimal()
 ```
 
 # putting it all together
@@ -281,15 +289,14 @@ We can make an OK map using some of the details below.
 ```{r}
 
 ggplot() + 
-  geom_sf(data = land, fill = '#EFDD8D') + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = places) +  
  # geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
   annotation_scale()  + 
-  annotation_north_arrow(which_north = "true", style = north_arrow_minimal)
-
-  north_arrow_minimal()
+  annotation_north_arrow(which_north = "true", style = north_arrow_minimal) + 
+  theme_minimal() 
 ```
 
