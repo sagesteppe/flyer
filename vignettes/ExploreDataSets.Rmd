@@ -65,8 +65,29 @@ graticNo <- function(polygon, nx, ny){
   )
 }
 
-brks <- graticNo(polygon = places, nx = 4, ny = 5)
+brks <- graticNo(polygon = places, nx = 4, ny = 4)
 
+
+theme_nautical <- function() {
+  theme(
+    
+    axis.title = element_text(colour = "#222823", family = "Times New Roman"),
+    axis.text = element_text(colour = "#575A5E", face = "italic", family = "Optima"),
+    axis.ticks = element_line(colour = "#575A5E"),
+    
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 1),
+
+    
+    panel.background = element_rect(fill = "#F4F7F5"),
+    panel.border = element_rect(colour = NA, fill = NA),
+    panel.grid.major = element_line(colour = "#A7A2A9", linetype = 'dotted', linewidth = 0.25),
+    panel.grid.minor = element_blank(),
+  
+    legend.position = "bottom"
+    
+  )
+}
 ```
 
 # the data sets 
@@ -88,8 +109,9 @@ Anyways, we have duped the natural earth land surfaces into this package - but t
 head(land)
 
 ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
-  theme_minimal()
+  geom_sf(data = land, fill = '#F8F6F0') + 
+  theme_nautical() +
+  labs(title = '`land` dataset')
 ```
 
 For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
@@ -98,8 +120,11 @@ For playing around with the data today, I don't want the different countries to 
 land <- st_union(land)
 
 m <- ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
-  theme_minimal()
+  geom_sf(data = land, fill = '#F8F6F0') + 
+  theme_nautical() + 
+  labs(title = 'st_union(land) dataset')
+
+m
 ```
 
 #### places
@@ -109,7 +134,8 @@ data(places)
 head(places)
 
 m <- m + 
-  geom_sf(data = places)
+  geom_sf(data = places)  +
+  labs(title = 'places', subtitle = 'land + places')
 m
 ```
 
@@ -127,7 +153,9 @@ m <- m +
   # now let's add in our customized graticules too. 
   scale_x_continuous('Longitude', breaks = brks$x) +
   scale_y_continuous('Latitude', breaks = brks$y) + 
-  theme_minimal()
+  theme_nautical() + 
+  
+  labs(title = 'geom_text_repel(places)', subtitle = 'land + places')
 
 m
 ```
@@ -160,7 +188,7 @@ We can convert the dates to factor to enforce data to be plotted in actual order
 
 ```{r, warning=F}
 m + 
-  geom_sf(data = route, aes(color = date_arrive))
+  geom_sf(data = route, aes(color = date_arrive)) 
 ```
 
 While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
@@ -180,9 +208,10 @@ bb <- st_bbox(
 places <- st_crop(places, bb)
 
 m <- ggplot()  +
-  geom_sf(data = land, fill = '#F0E7D8') + 
-  theme_minimal() +
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+  geom_sf(data = land, fill = '#F8F6F0') + 
+  theme_nautical() +
+  geom_sf(data = route, aes(color = date_arrive)) + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 
 m
 ```
@@ -198,19 +227,20 @@ We'll still overwrite the variable m.
 plot(topography)
 
 m <- ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = topography, lwd = 0.1) + 
   geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
 
-  
+  # we are going to shift to adding 'backing' to the labels this makes them easier to read
   ggrepel::geom_label_repel(
     data = places,
     aes(label = location_espanol, geometry = geometry),
     stat = "sf_coordinates",
-    alpha = 0.9,
-    label.padding = 0.1,
-    size = 1.5
+    alpha = 0.7, # make the backing more transparent
+    label.size = NA, # remove the backing borders
+    label.padding = 0.1, # reduce space between label borders and text
+    size = 1.5 # make the font smaller. 
     ) + 
   
   # now let's add in our customized graticules too. 
@@ -224,9 +254,8 @@ m
 We can plot the bathymetry data like this. 
 
 ```{r}
-
 ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4)  +
   theme_minimal() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
@@ -240,13 +269,12 @@ With darker areas being deeper hues of blue.
 
 ```{r and bathymetry}
 head(bathymetry)
-plot(bathymetry)
 
 ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4) + 
   geom_sf(data = topography, aes(color = elevation), lwd = 0.4) + 
-  scale_color_distiller(palette = "Spectral") +
+  scale_color_distiller('Elevation', palette = "Spectral") +
   
   ggnewscale::new_scale_color() + 
 
@@ -276,7 +304,7 @@ Additionally, information on protected areas of Mexico are also included.
 
 ```{r}
 ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(
     data = protected, 
     aes(color = reserve_type, fill = reserve_type), 
@@ -299,7 +327,7 @@ We can make an OK map using some of the details below.
 ```{r}
 
 ggplot() + 
-  geom_sf(data = land, fill = '#F0E7D8') + 
+  geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = places) +  
