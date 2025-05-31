@@ -268,7 +268,8 @@ Additionally, information on protected areas of Mexico are also included.
 ```{r}
 ggplot() + 
   geom_sf(data = land) + 
-  geom_sf(data = protected, aes(fill = reserve_type))
+  geom_sf(data = protected, aes(fill = reserve_type)) + 
+  theme_minimal()
 
 ```
 

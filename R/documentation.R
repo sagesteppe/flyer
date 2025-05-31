@@ -16,7 +16,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = places, aes(color = date_arrive))
+#'	 geom_sf(data = places, aes(color = date_arrive)) +
+#'	 theme_minimal()
 #'
 "places"
 
@@ -43,7 +44,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = route, aes(color = date_arrive))
+#'	 geom_sf(data = route, aes(color = date_arrive)) +
+#'	 theme_minimal()
 #'
 
 "route"
@@ -64,7 +66,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = topography, aes(color = elevation))
+#'	 geom_sf(data = topography, aes(color = elevation)) +
+#'	 theme_minimal()
 
 "topography"
 
@@ -84,7 +87,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = bathymetry, aes(color = elevation))
+#'	 geom_sf(data = bathymetry, aes(color = elevation)) +
+#'	 theme_minimal()
 
 "bathymetry"
 
@@ -106,7 +110,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = protected, aes(fill = reserve_type))
+#'	 geom_sf(data = protected, aes(fill = reserve_type)) +
+#'	 theme_minimal()
 "protected"
 
 #' Major landcover classes of Western Mexico
@@ -123,7 +128,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = landcover, aes(fill = class))
+#'	 geom_sf(data = landcover, aes(fill = class)) +
+#'	 theme_minimal()
 "landcover"
 
 
@@ -144,7 +150,8 @@
 #'
 #' library(ggplot2)
 #' ggplot() +
-#'	 geom_sf(data = land, aes(fill = name))
+#'	 geom_sf(data = land, aes(fill = name)) +
+#'	 theme_minimal()
 "land"
 
 
@@ -153,6 +160,7 @@
 #' Colors from coolors, hand selected by me, to look OK.
 #' @examples
 #' data(lc_pal)
+#' data(landcover)
 #'
 #'library(ggplot2)
 #' ggplot() +
