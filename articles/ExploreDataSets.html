@@ -122,7 +122,29 @@ the <code>pretty</code> function does not always return the requested
 <span>  <span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">brks</span> <span class="op">&lt;-</span> <span class="fu">graticNo</span><span class="op">(</span>polygon <span class="op">=</span> <span class="va">places</span>, nx <span class="op">=</span> <span class="fl">4</span>, ny <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">brks</span> <span class="op">&lt;-</span> <span class="fu">graticNo</span><span class="op">(</span>polygon <span class="op">=</span> <span class="va">places</span>, nx <span class="op">=</span> <span class="fl">4</span>, ny <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="va">theme_nautical</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>    </span>
+<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#222823"</span>, family <span class="op">=</span> <span class="st">"Times New Roman"</span><span class="op">)</span>,</span>
+<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#575A5E"</span>, face <span class="op">=</span> <span class="st">"italic"</span>, family <span class="op">=</span> <span class="st">"Optima"</span><span class="op">)</span>,</span>
+<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#575A5E"</span><span class="op">)</span>,</span>
+<span>    </span>
+<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>,</span>
+<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span></span>
+<span>    </span>
+<span>    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#F4F7F5"</span><span class="op">)</span>,</span>
+<span>    panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"#A7A2A9"</span>, linetype <span class="op">=</span> <span class="st">'dotted'</span>, linewidth <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  </span>
+<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span></span>
+<span>    </span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="the-data-sets">the data sets<a class="anchor" aria-label="anchor" href="#the-data-sets"></a>
@@ -158,8 +180,9 @@ Open Sci page for more info</a>.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> United States of America (((-119.3816 34.01122, -119.3923 34.00631, -119.4113…</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'`land` dataset'</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/add%20land-1.png" width="700"></p>
 <p>For playing around with the data today, I don’t want the different
 countries to be drawn separately so we can union them.</p>
@@ -167,8 +190,12 @@ countries to be drawn separately so we can union them.</p>
 <code class="sourceCode R"><span><span class="va">land</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_combine.html" class="external-link">st_union</a></span><span class="op">(</span><span class="va">land</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'st_union(land) dataset'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">m</span></span></code></pre></div>
+<p><img src="ExploreDataSets_files/figure-html/union%20land-1.png" width="700"></p>
 </div>
 <div class="section level5">
 <h5 id="places">places<a class="anchor" aria-label="anchor" href="#places"></a>
@@ -197,7 +224,8 @@ countries to be drawn separately so we can union them.</p>
 <span><span class="co">#&gt; 6  1940-03-18 POINT (-109.4243 23.43779)</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="va">m</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">places</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">places</span><span class="op">)</span>  <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'places'</span>, subtitle <span class="op">=</span> <span class="st">'land + places'</span><span class="op">)</span></span>
 <span><span class="va">m</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/plot%20the%20places-1.png" width="700"></p>
 <p>The places seem like they will be better treated as text labels - we
@@ -215,7 +243,9 @@ move them to avoid conflicts with other plot elements.</p>
 <span>  <span class="co"># now let's add in our customized graticules too. </span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span><span class="st">'Longitude'</span>, breaks <span class="op">=</span> <span class="va">brks</span><span class="op">$</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span><span class="st">'Latitude'</span>, breaks <span class="op">=</span> <span class="va">brks</span><span class="op">$</span><span class="va">y</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'geom_text_repel(places)'</span>, subtitle <span class="op">=</span> <span class="st">'land + places'</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">m</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/plot%20places%20as%20text-1.png" width="700"></p>
@@ -276,7 +306,7 @@ would. We can convert the dates to factor to enforce data to be plotted
 in actual order.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">route</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">date_arrive</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">route</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">date_arrive</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 <p>While some of the data for the start end of the trip is included,
 such as an entry when they are near Santa Barbara and that they started
@@ -298,9 +328,10 @@ CRAN. In my mind the maximum map area reaches San Diego in the North</p>
 <span><span class="co">#&gt; all geometries</span></span>
 <span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span>  <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">route</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">date_arrive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">m</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/subset%20bounding%20box-1.png" width="700"></p>
@@ -316,19 +347,20 @@ variable m.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">topography</span>, lwd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">route</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">date_arrive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span></span>
-<span>  </span>
+<span>  <span class="co"># we are going to shift to adding 'backing' to the labels this makes them easier to read</span></span>
 <span>  <span class="fu">ggrepel</span><span class="fu">::</span><span class="fu"><a href="https://ggrepel.slowkow.com/reference/geom_text_repel.html" class="external-link">geom_label_repel</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">places</span>,</span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="va">location_espanol</span>, geometry <span class="op">=</span> <span class="va">geometry</span><span class="op">)</span>,</span>
 <span>    stat <span class="op">=</span> <span class="st">"sf_coordinates"</span>,</span>
-<span>    alpha <span class="op">=</span> <span class="fl">0.9</span>,</span>
-<span>    label.padding <span class="op">=</span> <span class="fl">0.1</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">1.5</span></span>
+<span>    alpha <span class="op">=</span> <span class="fl">0.7</span>, <span class="co"># make the backing more transparent</span></span>
+<span>    label.size <span class="op">=</span> <span class="cn">NA</span>, <span class="co"># remove the backing borders</span></span>
+<span>    label.padding <span class="op">=</span> <span class="fl">0.1</span>, <span class="co"># reduce space between label borders and text</span></span>
+<span>    size <span class="op">=</span> <span class="fl">1.5</span> <span class="co"># make the font smaller. </span></span>
 <span>    <span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># now let's add in our customized graticules too. </span></span>
@@ -342,9 +374,8 @@ variable m.</p>
 <p><img src="ExploreDataSets_files/figure-html/add%20topography-2.png" width="700"></p>
 <p>We can plot the bathymetry data like this.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bathymetry</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>  <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -372,15 +403,12 @@ blue.</p>
 <span><span class="co">#&gt; 1.3     -4000 LINESTRING (-121 27.20785, ...</span></span>
 <span><span class="co">#&gt; 1.4     -4000 LINESTRING (-121 21.41284, ...</span></span>
 <span><span class="co">#&gt; 1.5     -4000 LINESTRING (-121 21.86726, ...</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bathymetry</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ExploreDataSets_files/figure-html/and%20bathymetry-1.png" width="700"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
+<span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bathymetry</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">topography</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_distiller</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_distiller</a></span><span class="op">(</span><span class="st">'Elevation'</span>, palette <span class="op">=</span> <span class="st">"Spectral"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="fu">ggnewscale</span><span class="fu">::</span><span class="fu"><a href="https://eliocamp.github.io/ggnewscale/reference/new_scale.html" class="external-link">new_scale_color</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span></span>
@@ -388,7 +416,7 @@ blue.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">route</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">date_arrive</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ExploreDataSets_files/figure-html/and%20bathymetry-2.png" width="700"></p>
+<p><img src="ExploreDataSets_files/figure-html/and%20bathymetry-1.png" width="700"></p>
 </div>
 <div class="section level3">
 <h3 id="tangential-data">tangential data<a class="anchor" aria-label="anchor" href="#tangential-data"></a>
@@ -399,7 +427,7 @@ cartography.</p>
 <p>A simple landcover classification data set is available as
 <code>landcover</code>. We also include some quick colors to help with
 mapping these classes.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">landcover</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">lc_pal</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -407,9 +435,9 @@ mapping these classes.</p>
 <p><img src="ExploreDataSets_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
 <p>Additionally, information on protected areas of Mexico are also
 included.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">protected</span>, </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">reserve_type</span>, fill <span class="op">=</span> <span class="va">reserve_type</span><span class="op">)</span>, </span>
@@ -434,10 +462,10 @@ included.</p>
 <h2 id="putting-it-all-together">putting it all together<a class="anchor" aria-label="anchor" href="#putting-it-all-together"></a>
 </h2>
 <p>We can make an OK map using some of the details below.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F0E7D8'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">bathymetry</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">topography</span>,  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">elevation</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">places</span><span class="op">)</span> <span class="op">+</span>  </span>
