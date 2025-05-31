@@ -76,24 +76,52 @@ These are really the whole point of the package!
 And spoiler alert... 
 are very simple!
 
+But before we pull up `places` and `routes` let's pull up the `land` data set so we have some context to plot them on. 
+
+
+#### land 
+
+We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
+Anyways, we have duped the natural earth land surfaces into this package - but there are ton's of other products you may want to use from there, check out the [R Open Sci page for more info](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html). 
+
+```{r add land}
+head(land)
+
+ggplot() + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
+  theme_minimal()
+```
+
+For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
+
+```{r union land}
+land <- st_union(land)
+
+m <- ggplot() + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
+  theme_minimal()
+```
+
+#### places
+
 ```{r plot the places}
 data(places)
 head(places)
 
-m <- ggplot() + 
+m <- m + 
   geom_sf(data = places)
+m
 ```
 
 The places seem like they will be better treated as text labels - we can apply them with `ggrepel::geom_text_repel` which will move them to avoid conflicts with other plot elements. 
 
 ```{r plot places as text, warning=F}
-m <- ggplot() +
-  
+m <- m + 
   ggrepel::geom_text_repel(
     data = places,
     aes(label = location_espanol, geometry = geometry),
     stat = "sf_coordinates",
-    size = 3
+    size = 2.5
     ) + 
   
   # now let's add in our customized graticules too. 
@@ -108,6 +136,8 @@ Also, because the package is attached we can also just start using the data, whi
 In other words we don't need to call `data(object)` on the data sets, we can just use them directly - such as viewing them by calling `head(object)`. 
 We are going to use this direct approach for the remainder of the vignette. 
 
+#### route 
+
 ```{r show the routes, warning=F}
 head(route)
 
@@ -120,7 +150,7 @@ route <- left_join(
 
 ```
 
-the route object itself is pretty minimal, but relevant attributes can be brought in by joining it to places. 
+The route object itself is pretty minimal, but relevant attributes can be brought in by joining it to places. 
 ```{r route head, warning=F}
 head(route)
 ```
@@ -133,31 +163,9 @@ m +
   geom_sf(data = route, aes(color = date_arrive))
 ```
 
-Obviously we need some context for these data. 
-Other wise they just... look the way they do above. 
-We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
-Anyways, we have duped the natural earth land surfaces into this package - but there are ton's of other products you may want to use from there, check out the [R Open Sci page for more info](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html). 
-
-```{r add land}
-head(land)
-
-ggplot() + 
-  geom_sf(data = land) + 
-  theme_minimal()
-```
-
-For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
-
-```{r union land}
-land <- st_union(land)
-
-ggplot() + 
-  geom_sf(data = land) + 
-  theme_minimal()
-```
-
 While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
 Basically, too much data would make the package too cumbersome to fit on CRAN. 
+In my mind the maximum map area reaches San Diego in the North
 
 ```{r subset bounding box}
 
@@ -172,7 +180,7 @@ bb <- st_bbox(
 places <- st_crop(places, bb)
 
 m <- ggplot()  +
-  geom_sf(data = land) + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
   theme_minimal() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
@@ -190,17 +198,19 @@ We'll still overwrite the variable m.
 plot(topography)
 
 m <- ggplot() + 
-  geom_sf(data = land) + 
+  geom_sf(data = land, fill = '#F0E7D8') + 
   geom_sf(data = topography, lwd = 0.1) + 
   geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
 
   
-  ggrepel::geom_text_repel(
+  ggrepel::geom_label_repel(
     data = places,
     aes(label = location_espanol, geometry = geometry),
     stat = "sf_coordinates",
-    size = 2.5
+    alpha = 0.9,
+    label.padding = 0.1,
+    size = 1.5
     ) + 
   
   # now let's add in our customized graticules too. 
