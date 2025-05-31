@@ -256,7 +256,6 @@ We also include some quick colors to help with mapping these classes.
 
 ```{r}
 
-
 ggplot() + 
   geom_sf(data = landcover, aes(fill = class)) + 
   scale_fill_manual(values = lc_pal) + 
