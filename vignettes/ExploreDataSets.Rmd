@@ -142,7 +142,8 @@ Anyways, we have duped the natural earth land surfaces into this package - but t
 head(land)
 
 ggplot() + 
-  geom_sf(data = land)
+  geom_sf(data = land) + 
+  theme_minimal()
 ```
 
 For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
