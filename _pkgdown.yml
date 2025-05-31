@@ -2,7 +2,7 @@ url: https://sagesteppe.github.io/flyer/
 template:
   bootstrap: 5
 reference:
-- title: Data sets
+- title: Exploring the data sets
   desc: All data sets included in the package. 
   contents:
   - places
@@ -12,3 +12,4 @@ reference:
   - protected
   - landcover
   - land
+  - lc_pal

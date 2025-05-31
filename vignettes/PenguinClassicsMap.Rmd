@@ -1,8 +1,8 @@
 ---
-title: "Exploring the Data sets"
+title: "Exploring the data sets"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{DataSetsExpose}
+  %\VignetteIndexEntry{Exploring the data sets}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

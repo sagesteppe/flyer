@@ -22,3 +22,4 @@ Suggests:
     ggrepel,
     ggspatial
 VignetteBuilder: knitr
+URL: https://sagesteppe.github.io/flyer
