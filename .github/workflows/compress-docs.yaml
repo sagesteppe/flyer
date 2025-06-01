@@ -14,6 +14,6 @@ jobs:
 
       - name: Compress docs directory and clean up
         run: |
-          cd docs
+          cd ./docs
           zip -r flyer-geodata.zip ./*
           find . -mindepth 1 -not -name 'flyer-geodata.zip' -exec rm -rf {} +
