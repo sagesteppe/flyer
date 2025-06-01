@@ -1,3 +1,3 @@
 #!/bin/bash
 cd data_dl
-zip -r flyer-geodata.zip *
+zip -r flyer-geodata.zip . -i *
