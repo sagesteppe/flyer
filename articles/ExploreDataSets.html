@@ -315,8 +315,7 @@ and returned to Monterey, most all data focuses on the Gulf of Mexico.
 Basically, too much data would make the package too cumbersome to fit on
 CRAN. In my mind the maximum map area reaches San Diego in the North</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">114</span>, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">108.5</span>, ymin <span class="op">=</span> <span class="fl">22.5</span>, ymax <span class="op">=</span> <span class="fl">30.5</span><span class="op">)</span>,</span>
 <span>  crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="fl">4326</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
@@ -439,12 +438,16 @@ mapping these classes.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">landcover</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span><span class="st">'Class'</span>, values <span class="op">=</span> <span class="va">lc_pal</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'landcover'</span>, subtitle <span class="op">=</span> <span class="st">'+ lc_pal'</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">'landcover'</span>, subtitle <span class="op">=</span> <span class="st">'+ lc_pal'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/unnamed-chunk-3-1.png" width="700"></p>
 <p>Additionally, information on protected areas of Mexico are also
 included.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span></span>
+<span><span class="va">protected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">st_crop</a></span><span class="op">(</span><span class="va">protected</span>, <span class="va">bb</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">land</span>, fill <span class="op">=</span> <span class="st">'#F8F6F0'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span></span>
 <span>    data <span class="op">=</span> <span class="va">protected</span>, </span>
@@ -457,9 +460,10 @@ included.</p>
 <span>    stat <span class="op">=</span> <span class="st">"sf_coordinates"</span>,</span>
 <span>    size <span class="op">=</span> <span class="fl">1.5</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="st">'protected'</span>, subtitle <span class="op">=</span> <span class="st">'+land'</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span>, title <span class="op">=</span> <span class="st">'protected'</span>, subtitle <span class="op">=</span> <span class="st">'+ land'</span><span class="op">)</span> <span class="op">+</span> </span>
 <span></span>
-<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">theme_nautical</span><span class="op">(</span><span class="op">)</span>  <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/Protected%20areas-1.png" width="700"></p>
 </div>
 </div>
@@ -468,8 +472,7 @@ included.</p>
 </h2>
 <p>We can make an OK map using some of the details below.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span></span>
-<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># the stage</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">landcover</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -497,7 +500,6 @@ included.</p>
 <span>    fill <span class="op">=</span> <span class="st">'#F4F7F5'</span></span>
 <span>    <span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
-<span>  </span>
 <span>  <span class="co"># the ambiance.  </span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">bb</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">bb</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>, crs <span class="op">=</span> <span class="fl">4326</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://paleolimbot.github.io/ggspatial/reference/annotation_scale.html" class="external-link">annotation_scale</a></span><span class="op">(</span>bar_cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'#222823'</span>, <span class="st">'#F4F7F5'</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> </span>
@@ -507,6 +509,17 @@ included.</p>
 <span><span class="co">#&gt; Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not</span></span>
 <span><span class="co">#&gt; give correct results for longitude/latitude data</span></span></code></pre></div>
 <p><img src="ExploreDataSets_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rm.html" class="external-link">rm</a></span><span class="op">(</span><span class="va">graticNo</span>, <span class="va">brks</span>, <span class="va">theme_nautical</span>, <span class="va">route</span>, <span class="va">places</span>, <span class="va">bb</span>, <span class="va">landcover</span>, <span class="va">lc_pal</span>, <span class="va">land</span>,</span>
+<span>   <span class="va">protected</span>, <span class="va">bathymetry</span>, <span class="va">topography</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in rm(graticNo, brks, theme_nautical, route, places, bb, landcover, :</span></span>
+<span><span class="co">#&gt; object 'landcover' not found</span></span>
+<span><span class="co">#&gt; Warning in rm(graticNo, brks, theme_nautical, route, places, bb, landcover, :</span></span>
+<span><span class="co">#&gt; object 'lc_pal' not found</span></span>
+<span><span class="co">#&gt; Warning in rm(graticNo, brks, theme_nautical, route, places, bb, landcover, :</span></span>
+<span><span class="co">#&gt; object 'bathymetry' not found</span></span>
+<span><span class="co">#&gt; Warning in rm(graticNo, brks, theme_nautical, route, places, bb, landcover, :</span></span>
+<span><span class="co">#&gt; object 'topography' not found</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
