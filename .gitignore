@@ -54,10 +54,10 @@ inst/doc
 anpmx/
 protected_areas/
 landcover/
-docs/README.txt
-docs/landcover.gpkg
-docs/landcover_palette.csv
-docs/places.gpkg
-docs/protected.gpkg
-docs/route.gpkg
-docs/topography.gpkg
+data_dl/README.txt
+data_dl/landcover.gpkg
+data_dl/landcover_palette.csv
+data_dl/places.gpkg
+data_dl/protected.gpkg
+data_dl/route.gpkg
+data_dl/topography.gpkg
