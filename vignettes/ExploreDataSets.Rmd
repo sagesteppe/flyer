@@ -72,21 +72,27 @@ theme_nautical <- function() {
   theme(
     
     aspect.ratio = 4/3,
-    axis.title = element_text(colour = "#222823", family = "Times New Roman"),
-    axis.text = element_text(colour = "#575A5E", face = "italic", family = "Optima"),
+    text = element_text(family = "Optima"),
+    axis.title = element_text(colour = "#222823"),
+    axis.text = element_text(colour = "#575A5E", face = "italic"),
     axis.text.x = element_text(hjust= 1, angle=45),
     axis.ticks = element_line(colour = "#575A5E"),
     
-    plot.title = element_text(hjust = 0.5, family = 'Optima'),
-    plot.subtitle = element_text(hjust = 1, family = 'Optima'),
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 1, face = 'italic'),
+    plot.caption = element_text(color = '#575A5E', face = 'italic'),
     
     panel.background = element_rect(fill = "#F4F7F5"),
     panel.border = element_rect(colour = NA, fill = NA),
     panel.grid.major = element_line(colour = "#A7A2A9", linetype = 'dotted', linewidth = 0.25),
     panel.grid.minor = element_blank(),
-  
-    legend.position = "bottom"
     
+    legend.background = element_rect(fill = '#FEF9F3', color = '#A7A2A9'),
+    legend.text = element_text(size = 5),
+    legend.title = element_text(size = 7), 
+    legend.key.size = unit(1,"line"),
+    legend.position = "bottom",
+    legend.spacing = unit(0.1, "line")
   )
 }
 ```
@@ -152,11 +158,12 @@ m <- m +
     ) + 
   
   # now let's add in our customized graticules too. 
-  scale_x_continuous('Longitude', breaks = brks$x) +
-  scale_y_continuous('Latitude', breaks = brks$y) + 
+  scale_x_continuous(breaks = brks$x) +
+  scale_y_continuous(breaks = brks$y) + 
   theme_nautical() + 
   
   labs(
+    x = NULL, y = NULL,
     title = 'geom_text_repel(places)', 
     subtitle = 'land + places')
 
@@ -186,19 +193,11 @@ The route object itself is pretty minimal, but relevant attributes can be brough
 head(route)
 ```
 
-By default ggplot2 does not seem to order date variables the way I would. 
-We can convert the dates to factor to enforce data to be plotted in actual order. 
-
-```{r, warning=F}
-m + 
-  geom_sf(data = route, aes(color = date_arrive)) 
-```
-
 While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
 Basically, too much data would make the package too cumbersome to fit on CRAN. 
 In my mind the maximum map area reaches San Diego in the North
 
-```{r subset bounding box}
+```{r subset bounding box, warning = F}
 
 bb <- st_bbox(
   c(xmin = -114, xmax = -108.5, ymin = 22.5, ymax = 30.5),
@@ -213,8 +212,13 @@ places <- st_crop(places, bb)
 m <- ggplot()  +
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() +
-  geom_sf(data = route, aes(color = date_arrive)) + 
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
+  geom_sf(data = route, aes(color = date_arrive)) +  
+  scale_color_date('Date') + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
+  
+  labs(
+    title = 'route', 
+    subtitle = '+ land')
 
 m
 ```
@@ -231,6 +235,7 @@ m <- ggplot() +
   geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = topography, lwd = 0.1) + 
   geom_sf(data = route, aes(color = date_arrive)) +
+  scale_color_date('Date') + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
 
   # we are going to shift to adding 'backing' to the labels this makes them easier to read
@@ -245,9 +250,13 @@ m <- ggplot() +
     ) + 
   
   # now let's add in our customized graticules too. 
-  scale_x_continuous('Longitude', breaks = brks$x) +
-  scale_y_continuous('Latitude', breaks = brks$y) + 
-  theme_linedraw()
+  scale_x_continuous(breaks = brks$x) +
+  scale_y_continuous(breaks = brks$y) + 
+  theme_nautical() + 
+  labs(
+    x = NULL, y = NULL,
+    title = 'elevation', 
+    subtitle = '+ route + places') 
 
 m
 ```
@@ -258,8 +267,9 @@ We can plot the bathymetry data like this.
 ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.4)  +
-  theme_minimal() + 
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+  theme_nautical() + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
+  labs(title = 'bathymetry', subtitle = '+ land')
 ```
 And obviously we can rename it something like depth... :)
 
@@ -281,6 +291,7 @@ ggplot() +
 
   geom_sf(data = places) +  
   geom_sf(data = route, aes(color = date_arrive)) +
+  scale_color_date('Date') + 
   theme_nautical() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
@@ -303,20 +314,21 @@ ggplot() +
 
 Additionally, information on protected areas of Mexico are also included. 
 
-```{r}
+```{r Protected areas, warning = F}
 ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(
     data = protected, 
-    aes(color = reserve_type, fill = reserve_type), 
+    aes(fill = reserve_type), 
     alpha = 0.4) + 
-  
+  scale_fill_manual('Reserve', values = c('Terrestrial' = '#417B5A', 'Marine' = '#DA7635')) + 
   ggrepel::geom_text_repel(
     data = protected,
     aes(label = name, geometry = geometry),
     stat = "sf_coordinates",
     size = 1.5
     ) + 
+  labs(x = NULL, y = NULL) + 
 
   theme_nautical()
 ```
@@ -328,14 +340,16 @@ We can make an OK map using some of the details below.
 ```{r}
 
 ggplot() + 
-  geom_sf(data = land, fill = '#F8F6F0') + 
+  geom_sf(data = landcover, aes(fill = class)) + 
+  scale_fill_manual('Class', values = lc_pal) + 
+  geom_sf(data = land, fill = '#F8F6F0', alpha = 0.5) +  # helps to dull the landcover for this map. 
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
   geom_sf(data = places) +  
  # geom_sf(data = route, aes(color = date_arrive)) +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
   annotation_scale()  + 
-  annotation_north_arrow(which_north = "true", style = north_arrow_minimal) + 
+  annotation_north_arrow(which_north = "true", style = north_arrow_nautical) + 
   theme_nautical() 
 ```
 

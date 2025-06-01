@@ -8,11 +8,14 @@ library(data.table)
 
 places <- read.csv('Places.csv') |>
   st_as_sf(coords = c('longitude', 'latitude'), crs = 4326) |>
-  mutate(across(starts_with('date'), ~ as.Date(.x, format = "%m-%d-%Y"))) |>
+  mutate(
+    across(starts_with('date'), ~ lubridate::as_date(.x, format = "%m-%d-%Y"))) |>
   arrange(date_arrive)
 
+dput(places)
+
 ggplot() +
-  geom_sf(data = places)
+  geom_sf(data = places, aes(color = date_arrive))
 
 st_write(places, 'places.gpkg', append = FALSE)
 usethis::use_data(places, overwrite = TRUE)
