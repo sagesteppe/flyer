@@ -73,9 +73,9 @@ incorporate your perspectives.
 
 ## Download files directly
 
-If you just want to grab all the data directly, you can do that too.
-<a href="https://sagesteppe.github.io/flyer/flyer-geodata.zip" download>Here
-you go</a>
+If you just want the data
+<a href="https://sagesteppe.github.io/flyer/flyer-geodata.zip" download>you
+can grab it here</a>
 
 ## Works Cited
 

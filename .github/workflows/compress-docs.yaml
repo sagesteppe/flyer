@@ -14,5 +14,5 @@ jobs:
 
       - name: Run compression script
         run: |
-          chmod +x compress.sh
-          bash compress.sh
+          chmod +x ./compress.sh
+          ./compress.sh
