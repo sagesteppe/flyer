@@ -32,5 +32,6 @@ format(object.size(mx), units = 'MB')
 protected <- mx
 
 usethis::use_data(protected, overwrite = TRUE)
+st_write(protected, '../docs/protected.gpkg', append = F)
 
 rm(mx, bb, p, protected)

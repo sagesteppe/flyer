@@ -1,0 +1,19 @@
+name: Compress geodata to zip archive 
+
+on:
+  push:
+    branches: [main, gh_pages]
+    
+jobs:
+  compress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Compress docs directory and clean up
+        run: |
+          cd docs
+          zip -r flyer-geodata.zip ./*
+          find . -mindepth 1 -not -name 'flyer-geodata.zip' -exec rm -rf {} +

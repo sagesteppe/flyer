@@ -6,7 +6,6 @@ library(tidyverse)
 library(smoothr)
 library(rnaturalearth)
 
-
 p <- '~/Documents/DEM4flyr'
 f <- file.path(p, list.files(p, pattern = '.bil$'))
 r <- mosaic(sprc(f))
@@ -61,10 +60,11 @@ format(object.size(topography), units = 'MB')
 topography <- select(topography, -ID) |>
   rename(elevation = level) |>
   st_as_sf()
+
 usethis::use_data(topography, overwrite = TRUE)
+st_write(topography, '../docs/topography.gpkg', append = FALSE)
 
 rm(sf_ver, r, sf_ver_1, topography, v, f, p)
-
 
 #################################################
 
@@ -101,7 +101,7 @@ bathymetry <- sf_ver[ st_length(sf_ver) > units::set_units(15, 'km'), ] |>
 
 format(object.size(bathymetry), units = 'MB')
 usethis::use_data(bathymetry, overwrite = TRUE)
-
+st_write(bathymetry, '../docs/bathymetry.gpkg', append = F)
 
 ######################################################
 
@@ -135,5 +135,7 @@ land <- bind_rows(cntr, mis) |>
 
 format(object.size(land), units = 'MB')
 usethis::use_data(land, overwrite = TRUE)
+st_write(land, '../docs/land.gpkg', append = F)
+
 
 rm(mis, cntr)

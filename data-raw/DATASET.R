@@ -17,7 +17,7 @@ dput(places)
 ggplot() +
   geom_sf(data = places, aes(color = date_arrive))
 
-st_write(places, 'places.gpkg', append = FALSE)
+st_write(places, '../docs/places.gpkg', append = F)
 usethis::use_data(places, overwrite = TRUE)
 
 ################################################################################
@@ -103,7 +103,7 @@ route <- route_dates[split_lines, roll = T] |>
   group_by(destination) |>
   summarize(geometry = st_union(geometry))
 
-st_write(route, 'route.gpkg', append = FALSE)
+st_write(route, '../docs/route.gpkg', append = F)
 rm(split_lines)
 
 usethis::use_data(route, overwrite = TRUE)

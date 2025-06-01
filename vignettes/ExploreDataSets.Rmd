@@ -198,7 +198,6 @@ Basically, too much data would make the package too cumbersome to fit on CRAN.
 In my mind the maximum map area reaches San Diego in the North
 
 ```{r subset bounding box, warning = F}
-
 bb <- st_bbox(
   c(xmin = -114, xmax = -108.5, ymin = 22.5, ymax = 30.5),
   crs = st_crs(4326)
@@ -310,12 +309,16 @@ ggplot() +
   geom_sf(data = landcover, aes(fill = class), color = NA) + 
   scale_fill_manual('Class', values = lc_pal) + 
   theme_nautical() + 
-  labs(title = 'landcover', subtitle = '+ lc_pal')
+  labs(title = 'landcover', subtitle = '+ lc_pal') + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 
 Additionally, information on protected areas of Mexico are also included. 
 
 ```{r Protected areas, warning = F}
+
+protected <- st_crop(protected, bb)
+
 ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   geom_sf(
@@ -329,9 +332,10 @@ ggplot() +
     stat = "sf_coordinates",
     size = 1.5
     ) + 
-  labs(x = NULL, y = NULL, title = 'protected', subtitle = '+land') + 
+  labs(x = NULL, y = NULL, title = 'protected', subtitle = '+ land') + 
 
-  theme_nautical()
+  theme_nautical()  + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 
 # putting it all together
@@ -339,7 +343,6 @@ ggplot() +
 We can make an OK map using some of the details below. 
 
 ```{r}
-
 ggplot() + 
   
   # the stage
@@ -368,7 +371,6 @@ ggplot() +
     fill = '#F4F7F5'
     ) +
   
-  
   # the ambiance.  
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
   annotation_scale(bar_cols = c('#222823', '#F4F7F5'))  + 
@@ -376,6 +378,12 @@ ggplot() +
   theme_nautical() +
   labs(title = 'A map', subtitle = 'Ricketts <3 giardiniera', x = NULL, y = NULL)
 
-
 ```
+
+
+```{r}
+rm(graticNo, brks, theme_nautical, route, places, bb, landcover, lc_pal, land,
+   protected, bathymetry, topography)
+```
+
 

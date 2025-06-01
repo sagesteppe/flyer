@@ -75,8 +75,8 @@ landcover <- nc_simp |>
 
 row.names(landcover) <- 1:nrow(landcover)
 
+st_write(landcover, '../docs/landcover.gpkg')
 usethis::use_data(landcover, overwrite = TRUE)
-
 
 
 class = c('Evergreen Deciduous Needleleaf Forest', 'Evergreen Broadleaf Forest',
@@ -91,5 +91,14 @@ lc_pal <- c(
   '#069E2D',  '#95E06C', '#8D8EA5',  '#FFFBFE', '#CBC0D3', '#37718E')
 names(lc_pal) <- class
 
-
 usethis::use_data(lc_pal, overwrite = TRUE)
+
+lc_pal <- set_names(
+  data.frame(
+    names(lc_pal),
+    unname(lc_pal)
+  ),
+  c('class', 'hex')
+)
+
+write.csv(lc_pal, '../docs/landcover_palette.csv', row.names = FALSE)
