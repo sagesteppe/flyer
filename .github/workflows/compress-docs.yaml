@@ -12,6 +12,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Compress docs directory and clean up
-        run: 
-        	command: bash compress.sh
+      - name: Run compression script
+        run: |
+          chmod +x ./compress.sh
+          ./compress.sh

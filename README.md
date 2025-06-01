@@ -40,7 +40,7 @@ ecology.
 
 The goal of this package is to provide a readily available data set for
 cartographic activities. In particular, a data set composed of point,
-and linestring geometries, rather than polygons for typical chloropleth
+and linestring geometries, rather than polygons for typical choropleth
 applications - such as the North Carolina SIDS data set which comes with
 `sf`. Additional advantages of the data set is that it follows a
 sequential series of events, allowing for intelligent use of story maps,
@@ -51,10 +51,10 @@ merge increasingly accurate collection localities, or routes. I have
 only read the *Log form the Sea of Cortez*, and not *Sea of Cortez: A
 Leisurely Journal of Travel and Research*, or any of the other true
 catalogs from the voyage. I have quickly poked through Brusca 2020, a
-wonderful read, this served as the definitive source for locations.
+wonderful read, which served as the definitive source for locations.
 
 The ‘route’ of the Western Flyer is liberally digitized and redrawn from
-Penguin Classics 1995 edition of *The Log from the Sea of Corte*z; of
+Penguin Classics 1995 edition of *The Log from the Sea of Cortez*; of
 which I am not sure of the actual accuracy of. I further embellished
 curvatures and shapes to make the data set aesthetically appealing. If
 you think you know the real route, as I guess would have been supplied
@@ -68,8 +68,14 @@ in the package.
 As mentioned, I use this data set for testing our cartographic
 approaches. If you are a marine biologist, into data viz, or mariner and
 think you have some insight - but are hesitant about this whole Github
-thing - shoot me an email and we’ll try and figure out how to
+thing - shoot me an email and we can try and figure out how to
 incorporate your perspectives.
+
+## Download files directly
+
+If you just want to grab all the data directly, you can do that too.
+<a href="https://sagesteppe.github.io/flyer/flyer-geodata.zip" download>Here
+you go</a>
 
 ## Works Cited
 
@@ -112,3 +118,7 @@ nearly-global, void-free, multi-scale smoothed, 90m digital elevation
 model from fused ASTER and SRTM data. ISPRS Journal of Photogrammetry
 and Remote Sensing, 87:2014, 57-67. Available at
 <http://www.sciencedirect.com/science/article/pii/S0924271613002360>
+
+Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover
+product for biodiversity and ecosystem modeling. Global Ecology and
+Biogeography 23(9): 1031-1045.
