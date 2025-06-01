@@ -27,7 +27,8 @@ data(places)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = places, aes(color = date_arrive))
+ geom_sf(data = places, aes(color = date_arrive)) +
+ theme_minimal()
 
 }
 \keyword{datasets}

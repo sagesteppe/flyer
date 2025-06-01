@@ -24,6 +24,7 @@ data(bathymetry)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = bathymetry, aes(color = elevation))
+ geom_sf(data = bathymetry, aes(color = elevation)) +
+ theme_minimal()
 }
 \keyword{datasets}

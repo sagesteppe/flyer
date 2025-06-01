@@ -24,6 +24,7 @@ data(topography)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = topography, aes(color = elevation))
+ geom_sf(data = topography, aes(color = elevation)) +
+ theme_minimal()
 }
 \keyword{datasets}

@@ -118,7 +118,7 @@ head(land)
 ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() +
-  labs(title = '`land` dataset')
+  labs(title = 'land')
 ```
 
 For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
@@ -129,7 +129,7 @@ land <- st_union(land)
 m <- ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() + 
-  labs(title = 'st_union(land) dataset')
+  labs(title = 'st_union(land)')
 
 m
 ```
@@ -142,7 +142,7 @@ head(places)
 
 m <- m + 
   geom_sf(data = places)  +
-  labs(title = 'places', subtitle = 'land + places')
+  labs(title = 'places', subtitle = '+ land')
 m
 ```
 
@@ -165,7 +165,7 @@ m <- m +
   labs(
     x = NULL, y = NULL,
     title = 'geom_text_repel(places)', 
-    subtitle = 'land + places')
+    subtitle = '+ land + places')
 
 m
 ```
@@ -309,7 +309,8 @@ We also include some quick colors to help with mapping these classes.
 ggplot() + 
   geom_sf(data = landcover, aes(fill = class), color = NA) + 
   scale_fill_manual('Class', values = lc_pal) + 
-  theme_nautical()
+  theme_nautical() + 
+  labs(title = 'landcover', subtitle = '+ lc_pal')
 ```
 
 Additionally, information on protected areas of Mexico are also included. 
@@ -328,7 +329,7 @@ ggplot() +
     stat = "sf_coordinates",
     size = 1.5
     ) + 
-  labs(x = NULL, y = NULL) + 
+  labs(x = NULL, y = NULL, title = 'protected', subtitle = '+land') + 
 
   theme_nautical()
 ```

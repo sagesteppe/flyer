@@ -26,6 +26,7 @@ data(land)
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = land, aes(fill = name))
+ geom_sf(data = land, aes(fill = name)) +
+ theme_minimal()
 }
 \keyword{datasets}

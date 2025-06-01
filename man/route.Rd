@@ -31,7 +31,8 @@ route <- dplyr::left_join(
 
 library(ggplot2)
 ggplot() +
- geom_sf(data = route, aes(color = date_arrive))
+ geom_sf(data = route, aes(color = date_arrive)) +
+ theme_minimal()
 
 }
 \keyword{datasets}

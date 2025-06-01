@@ -15,6 +15,7 @@ Colors from coolors, hand selected by me, to look OK.
 }
 \examples{
 data(lc_pal)
+data(landcover)
 
 library(ggplot2)
 ggplot() +
