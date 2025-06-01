@@ -89,7 +89,8 @@ theme_nautical <- function() {
     
     legend.background = element_rect(fill = '#FEF9F3', color = '#A7A2A9'),
     legend.text = element_text(size = 5),
-    legend.title = element_text(size = 7), 
+    legend.title = element_text(size = 7, hjust = 0.5), 
+    legend.title.position = 'top',
     legend.key.size = unit(1,"line"),
     legend.position = "bottom",
     legend.spacing = unit(0.1, "line")
@@ -110,7 +111,6 @@ But before we pull up `places` and `routes` let's pull up the `land` data set so
 #### land 
 
 We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
-Anyways, we have duped the natural earth land surfaces into this package - but there are ton's of other products you may want to use from there, check out the [R Open Sci page for more info](https://docs.ropensci.org/rnaturalearth/articles/rnaturalearth.html). 
 
 ```{r add land}
 head(land)
@@ -374,7 +374,7 @@ ggplot() +
   annotation_scale(bar_cols = c('#222823', '#F4F7F5'))  + 
   annotation_north_arrow(which_north = "true", style = north_arrow_nautical) + 
   theme_nautical() +
-  labs(title = 'A map', subtitle = 'from Chicago with Love', x = NULL, y = NULL)
+  labs(title = 'A map', subtitle = 'Ricketts <3 giardiniera', x = NULL, y = NULL)
 
 
 ```
