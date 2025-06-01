@@ -1,2 +1,2 @@
-cd ./data_dl
-zip -r flyer-geodata.zip ./*
+cd data_dl
+zip -r ./flyer-geodata.zip ./*
