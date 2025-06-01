@@ -341,16 +341,41 @@ We can make an OK map using some of the details below.
 ```{r}
 
 ggplot() + 
+  
+  # the stage
   geom_sf(data = landcover, aes(fill = class)) + 
   scale_fill_manual('Class', values = lc_pal) + 
   geom_sf(data = land, fill = '#F8F6F0', alpha = 0.5) +  # helps to dull the landcover for this map. 
-  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.1) + 
-  geom_sf(data = topography,  aes(color = elevation), lwd = 0.1) + 
-  geom_sf(data = places) +  
- # geom_sf(data = route, aes(color = date_arrive)) +
+  
+  geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.25) + 
+  geom_sf(data = topography,  aes(color = elevation), lwd = 0.25) + 
+  scale_color_distiller('Elevation', palette = "Spectral") +
+  ggnewscale::new_scale_colour() + 
+  
+  # the story 
+  geom_sf(data = route, aes(color = date_arrive)) +
+  scale_color_date('Date') +
+
+  geom_sf(data = places, shape = 5, size = 1.5, color = '#222823') +   
+  ggrepel::geom_label_repel(
+    data = places,
+    aes(label = location_espanol, geometry = geometry),
+    stat = "sf_coordinates",
+    alpha = 0.7, # make the backing more transparent
+    label.size = NA, # remove the backing borders
+    label.padding = 0.1, # reduce space between label borders and text
+    size = 2.5,# make the font smaller. 
+    fill = '#F4F7F5'
+    ) +
+  
+  
+  # the ambiance.  
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]), crs = 4326) + 
-  annotation_scale()  + 
+  annotation_scale(bar_cols = c('#222823', '#F4F7F5'))  + 
   annotation_north_arrow(which_north = "true", style = north_arrow_nautical) + 
-  theme_nautical() 
+  theme_nautical() +
+  labs(title = 'A map', subtitle = 'from Chicago with Love', x = NULL, y = NULL)
+
+
 ```
 
