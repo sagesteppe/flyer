@@ -123,6 +123,12 @@ ggplot() +
   # stars and sea critters share the same palette.
   scale_color_manual(values = cols) +
   scale_fill_manual(values = cols) +
+
+  # the anemone.
+  geom_sf(data = circle_sf, fill = "#74A57F", color = "#E94F37", size = 1) +
+  ggnewscale::new_scale_fill() +
+  geom_sf(data = rays_sf, aes(fill = bend), col = '#531CB3') +
+
   theme_void() +
   theme(
     aspect.ratio = 1/1,
@@ -133,7 +139,7 @@ ggplot() +
   ylim(1,9)
 
 # now save the plot
-ggsave('flyer_logo.png')
+ggsave('flyer_logo.png', height = 1640, width = 1640, units = 'px')
 
 # reimport to make the sticker
 
@@ -148,7 +154,7 @@ sticker(
   s_x = 1,
   s_y = 1.12,
   s_width = 1,
-  s_height = 0.85,
+  s_height = 1,
 
   p_x = 1,
   p_y = 0.9,
@@ -166,19 +172,16 @@ sticker(
 
 
 
-
-
-
 library(sf)
 library(ggplot2)
 
 # Parameters
 center_x <- 5
-center_y <- 2
-circle_radius <- 0.5
-ray_length <- circle_radius / 2  # 1/3 of radius
-n_rays <- 30
-points_per_ray <- 7  # More points for better bend representation
+center_y <- 1.5
+circle_radius <- 0.3
+ray_length <- circle_radius  # 1/3 of radius
+n_rays <- 25
+points_per_ray <- 6  # More points for better bend representation
 
 # Create the circle
 circle <- st_buffer(st_point(c(center_x, center_y)), dist = circle_radius)
@@ -197,7 +200,7 @@ create_ray <- function(angle, center_x, center_y, circle_radius, ray_length, n_p
   t_vals <- seq(0, 1, length.out = n_points)
 
   # Random parameters for this specific ray
-  bend_intensity <- runif(1, 0.1, 0.3)  # How much to bend
+  bend_intensity <- runif(1, 0.05, 0.2)  # How much to bend
   bend_frequency <- runif(1, 2, 5)      # How many bends
   bend_phase <- runif(1, 0, 1*pi)       # Random phase offset
 
@@ -267,11 +270,13 @@ rays_sf <- lapply(
   stplanr::line_segment, n_segments = sample(8:10, 1), use_rsgeo = FALSE) |>
   bind_rows() |>
   group_by(ray_id) |>
-  mutate(bend = 1:n(), .before = geometry)
+  mutate(
+    bend = 1:n(), .before = geometry) |>
+  st_buffer(0.035)
 
 # Plot the result
 ggplot() +
   geom_sf(data = circle_sf, fill = "#DDC3D0", color = "orange", size = 1) +
-  geom_sf(data = rays_sf, aes(color = bend)) +
+  geom_sf(data = rays_sf, aes(fill = bend)) +
   coord_sf(expand = FALSE) +
   theme_void()
