@@ -17,10 +17,10 @@ names(cols) <- c('Thistle', 'Chrysler', 'Syracuse', 'Cambridge')
 
 # use 1-9 to easily partition plot panels into thirds.
 stars <- data.frame(
-  x = runif(75, min = 1, max = 9),
-  y = runif(75, min = 5, max = 9),
-  size = runif(75, min = 0.1, max = 1.2),
-  col = sample(names(cols), 75, replace = T, prob = c(2,1,1,1))
+  x = runif(90, min = 1, max = 9),
+  y = runif(90, min = 4, max = 9),
+  size = runif(90, min = 0.1, max = 1.2),
+  col = sample(names(cols), 90, replace = T, prob = c(2,1,1,1))
 ) |>
   st_as_sf(coords = c('x', 'y'))
 
@@ -230,6 +230,18 @@ ggplot() +
   theme_void()
 
 
+# we will add some flecks to the ocean too  - plankton and microscopic life.
+
+# use 1-9 to easily partition plot panels into thirds.
+plankton <- data.frame(
+  x = runif(75, min = 1, max = 9),
+  y = runif(75, min = 1, max = 3),
+  size = runif(75, min = 0.1, max = 1.2),
+  col = sample(names(cols[c(1,4)]), 75, replace = T, prob = c(1,1))
+) |>
+  st_as_sf(coords = c('x', 'y'))
+
+
 
 ################################################################################
 ##                 finally we can create our plot !!!                       ####
@@ -237,7 +249,7 @@ ggplot() +
 
   # the stars and above.
   geom_sf(data = stars, aes(color = col, size = size), shape = 8) +
-  geom_sf(data= moon, fill = '#FBFCFF', col = '#DDC3D0') +
+  geom_sf(data = moon, fill = '#FBFCFF', col = '#DDC3D0') +
   geom_sf(data = st_sample(moon, size = 35), alpha = 0.2, col = '#DDC3D0') +
   scale_size_continuous(range = c(0.2, 3)) +
 
@@ -248,10 +260,12 @@ ggplot() +
   geom_sf(data = wave_contours, col = '#DDC3D0') +
 
   # the tide pools
+  geom_sf(data = plankton, aes(color = col, size = size/10), shape = 20) +
   geom_sf(data = seastars, aes(fill = col)) +
   geom_sf(data = seastrings) +
 
   # stars and sea critters share the same palette.
+
   scale_color_manual(values = cols) +
   scale_fill_manual(values = cols) +
 
