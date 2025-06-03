@@ -108,3 +108,104 @@ create_linestrings_from_focal <- function(focal_sf, targets_sf) {
 
   return(lines_sf)
 }
+
+
+
+# Create rays with random bends and zig-zags
+create_ray <- function(angle, center_x, center_y, circle_radius, ray_length, n_points) {
+  # Start point is on the circle edge
+  start_x <- center_x + circle_radius * cos(angle)
+  start_y <- center_y + circle_radius * sin(angle)
+
+  # End point is ray_length further out (base direction)
+  end_x <- center_x + (circle_radius + ray_length) * cos(angle)
+  end_y <- center_y + (circle_radius + ray_length) * sin(angle)
+
+  # Create points along the ray with random bends
+  t_vals <- seq(0, 1, length.out = n_points)
+
+  # Random parameters for this specific ray
+  bend_intensity <- runif(1, 0.05, 0.2)  # How much to bend
+  bend_frequency <- runif(1, 2, 5)      # How many bends
+  bend_phase <- runif(1, 0, 1*pi)       # Random phase offset
+
+  # Direction perpendicular to the ray (for lateral displacement)
+  perp_angle <- angle + pi/2
+
+  ray_points <- lapply(seq_along(t_vals), function(i) {
+    t <- t_vals[i]
+
+    # Base position along straight line
+    base_x <- start_x + t * (end_x - start_x)
+    base_y <- start_y + t * (end_y - start_y)
+
+    # Add sinusoidal bend with random variation
+    bend_amount <- sin(t * bend_frequency * 2 * pi + bend_phase) * bend_intensity * t
+
+    # Add some random zig-zag effect (smaller, more frequent)
+    if (i > 1 && i < length(t_vals)) {  # Don't bend the first and last points too much
+      zigzag <- runif(1, -0.25, 0.25) * bend_intensity * 0.1
+      bend_amount <- bend_amount + zigzag
+    }
+
+    # Apply perpendicular displacement
+    x <- base_x + bend_amount * cos(perp_angle)
+    y <- base_y + bend_amount * sin(perp_angle)
+
+    c(x, y)
+  })
+
+  # Convert to matrix and create linestring
+  ray_matrix <- do.call(rbind, ray_points)
+  st_linestring(ray_matrix)
+}
+
+
+# Create circle
+create_circle <- function(cx, cy, radius, n_pts = 100) {
+  angles <- seq(0, 2*pi, length.out = n_pts)
+  x <- cx + radius * cos(angles)
+  y <- cy + radius * sin(angles)
+
+  # Close the polygon properly
+  coords <- rbind(cbind(x, y), c(x[1], y[1]))
+  st_polygon(list(coords))
+}
+
+
+# Create a single sine wave line
+create_wave_line <- function(angle_rad, cx, cy, radius, n_pts) {
+  # Distance from center (0 to radius)
+  r_vals <- seq(0, radius, length.out = n_pts)
+
+  # Normalized distance (0 to 1)
+  t <- r_vals / radius
+
+  # Two complete sine cycles for two troughs
+  # sin(4πt) gives two troughs: one around t=0.25, another around t=0.75
+  wave_phase <- 4 * pi * t
+
+  # Amplitude that increases from center to edge
+  # Inner amplitude = A, Outer amplitude = 2.6A
+  inner_amp <- 0.02  # Small amplitude for the scale
+  outer_amp <- inner_amp * 2.6
+
+  # Linear amplitude scaling from center to edge
+  amplitude <- inner_amp + (outer_amp - inner_amp) * t
+
+  # The sine wave displacement (perpendicular to radial direction)
+  wave_displacement <- amplitude * sin(wave_phase)
+
+  # Base radial line points
+  base_x <- cx + r_vals * cos(angle_rad)
+  base_y <- cy + r_vals * sin(angle_rad)
+
+  # Add wave displacement perpendicular to radial direction
+  perp_angle <- angle_rad + pi/2
+  final_x <- base_x + wave_displacement * cos(perp_angle)
+  final_y <- base_y + wave_displacement * sin(perp_angle)
+
+  # Create linestring
+  coords <- cbind(final_x, final_y)
+  st_linestring(coords)
+}

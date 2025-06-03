@@ -10,7 +10,7 @@ setwd('~/Documents/flyer/data-raw')
 source('functions.R')
 
 # stars are easy
-set.seed(37)
+set.seed(1320)
 
 cols <- c('#DDC3D0', '#531CB3', '#E94F37', '#74A57F')
 names(cols) <- c('Thistle', 'Chrysler', 'Syracuse', 'Cambridge')
@@ -103,6 +103,112 @@ seastars <- lapply(l, setNames, nm = 'geometry') |>
 
 rm(l, arms, create_linestrings_from_focal, create_sea_star)
 
+
+
+################################################################################
+###########              THE  SEA  ANEMONE  <<<3333              ###############
+
+# Parameters
+center_x <- 5
+center_y <- 1.5
+circle_radius <- 0.3
+ray_length <- circle_radius  # 1/3 of radius
+
+# params for the outer arms
+n_rays <- 20
+points_per_ray <- 6  # More points for better bend representation
+
+# Parameters for the inner arms.
+n_lines <- 13
+n_points_per_line <- 50
+
+# Create the circle
+circle <- st_buffer(st_point(c(center_x, center_y)), dist = circle_radius)
+
+# Generate angles for rays (evenly spaced around circle)
+angles <- seq(0, 2 * pi, length.out = n_rays + 1)[1:n_rays]
+
+# Create all rays
+rays <- lapply(angles, create_ray,
+               center_x = center_x,
+               center_y = center_y,
+               circle_radius = circle_radius,
+               ray_length = ray_length,
+               n_points = points_per_ray)
+
+# Convert rays to sf object
+rays_sf <- st_sf(
+  ray_id = 1:n_rays,
+  geometry = st_sfc(rays)
+)
+
+# Create circle as sf object
+circle_sf <- st_sf(
+  id = 1,
+  geometry = st_sfc(circle)
+)
+
+rays_sf <- smoothr::smooth(rays_sf)
+
+# now we split the lines so we can color them.
+
+rays_sf <- lapply(
+  split(rays_sf, 1:nrow(rays_sf)),
+  function(x) stplanr::line_segment(x, n_segments = sample(4:8, 1), use_rsgeo = FALSE)
+) |>
+  bind_rows() |>
+  group_by(ray_id) |>
+  mutate(
+    bend = 1:n(), .before = geometry) |>
+  st_buffer(0.035)
+
+
+########## now create  the inner arms !!!!!!!
+
+# Generate equally spaced angles
+angles <- seq(0, 2*pi, length.out = n_lines + 1)[1:n_lines]
+
+# Create geometries
+circle_geom <- create_circle(center_x, center_y, circle_radius)
+wave_lines <- map(angles, ~create_wave_line(.x, center_x, center_y, circle_radius, n_points_per_line))
+
+# Convert to sf objects
+inner_lines_sf <- st_sf(
+  line_id = 1:length(wave_lines),
+  geometry = st_sfc(wave_lines)
+)
+
+inner_lines_sf <- lapply(
+  split(inner_lines_sf, 1:nrow(inner_lines_sf)),
+  function(x) stplanr::line_segment(x, n_segments = sample(3:5, 1), use_rsgeo = FALSE)
+) |>
+  bind_rows() |>
+  group_by(line_id) |>
+  mutate(
+    bend = 1:n(),
+    bend = bend*-1 * 2,
+    .before = geometry) |>
+  st_buffer(0.01)
+
+
+rm(angles, center_x, center_y, circle_radius, ray_length, n_rays, n_lines,
+   n_points_per_line, wave_lines, subs)
+
+# Plot the result
+
+ggplot() +
+  geom_sf(data = inner_lines_sf,  aes(fill = bend)) +
+  geom_sf(data = rays_sf, aes(fill = bend), col = '#531CB3') +
+  scale_fill_gradient2(
+    low = cols[names(cols)=='Chrysler'],
+    mid = cols[names(cols)=='Thistle'],
+    high = cols[names(cols)=='Syracuse']
+  )
+
+
+
+################################################################################
+##                 finally we can create our plot !!!                       ####
 ggplot() +
 
   # the stars and above.
@@ -127,7 +233,16 @@ ggplot() +
   # the anemone.
   geom_sf(data = circle_sf, fill = "#74A57F", color = "#E94F37", size = 1) +
   ggnewscale::new_scale_fill() +
+  ggnewscale::new_scale_color()+
+
+  geom_sf(data = inner_lines_sf,  aes(fill = bend)) +
   geom_sf(data = rays_sf, aes(fill = bend), col = '#531CB3') +
+  scale_fill_gradient2(
+    low = cols[names(cols)=='Chrysler'],
+    mid = cols[names(cols)=='Thistle'],
+    high = cols[names(cols)=='Syracuse']
+    ) +
+
 
   theme_void() +
   theme(
@@ -138,6 +253,8 @@ ggplot() +
   xlim(1,9) +
   ylim(1,9)
 
+
+  ?scale_colour_gradient
 # now save the plot
 ggsave('flyer_logo.png', height = 1640, width = 1640, units = 'px')
 
@@ -166,117 +283,3 @@ sticker(
 
 
 
-
-
-
-
-
-
-library(sf)
-library(ggplot2)
-
-# Parameters
-center_x <- 5
-center_y <- 1.5
-circle_radius <- 0.3
-ray_length <- circle_radius  # 1/3 of radius
-n_rays <- 25
-points_per_ray <- 6  # More points for better bend representation
-
-# Create the circle
-circle <- st_buffer(st_point(c(center_x, center_y)), dist = circle_radius)
-
-# Create rays with random bends and zig-zags
-create_ray <- function(angle, center_x, center_y, circle_radius, ray_length, n_points) {
-  # Start point is on the circle edge
-  start_x <- center_x + circle_radius * cos(angle)
-  start_y <- center_y + circle_radius * sin(angle)
-
-  # End point is ray_length further out (base direction)
-  end_x <- center_x + (circle_radius + ray_length) * cos(angle)
-  end_y <- center_y + (circle_radius + ray_length) * sin(angle)
-
-  # Create points along the ray with random bends
-  t_vals <- seq(0, 1, length.out = n_points)
-
-  # Random parameters for this specific ray
-  bend_intensity <- runif(1, 0.05, 0.2)  # How much to bend
-  bend_frequency <- runif(1, 2, 5)      # How many bends
-  bend_phase <- runif(1, 0, 1*pi)       # Random phase offset
-
-  # Direction perpendicular to the ray (for lateral displacement)
-  perp_angle <- angle + pi/2
-
-  ray_points <- lapply(seq_along(t_vals), function(i) {
-    t <- t_vals[i]
-
-    # Base position along straight line
-    base_x <- start_x + t * (end_x - start_x)
-    base_y <- start_y + t * (end_y - start_y)
-
-    # Add sinusoidal bend with random variation
-    bend_amount <- sin(t * bend_frequency * 2 * pi + bend_phase) * bend_intensity * t
-
-    # Add some random zig-zag effect (smaller, more frequent)
-    if (i > 1 && i < length(t_vals)) {  # Don't bend the first and last points too much
-      zigzag <- runif(1, -0.25, 0.25) * bend_intensity * 0.1
-      bend_amount <- bend_amount + zigzag
-    }
-
-    # Apply perpendicular displacement
-    x <- base_x + bend_amount * cos(perp_angle)
-    y <- base_y + bend_amount * sin(perp_angle)
-
-    c(x, y)
-  })
-
-  # Convert to matrix and create linestring
-  ray_matrix <- do.call(rbind, ray_points)
-  st_linestring(ray_matrix)
-}
-
-# Generate angles for rays (evenly spaced around circle)
-angles <- seq(0, 2 * pi, length.out = n_rays + 1)[1:n_rays]
-
-# Create all rays
-rays <- lapply(angles, create_ray,
-               center_x = center_x,
-               center_y = center_y,
-               circle_radius = circle_radius,
-               ray_length = ray_length,
-               n_points = points_per_ray)
-
-# Convert rays to sf object
-rays_sf <- st_sf(
-  ray_id = 1:n_rays,
-  geometry = st_sfc(rays)
-)
-
-# Create circle as sf object
-circle_sf <- st_sf(
-  id = 1,
-  geometry = st_sfc(circle)
-)
-
-rays_sf <- smoothr::smooth(rays_sf)
-
-subs <- stplanr::line_segment(rays_sf[1,], n_segments = 3, use_rsgeo = FALSE) |>
-  mutate(ray_id = 1:n())
-
-# now we split the lines so we can color them.
-
-rays_sf <- lapply(
-  split(rays_sf, 1:nrow(rays_sf)),
-  stplanr::line_segment, n_segments = sample(8:10, 1), use_rsgeo = FALSE) |>
-  bind_rows() |>
-  group_by(ray_id) |>
-  mutate(
-    bend = 1:n(), .before = geometry) |>
-  st_buffer(0.035)
-
-# Plot the result
-ggplot() +
-  geom_sf(data = circle_sf, fill = "#DDC3D0", color = "orange", size = 1) +
-  geom_sf(data = rays_sf, aes(fill = bend)) +
-  coord_sf(expand = FALSE) +
-  theme_void()
