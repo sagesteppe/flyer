@@ -209,3 +209,30 @@ create_wave_line <- function(angle_rad, cx, cy, radius, n_pts) {
   coords <- cbind(final_x, final_y)
   st_linestring(coords)
 }
+
+
+classify_line_orientation <- function(linestring_sf) {
+  # Extract coordinates and calculate angle for each linestring
+  angles <- sapply(st_geometry(linestring_sf), function(line) {
+    coords <- st_coordinates(line)
+
+    # Get start and end points
+    start <- coords[1, 1:2]
+    end <- coords[nrow(coords), 1:2]
+
+    # Calculate angle in degrees (0-360)
+    dx <- end[1] - start[1]
+    dy <- end[2] - start[2]
+
+    angle_rad <- atan2(dy, dx)
+    angle_deg <- (angle_rad * 180 / pi + 360) %% 360
+
+    return(angle_deg)
+  })
+
+  # Classify: X-predominant if angle is 45-135° or 225-315°
+  x_predominant <- (angles >= 45 & angles <= 135) | (angles >= 225 & angles <= 315)
+
+  # Return classification
+  ifelse(x_predominant, "X", "Y")
+}

@@ -26,7 +26,7 @@ stars <- data.frame(
 
 
 moon <- data.frame(
-  x = 5, y = 8
+  x = 5, y = 7.85
 ) |>
   st_as_sf(coords = c('x', 'y')) |>
   st_buffer(0.5)
@@ -85,6 +85,29 @@ wave <- bind_rows(waveline, wavebottom)  %>%
 
 rm(wavebottom, waveline, y)
 
+
+# now they need some lines running through them or they look silly.
+
+wave_contours <- bind_rows(
+ # st_buffer(wave, dist = -0.45),
+  st_buffer(wave, dist = -0.41),
+  st_buffer(wave, dist = -0.24),
+  st_buffer(wave, dist = -0.11)
+) |>
+  st_cast('MULTILINESTRING') |>
+  st_cast('LINESTRING') |>
+  stplanr::line_segment(segment_length =  0.1, use_rsgeo = FALSE)
+
+wave_contours <- wave_contours[classify_line_orientation(wave_contours)=='Y',]
+
+# now let's down sample these we have too many
+wave_contours <- wave_contours[
+  sample(1:nrow(wave_contours), size = round(nrow(wave_contours)*0.55), 0), ]
+
+ggplot() +
+  geom_sf(data = wave_contours)
+
+
 ## and now create some sea stars !!! :-)
 
 l <- list(
@@ -110,7 +133,7 @@ rm(l, arms, create_linestrings_from_focal, create_sea_star)
 
 # Parameters
 center_x <- 5
-center_y <- 1.5
+center_y <- 1.25
 circle_radius <- 0.3
 ray_length <- circle_radius  # 1/3 of radius
 
@@ -192,7 +215,7 @@ inner_lines_sf <- lapply(
 
 
 rm(angles, center_x, center_y, circle_radius, ray_length, n_rays, n_lines,
-   n_points_per_line, wave_lines, subs)
+   n_points_per_line, wave_lines, subs, create_circle, create_ray, create_wave_line)
 
 # Plot the result
 
@@ -203,7 +226,8 @@ ggplot() +
     low = cols[names(cols)=='Chrysler'],
     mid = cols[names(cols)=='Thistle'],
     high = cols[names(cols)=='Syracuse']
-  )
+  ) +
+  theme_void()
 
 
 
@@ -214,13 +238,14 @@ ggplot() +
   # the stars and above.
   geom_sf(data = stars, aes(color = col, size = size), shape = 8) +
   geom_sf(data= moon, fill = '#FBFCFF', col = '#DDC3D0') +
-  geom_sf(data = st_sample(moon, size = 35), alpha = 0.15, col = '#DDC3D0') +
+  geom_sf(data = st_sample(moon, size = 35), alpha = 0.2, col = '#DDC3D0') +
   scale_size_continuous(range = c(0.2, 3)) +
 
   # the ship and the sea
   geom_sf(data = cab, fill = '#E94F37', col = '#74A57F', lwd = 0.8) +
   geom_sf(data = hull, fill = '#E94F37', col = '#74A57F', lwd = 0.8) +
   geom_sf(data = wave, fill = '#531CB3', col = '#531CB3', lwd = 1) +
+  geom_sf(data = wave_contours, col = '#DDC3D0') +
 
   # the tide pools
   geom_sf(data = seastars, aes(fill = col)) +
@@ -254,7 +279,6 @@ ggplot() +
   ylim(1,9)
 
 
-  ?scale_colour_gradient
 # now save the plot
 ggsave('flyer_logo.png', height = 1640, width = 1640, units = 'px')
 
@@ -266,7 +290,7 @@ sticker(
   subplot = "flyer_logo.png",
   package = "flyer",
   p_size = 48,
-  p_color = "#DDC3D0",
+  p_color = "#74A57F",
   p_family = "David Libre",  # Replace with your Google font family name
   s_x = 1,
   s_y = 1.12,
@@ -277,7 +301,7 @@ sticker(
   p_y = 0.9,
   white_around_sticker = TRUE,
   h_fill = "#222222",  # dark background for white text to pop
-  h_color = "#DDC3D0",  # white border (or choose another highlight color)
+  h_color = "#74A57F",  # white border (or choose another highlight color)
   filename = "../man/figures/flyer_hex_sticker.png"
 )
 
