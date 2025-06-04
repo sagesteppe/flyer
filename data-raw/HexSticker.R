@@ -12,7 +12,7 @@ source('functions.R')
 # stars are easy
 set.seed(1320)
 
-cols <- c('#DDC3D0', '#531CB3', '#E94F37', '#74A57F')
+cols <- c('#ff6361', '#8a508f', '#ff8531', '#74A57F')
 names(cols) <- c('Thistle', 'Chrysler', 'Syracuse', 'Cambridge')
 
 # use 1-9 to easily partition plot panels into thirds.
@@ -24,14 +24,13 @@ stars <- data.frame(
 ) |>
   st_as_sf(coords = c('x', 'y'))
 
-
 moon <- data.frame(
   x = 5, y = 7.85
 ) |>
   st_as_sf(coords = c('x', 'y')) |>
   st_buffer(0.5)
 
-
+################################################################################
 ### create the boat
 
 cab <- sfheaders::sf_polygon(
@@ -51,6 +50,38 @@ hull <-  sfheaders::sf_polygon(
   smoothr::smooth(method = 'ksmooth', smoothness = 0.15)
 
 
+mast <- data.frame(
+  x = c(4.25, 4.2),
+  y = c(4, 7.5)
+) |>
+  sfheaders::sf_linestring() |>
+  st_buffer(0.02)
+
+
+
+########################################### now the strings for time.
+# Define end point
+end_point <- c(4.2, 7.5)
+
+# Define start points
+start_A <- c(1.5, 4.25)
+start_B <- c(8.25, 5.25)
+
+# Create the curved linestrings
+coords_A <- create_concave_line(start_A[1], start_A[2], end_point[1], end_point[2], curve_strength = -0.125)
+coords_B <- create_concave_line(start_B[1], start_B[2], end_point[1], end_point[2], curve_strength = 0.125)
+
+# Create sf data frames
+sf_line_A <- st_sf(id = "Line_A", geometry = st_sfc(st_linestring(coords_A)))
+sf_line_B <- st_sf(id = "Line_B", geometry = st_sfc(st_linestring(coords_B)))
+
+# Combine into single sf object
+combined_lines <- rbind(sf_line_A, sf_line_B)
+
+rm(start_A, start_B, line_A, line_B, line, sf_line_A, sf_line_B)
+
+
+################################################################################
 ######## create waves - takes  little bit of work.
 y <- rep(3.5, length = 17)
 y[4] <- 4.25
@@ -71,8 +102,8 @@ waveline <- wave |>
 
 wavebottom <- data.frame(
   x = c(jitter(seq(1, 9, by = 0.5), factor = 3) - 0.75, 9),
-  y = c(jitter(wave$y-0.9, factor = 5), 2)
-)|>
+  y = c(jitter(wave$y-1.1, factor = 5), 2)
+) |>
   sfheaders::sf_linestring() |>
   smoothr::smooth(method = 'ksmooth', smoothness = 2.5)
 
@@ -83,8 +114,20 @@ wave <- bind_rows(waveline, wavebottom)  %>%
   concaveman() %>%
   rename(geometry = polygons)
 
+seabottom <- data.frame(
+  x = c(1,9),
+  y = c(0, 0)
+) |>
+  sfheaders::sf_linestring()
+
+under_the_sea <- bind_rows(wavebottom, seabottom)  %>%
+  st_combine() %>%
+  st_convex_hull()
+
 rm(wavebottom, waveline, y)
 
+ggplot() +
+  geom_sf(data = under_the_sea)
 
 # now they need some lines running through them or they look silly.
 
@@ -253,11 +296,16 @@ ggplot() +
   geom_sf(data = st_sample(moon, size = 35), alpha = 0.2, col = '#DDC3D0') +
   scale_size_continuous(range = c(0.2, 3)) +
 
+  geom_sf(data = under_the_sea, fill = '#003f5c') +
   # the ship and the sea
-  geom_sf(data = cab, fill = '#E94F37', col = '#74A57F', lwd = 0.8) +
-  geom_sf(data = hull, fill = '#E94F37', col = '#74A57F', lwd = 0.8) +
-  geom_sf(data = wave, fill = '#531CB3', col = '#531CB3', lwd = 1) +
-  geom_sf(data = wave_contours, col = '#DDC3D0') +
+  geom_sf(data= mast, fill = '#ffd380')+
+  geom_sf(data = cab, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
+  geom_sf(data = hull, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
+  geom_sf(data = wave, fill = '#2c4875', col = '#531CB3', lwd = 1) +
+  geom_sf(data = wave_contours, col = '#ffd380') +
+
+  geom_sf(data = combined_lines, color = "#74A57F", linewidth = 1, alpha = 0.8) +
+
 
   # the tide pools
   geom_sf(data = plankton, aes(color = col, size = size/10), shape = 20) +
@@ -270,24 +318,23 @@ ggplot() +
   scale_fill_manual(values = cols) +
 
   # the anemone.
-  geom_sf(data = circle_sf, fill = "#74A57F", color = "#E94F37", size = 1) +
+  geom_sf(data = circle_sf, fill = "#74A57F", color = "#ff8531", size = 1) +
   ggnewscale::new_scale_fill() +
-  ggnewscale::new_scale_color()+
+  ggnewscale::new_scale_color() +
 
   geom_sf(data = inner_lines_sf,  aes(fill = bend)) +
-  geom_sf(data = rays_sf, aes(fill = bend), col = '#531CB3') +
+  geom_sf(data = rays_sf, aes(fill = bend), col = '#bc5090') +
   scale_fill_gradient2(
     low = cols[names(cols)=='Chrysler'],
     mid = cols[names(cols)=='Thistle'],
     high = cols[names(cols)=='Syracuse']
     ) +
 
-
   theme_void() +
   theme(
     aspect.ratio = 1/1,
     legend.position = 'none',
-    panel.background = element_rect(fill = '#222222')
+    panel.background = element_rect(fill = '#00202e')
   ) +
   xlim(1,9) +
   ylim(1,9)
@@ -303,8 +350,8 @@ font_add_google("David Libre", "David Libre")
 sticker(
   subplot = "flyer_logo.png",
   package = "flyer",
-  p_size = 48,
-  p_color = "#74A57F",
+  p_size = 56,
+  p_color = "#bc5090",
   p_family = "David Libre",  # Replace with your Google font family name
   s_x = 1,
   s_y = 1.12,
@@ -315,9 +362,7 @@ sticker(
   p_y = 0.9,
   white_around_sticker = TRUE,
   h_fill = "#222222",  # dark background for white text to pop
-  h_color = "#74A57F",  # white border (or choose another highlight color)
+  h_color = "#ffa600",  # white border (or choose another highlight color)
   filename = "../man/figures/flyer_hex_sticker.png"
 )
-
-
 

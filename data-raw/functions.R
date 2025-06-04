@@ -236,3 +236,41 @@ classify_line_orientation <- function(linestring_sf) {
   # Return classification
   ifelse(x_predominant, "X", "Y")
 }
+
+
+
+
+# Function to create a gently concave curve between two points
+create_concave_line <- function(start_x, start_y, end_x, end_y, n_points = 20, curve_strength = 0.3) {
+  # Calculate midpoint
+  mid_x <- (start_x + end_x) / 2
+  mid_y <- (start_y + end_y) / 2
+
+  # Calculate perpendicular offset for concave curve
+  # Vector from start to end
+  dx <- end_x - start_x
+  dy <- end_y - start_y
+
+  # Perpendicular vector (rotated 90 degrees)
+  perp_x <- -dy
+  perp_y <- dx
+
+  # Normalize perpendicular vector
+  perp_length <- sqrt(perp_x^2 + perp_y^2)
+  perp_x <- perp_x / perp_length
+  perp_y <- perp_y / perp_length
+
+  # Create offset midpoint for concave curve
+  offset_distance <- sqrt(dx^2 + dy^2) * curve_strength
+  control_x <- mid_x + perp_x * offset_distance
+  control_y <- mid_y + perp_y * offset_distance
+
+  # Generate points along quadratic Bezier curve
+  t <- seq(0, 1, length.out = n_points)
+
+  # Quadratic Bezier formula: B(t) = (1-t)²P₀ + 2(1-t)tP₁ + t²P₂
+  x_coords <- (1-t)^2 * start_x + 2*(1-t)*t * control_x + t^2 * end_x
+  y_coords <- (1-t)^2 * start_y + 2*(1-t)*t * control_y + t^2 * end_y
+
+  return(cbind(x_coords, y_coords))
+}
