@@ -9,7 +9,7 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 <!-- badges: end -->
 
-# flyer
+# flyer <img src="man/figures/flyer_hex_sticker.png" align="right" height="138" />
 
 Geographic data from Steinbeck and Ricketts 1940 trip to the Sea of
 Cortez. This is the original R package, which includes the data
