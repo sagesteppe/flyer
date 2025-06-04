@@ -43,19 +43,25 @@ cab <- sfheaders::sf_polygon(
 
 hull <-  sfheaders::sf_polygon(
   data.frame(
-    x = c(1.5, 2.25, 7.5, 8.25, 7.25, 6,    5, 1.5),
+    x = c(1.5, 2.25, 7.5, 8.25, 7.25, 6,   5, 1.5),
     y = c(4.25, 3.25, 3.25, 5.25, 5.25, 5, 4.75, 4.25)
   )
 ) |>
   smoothr::smooth(method = 'ksmooth', smoothness = 0.15)
 
+windows <- data.frame(
+  x = c(7, 6.6, 6.2, 5.55, 6.6, 6.2, 5.55),
+  y = c(5.75, 5.7, 5.65, 5.55, 5.3, 5.25, 5.15)
+)|>
+  st_as_sf(coords = c('x', 'y')) |>
+  st_buffer(0.1)
 
 mast <- data.frame(
   x = c(4.25, 4.2),
   y = c(4, 7.5)
 ) |>
   sfheaders::sf_linestring() |>
-  st_buffer(0.02)
+  st_buffer(0.04)
 
 
 
@@ -126,8 +132,6 @@ under_the_sea <- bind_rows(wavebottom, seabottom)  %>%
 
 rm(wavebottom, waveline, y)
 
-ggplot() +
-  geom_sf(data = under_the_sea)
 
 # now they need some lines running through them or they look silly.
 
@@ -146,10 +150,6 @@ wave_contours <- wave_contours[classify_line_orientation(wave_contours)=='Y',]
 # now let's down sample these we have too many
 wave_contours <- wave_contours[
   sample(1:nrow(wave_contours), size = round(nrow(wave_contours)*0.55), 0), ]
-
-ggplot() +
-  geom_sf(data = wave_contours)
-
 
 ## and now create some sea stars !!! :-)
 
@@ -277,10 +277,10 @@ ggplot() +
 
 # use 1-9 to easily partition plot panels into thirds.
 plankton <- data.frame(
-  x = runif(75, min = 1, max = 9),
-  y = runif(75, min = 1, max = 3),
-  size = runif(75, min = 0.1, max = 1.2),
-  col = sample(names(cols[c(1,4)]), 75, replace = T, prob = c(1,1))
+  x = runif(100, min = 1, max = 9),
+  y = runif(100, min = 1, max = 3),
+  size = runif(100, min = 0.1, max = 1.2),
+  col = sample(names(cols[c(1,4)]), 100, replace = T, prob = c(1,1))
 ) |>
   st_as_sf(coords = c('x', 'y'))
 
@@ -294,7 +294,7 @@ ggplot() +
   geom_sf(data = stars, aes(color = col, size = size), shape = 8) +
   geom_sf(data = moon, fill = '#FBFCFF', col = '#DDC3D0') +
   geom_sf(data = st_sample(moon, size = 35), alpha = 0.2, col = '#DDC3D0') +
-  scale_size_continuous(range = c(0.2, 3)) +
+  scale_size_continuous(range = c(0.8, 5)) +
 
   geom_sf(data = under_the_sea, fill = '#003f5c') +
   # the ship and the sea
@@ -302,13 +302,14 @@ ggplot() +
   geom_sf(data = cab, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
   geom_sf(data = hull, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
   geom_sf(data = wave, fill = '#2c4875', col = '#531CB3', lwd = 1) +
+  geom_sf(data = windows, fill = '#00202e') +
   geom_sf(data = wave_contours, col = '#ffd380') +
 
   geom_sf(data = combined_lines, color = "#74A57F", linewidth = 1, alpha = 0.8) +
 
 
   # the tide pools
-  geom_sf(data = plankton, aes(color = col, size = size/10), shape = 20) +
+  geom_sf(data = plankton, aes(color = col, size = size/5), shape = 20) +
   geom_sf(data = seastars, aes(fill = col)) +
   geom_sf(data = seastrings) +
 
@@ -365,4 +366,5 @@ sticker(
   h_color = "#ffa600",  # white border (or choose another highlight color)
   filename = "../man/figures/flyer_hex_sticker.png"
 )
+
 
