@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=4,
+  fig.height=6
 )
 ```
 
@@ -31,7 +33,7 @@ remotes::install_github('sagesteppe/flyer')
 To explore the data we will load a couple packages for interacting with the data (sf, dplyr), and a whole slew of packages for plotting the data using ggplot2 (ggnewscale, ggrepel). 
 It might seem onerous to be installing all of these packages, but I bet once you see what they do you'll be quite excited to have them. 
 
-```{r setup}
+```{r setup, warning=FALSE}
 library(flyer)
 library(dplyr) # for general data handling
 library(sf) # for spatial data
@@ -96,6 +98,11 @@ theme_nautical <- function() {
     legend.spacing = unit(0.1, "line")
   )
 }
+
+bb <-st_bbox(
+    c(xmin = -121, xmax = -105, ymin = 19, ymax = 34.5),  crs = st_crs(4326)
+  )
+
 ```
 
 # the data sets 
@@ -118,7 +125,8 @@ head(land)
 ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() +
-  labs(title = 'land')
+  labs(title = 'land') + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 ```
 
 For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
@@ -129,7 +137,8 @@ land <- st_union(land)
 m <- ggplot() + 
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() + 
-  labs(title = 'st_union(land)')
+  labs(title = 'st_union(land)') + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 
 m
 ```
@@ -142,7 +151,8 @@ head(places)
 
 m <- m + 
   geom_sf(data = places)  +
-  labs(title = 'places', subtitle = '+ land')
+  labs(title = 'places', subtitle = '+ land') + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 m
 ```
 
@@ -165,7 +175,9 @@ m <- m +
   labs(
     x = NULL, y = NULL,
     title = 'geom_text_repel(places)', 
-    subtitle = '+ land + places')
+    subtitle = '+ land + places'
+    ) + 
+  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 
 m
 ```
@@ -381,7 +393,7 @@ ggplot() +
 ```
 
 
-```{r}
+```{r warning = FALSE}
 rm(graticNo, brks, theme_nautical, route, places, bb, landcover, lc_pal, land,
    protected, bathymetry, topography)
 ```

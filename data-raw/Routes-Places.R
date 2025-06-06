@@ -12,12 +12,10 @@ places <- read.csv('Places.csv') |>
     across(starts_with('date'), ~ lubridate::as_date(.x, format = "%m-%d-%Y"))) |>
   arrange(date_arrive)
 
-dput(places)
-
 ggplot() +
   geom_sf(data = places, aes(color = date_arrive))
 
-st_write(places, '../docs/places.gpkg', append = F)
+st_write(places, './places.gpkg', append = F)
 usethis::use_data(places, overwrite = TRUE)
 
 ################################################################################
@@ -76,11 +74,11 @@ rm(segs, sample_points, chai_route)
 # identify route directions from the route-ls-chai data set. we do this by
 # identifying the nearest 'trip-part' points
 
-route_dates <- places[4:25,'location_english'] |>
+route_dates <- places[2:25,'location_english'] |>
   st_drop_geometry() |>
   rename(destination = location_english) |>
   mutate(
-    end = st_nearest_feature(places[4:25,], split_lines)
+    end = st_nearest_feature(places[2:25,], split_lines)
   ) |>
   mutate(
     start = lag(end, n = 1L)+1, .before = end,
@@ -103,7 +101,7 @@ route <- route_dates[split_lines, roll = T] |>
   group_by(destination) |>
   summarize(geometry = st_union(geometry))
 
-st_write(route, '../docs/route.gpkg', append = F)
+st_write(route, './route.gpkg', append = F)
 rm(split_lines)
 
 usethis::use_data(route, overwrite = TRUE)
