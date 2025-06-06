@@ -35,10 +35,10 @@ moon <- data.frame(
 
 cab <- sfheaders::sf_polygon(
   data.frame(
-    x = c(7.5, 4.25, 4.25, 7.5, 7.5),
+    x = c(7.5, 4.75, 4.75, 7.5, 7.5),
     y = c(4.2, 4.75, 5.75, 6, 4.2)
   )
-)|>
+) |>
   smoothr::smooth(method = 'ksmooth', smoothness = 0.15)
 
 hull <-  sfheaders::sf_polygon(
@@ -57,17 +57,45 @@ windows <- data.frame(
   st_buffer(0.1)
 
 mast <- data.frame(
-  x = c(4.25, 4.2),
+  x = c(4.75, 4.6),
   y = c(4, 7.5)
 ) |>
   sfheaders::sf_linestring() |>
   st_buffer(0.04)
 
+hull_boards <- bind_rows(
+  st_buffer(hull, dist = -0.75),
+  st_buffer(hull, dist = -0.6),
+  st_buffer(hull, dist = -0.45),
+  st_buffer(hull, dist = -0.3),
+  st_buffer(hull, dist = -0.15)
+) |>
+  st_cast('MULTILINESTRING') |>
+  st_cast('LINESTRING') |>
+  stplanr::line_segment(segment_length =  0.05, use_rsgeo = FALSE)
 
+hull_boards <- hull_boards[classify_line_orientation(hull_boards)=='Y',]
+hull_boards <- hull_boards[
+  sample(1:nrow(hull_boards), size = round(nrow(hull_boards)*0.85), 0), ]
 
+cab_boards <- bind_rows(
+  st_buffer(cab, dist = -0.45),
+  st_buffer(cab, dist = -0.3),
+  st_buffer(cab, dist = -0.15)
+) |>
+  st_cast('MULTILINESTRING') |>
+  st_cast('LINESTRING') |>
+  stplanr::line_segment(segment_length =  0.05, use_rsgeo = FALSE)
+cab_boards <- cab_boards[classify_line_orientation(cab_boards)=='Y',]
+cab_boards <- cab_boards[
+  sample(1:nrow(hull_boards), size = round(nrow(cab_boards)*0.9), 0), ]
+
+ggplot() +
+  geom_sf(data = cab) +
+  geom_sf(data = cab_boards)
 ########################################### now the strings for time.
 # Define end point
-end_point <- c(4.2, 7.5)
+end_point <- c(4.6, 7.5)
 
 # Define start points
 start_A <- c(1.5, 4.25)
@@ -134,9 +162,8 @@ rm(wavebottom, waveline, y)
 
 
 # now they need some lines running through them or they look silly.
-
+ wv <-
 wave_contours <- bind_rows(
- # st_buffer(wave, dist = -0.45),
   st_buffer(wave, dist = -0.41),
   st_buffer(wave, dist = -0.24),
   st_buffer(wave, dist = -0.11)
@@ -284,7 +311,7 @@ plankton <- data.frame(
 ) |>
   st_as_sf(coords = c('x', 'y'))
 
-
+plankton <- plankton[lengths(st_intersects(plankton, wave))==0 , ]
 
 ################################################################################
 ##                 finally we can create our plot !!!                       ####
@@ -300,7 +327,9 @@ ggplot() +
   # the ship and the sea
   geom_sf(data= mast, fill = '#ffd380')+
   geom_sf(data = cab, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
+  geom_sf(data = cab_boards, col = '#74A57F', lwd = 0.2) +
   geom_sf(data = hull, fill = '#ffd380', col = '#74A57F', lwd = 0.8) +
+  geom_sf(data = hull_boards, col = '#74A57F', lwd = 0.2) +
   geom_sf(data = wave, fill = '#2c4875', col = '#531CB3', lwd = 1) +
   geom_sf(data = windows, fill = '#00202e') +
   geom_sf(data = wave_contours, col = '#ffd380') +
@@ -346,23 +375,25 @@ ggsave('flyer_logo.png', height = 1640, width = 1640, units = 'px')
 
 # reimport to make the sticker
 
-font_add_google("David Libre", "David Libre")
+
+font_add_google("Montserrat Alternates", "Montserrat Alternates", bold.wt = 900)
 
 sticker(
   subplot = "flyer_logo.png",
   package = "flyer",
-  p_size = 56,
+  p_size = 46,
   p_color = "#bc5090",
-  p_family = "David Libre",  # Replace with your Google font family name
+  p_fontface = 'bold',
+  p_family = "Montserrat Alternates",  # Replace with your Google font family name
   s_x = 1,
   s_y = 1.12,
   s_width = 1,
   s_height = 1,
 
   p_x = 1,
-  p_y = 0.9,
+  p_y = 1,
   white_around_sticker = TRUE,
-  h_fill = "#222222",  # dark background for white text to pop
+  h_fill = "#003f5c",  # dark background for white text to pop
   h_color = "#ffa600",  # white border (or choose another highlight color)
   filename = "../man/figures/flyer_hex_sticker.png"
 )
