@@ -274,3 +274,4 @@ create_concave_line <- function(start_x, start_y, end_x, end_y, n_points = 20, c
 
   return(cbind(x_coords, y_coords))
 }
+

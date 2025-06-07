@@ -33,7 +33,7 @@ remotes::install_github('sagesteppe/flyer')
 To explore the data we will load a couple packages for interacting with the data (sf, dplyr), and a whole slew of packages for plotting the data using ggplot2 (ggnewscale, ggrepel). 
 It might seem onerous to be installing all of these packages, but I bet once you see what they do you'll be quite excited to have them. 
 
-```{r setup, warning=FALSE}
+```{r setup, warning=FALSE, message=FALSE}
 library(flyer)
 library(dplyr) # for general data handling
 library(sf) # for spatial data
@@ -47,7 +47,6 @@ library(ggspatial) # compasses and scale bars.
 We'll modify the number of graticules right off the bat, note that the `pretty` function does not always return the requested `n`, so... 
 
 ```{r define a carto ggplot theme}
-
 graticNo <- function(polygon, nx, ny){
   
   bb <- round(st_bbox(polygon), 1)
@@ -68,7 +67,6 @@ graticNo <- function(polygon, nx, ny){
 }
 
 brks <- graticNo(polygon = places, nx = 4, ny = 4)
-
 
 theme_nautical <- function() {
   theme(
@@ -101,7 +99,7 @@ theme_nautical <- function() {
 
 bb <-st_bbox(
     c(xmin = -121, xmax = -105, ymin = 19, ymax = 34.5),  crs = st_crs(4326)
-  )
+)
 
 ```
 
@@ -115,7 +113,7 @@ are very simple!
 But before we pull up `places` and `routes` let's pull up the `land` data set so we have some context to plot them on. 
 
 
-#### land 
+### land 
 
 We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
 
@@ -143,7 +141,7 @@ m <- ggplot() +
 m
 ```
 
-#### places
+### places
 
 ```{r plot the places}
 data(places)
@@ -186,7 +184,7 @@ Also, because the package is attached we can also just start using the data, whi
 In other words we don't need to call `data(object)` on the data sets, we can just use them directly - such as viewing them by calling `head(object)`. 
 We are going to use this direct approach for the remainder of the vignette. 
 
-#### route 
+### route 
 
 ```{r show the routes, warning=F}
 head(route)
@@ -351,7 +349,6 @@ ggplot() +
 Additionally, information on protected areas of Mexico are also included. 
 
 ```{r Protected areas, warning = F}
-
 protected <- st_crop(protected, bb)
 
 ggplot() + 
@@ -363,13 +360,13 @@ ggplot() +
   scale_fill_manual('Reserve', values = c('Terrestrial' = '#417B5A', 'Marine' = '#DA7635')) + 
   ggrepel::geom_text_repel(
     data = protected,
-    aes(label = name, geometry = geometry),
+    aes(label = name_wrapped, geometry = geometry),
     stat = "sf_coordinates",
-    size = 1.5
+    size = 2.5
     ) + 
   labs(x = NULL, y = NULL, title = 'protected', subtitle = '+ land') + 
 
-  theme_nautical()  + 
+  theme_nautical()  #+ 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 

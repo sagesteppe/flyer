@@ -1,5 +1,6 @@
 # protected areas
 setwd('~/Documents/flyer/data-raw')
+source('./functions.R')
 
 library(sf)
 library(tidyverse)
@@ -32,6 +33,6 @@ format(object.size(mx), units = 'MB')
 protected <- mx
 
 usethis::use_data(protected, overwrite = TRUE)
-st_write(protected, '../docs/protected.gpkg', append = F)
+st_write(protected, '../data_dl/protected.gpkg', append = F)
 
 rm(mx, bb, p, protected)
