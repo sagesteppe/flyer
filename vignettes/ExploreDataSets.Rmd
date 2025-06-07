@@ -11,8 +11,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.width=4,
-  fig.height=6
+  fig.width=5,
+  fig.height=7
 )
 ```
 
@@ -160,6 +160,7 @@ The places seem like they will be better treated as text labels - we can apply t
 
 ```{r plot places as text, warning=F}
 m <- m + 
+  coord_sf(xlim = c(-118, -106), ylim = c(22, 31)) +
   ggrepel::geom_text_repel(
     data = places,
     aes(label = location_espanol, geometry = geometry),
@@ -176,8 +177,7 @@ m <- m +
     x = NULL, y = NULL,
     title = 'geom_text_repel(places)', 
     subtitle = '+ land + places'
-    ) + 
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
+    )
 
 m
 ```
@@ -209,6 +209,15 @@ While some of the data for the start end of the trip is included, such as an ent
 Basically, too much data would make the package too cumbersome to fit on CRAN. 
 In my mind the maximum map area reaches San Diego in the North
 
+```{r}
+date_scale <- as.Date(quantile(as.numeric(route$date_arrive), na.rm = T, probs = c(0.1, 0.5, 0.9)))
+dates <- c(
+  expression(paste("March ", 16^th)), 
+  expression(paste("Mar. ", 28^th)), 
+  expression(paste("April ", 11^th))
+  )
+```
+
 ```{r subset bounding box, warning = F}
 bb <- st_bbox(
   c(xmin = -114, xmax = -108.5, ymin = 22.5, ymax = 30.5),
@@ -224,13 +233,18 @@ m <- ggplot()  +
   geom_sf(data = land, fill = '#F8F6F0') + 
   theme_nautical() +
   geom_sf(data = route, aes(color = date_arrive)) +  
-  scale_color_date('Date') + 
+ # scale_color_date() +  # alteratively just use this and default labels. 
+  scale_color_continuous('Date',
+      breaks = date_scale,
+      labels = dates
+      )  + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
   
   labs(
     title = 'route', 
     subtitle = '+ land')
 
+  
 m
 ```
 
@@ -257,8 +271,12 @@ m <- ggplot() +
     alpha = 0.7, # make the backing more transparent
     label.size = NA, # remove the backing borders
     label.padding = 0.1, # reduce space between label borders and text
-    size = 1.5 # make the font smaller. 
+    size = 2.5 # make the font smaller. 
     ) + 
+    scale_color_continuous('Date',
+      breaks = date_scale,
+      labels = dates
+      ) + 
   
   # now let's add in our customized graticules too. 
   scale_x_continuous(breaks = brks$x) +
@@ -302,7 +320,11 @@ ggplot() +
 
   geom_sf(data = places) +  
   geom_sf(data = route, aes(color = date_arrive)) +
-  scale_color_date('Date') + 
+  labs(title = 'topography', subtitle = '+ land + bathymetry')+
+  scale_color_continuous('Date',
+      breaks = date_scale,
+      labels = dates
+      ) + 
   theme_nautical() + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 
@@ -319,9 +341,10 @@ We also include some quick colors to help with mapping these classes.
 ```{r}
 ggplot() + 
   geom_sf(data = landcover, aes(fill = class), color = NA) + 
-  scale_fill_manual('Class', values = lc_pal) + 
+  scale_fill_manual('Class', values = lc_pal, breaks = names(lc_pal[c(1:8, 9)])) + 
   theme_nautical() + 
   labs(title = 'landcover', subtitle = '+ lc_pal') + 
+  guides(fill = guide_legend(nrow = 3)) + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 
@@ -361,15 +384,20 @@ ggplot() +
   geom_sf(data = landcover, aes(fill = class)) + 
   scale_fill_manual('Class', values = lc_pal) + 
   geom_sf(data = land, fill = '#F8F6F0', alpha = 0.5) +  # helps to dull the landcover for this map. 
-  
+  guides(fill="none") + 
+
   geom_sf(data = bathymetry, aes(color = elevation), lwd = 0.25) + 
-  geom_sf(data = topography,  aes(color = elevation), lwd = 0.25) + 
-  scale_color_distiller('Elevation', palette = "Spectral") +
+  geom_sf(data = topography,  aes(color = elevation), lwd = 0.25, color = 'black') + 
+#  scale_color_distiller('Elevation', palette = "Spectral") +
+  guides(color='none') + 
   ggnewscale::new_scale_colour() + 
   
   # the story 
   geom_sf(data = route, aes(color = date_arrive)) +
-  scale_color_date('Date') +
+    scale_color_continuous('Date',
+      breaks = date_scale,
+      labels = dates
+      ) + 
 
   geom_sf(data = places, shape = 5, size = 1.5, color = '#222823') +   
   ggrepel::geom_label_repel(
