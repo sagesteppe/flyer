@@ -360,7 +360,7 @@ ggplot() +
   scale_fill_manual('Reserve', values = c('Terrestrial' = '#417B5A', 'Marine' = '#DA7635')) + 
   ggrepel::geom_text_repel(
     data = protected,
-    aes(label = name_wrapped, geometry = geometry),
+    aes(label = name, geometry = geometry),
     stat = "sf_coordinates",
     size = 2.5
     ) + 
@@ -416,7 +416,6 @@ ggplot() +
   labs(title = 'A map', subtitle = 'Ricketts <3 giardiniera', x = NULL, y = NULL)
 
 ```
-
 
 ```{r warning = FALSE}
 rm(graticNo, brks, theme_nautical, route, places, bb, landcover, lc_pal, land,
