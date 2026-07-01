@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Example geospatial data for cartography • flyer</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Example geospatial data for cartography">
 <meta name="description" content="I often find that I need new geospatial data for playing around with cartographic tricks. A normal challenge for me is plotting points and linestrings on large geographic expanses. Here I digitize the locations from The Log from the Sea of Cortez, Ed Ricketts and John Steinbecks legendary collection trip.">
@@ -36,6 +36,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/ExploreDataSets.html">Exploring the data sets</a></li>
+    <li><a class="dropdown-item" href="articles/InteractiveMap.html">An interactive map</a></li>
+    <li><a class="dropdown-item" href="articles/NightMap.html">A dark-mode map</a></li>
   </ul>
 </li>
       </ul>
@@ -56,53 +58,62 @@
 <div class="section level1">
 <div class="page-header"><h1 id="flyer-">flyer <img src="reference/figures/flyer_hex_sticker.png" align="right" height="138"><a class="anchor" aria-label="anchor" href="#flyer-"></a>
 </h1></div>
-<p>Geographic data from Steinbeck and Ricketts 1940 trip to the Sea of Cortez. This is the original R package, which includes the data cleaning, while the python package just includes the data.</p>
+<p>Geographic data from Steinbeck and Ricketts’ 1940 expedition to the Sea of Cortez. This is the original R package, which includes the data-cleaning code; the Python package contains only the data.</p>
 </div>
 <div class="section level1">
 <h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h1>
-<p><code>flyer</code> is available only on github. It can be installed using remotes or devtools like so:</p>
+<p><code>flyer</code> is available only on GitHub. It can be installed using <code>remotes</code> or <code>devtools</code> like so:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'devtools'</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'sagesteppe/flyer'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co"># remotes is very similar and a good alternative for this use case.</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">'remotes'</span>) </span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">'sagesteppe/flyer'</span>)</span></code></pre></div>
-<p>Once installed it can be attached for use like any other package from github or CRAN</p>
+<p>Once installed, it can be attached like any other package from GitHub or CRAN:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(flyer)</span></code></pre></div>
 <div class="section level2">
 <h2 id="data-accuracy">Data Accuracy<a class="anchor" aria-label="anchor" href="#data-accuracy"></a>
 </h2>
-<p>The original author is not a marine ecologist, nor nautically inclined; rather they appreciate the journey as a philosophical exploration of ecology.</p>
-<p>The goal of this package is to provide a readily available data set for cartographic activities. In particular, a data set composed of point, and linestring geometries, rather than polygons for typical choropleth applications - such as the North Carolina SIDS data set which comes with <code>sf</code>. Additional advantages of the data set is that it follows a sequential series of events, allowing for intelligent use of story maps, interactive, or animations.</p>
-<p>Consider the package very alive, which is to say I am very happy to merge increasingly accurate collection localities, or routes. I have only read the <em>Log form the Sea of Cortez</em>, and not <em>Sea of Cortez: A Leisurely Journal of Travel and Research</em>, or any of the other true catalogs from the voyage. I have quickly poked through Brusca 2020, a wonderful read, which served as the definitive source for locations.</p>
-<p>The ‘route’ of the Western Flyer is liberally digitized and redrawn from Penguin Classics 1995 edition of <em>The Log from the Sea of Cortez</em>; of which I am not sure of the actual accuracy of. I further embellished curvatures and shapes to make the data set aesthetically appealing. If you think you know the real route, as I guess would have been supplied by the <em>Flyer</em> (actual nautical book), let me know and I am happy to try and digitize it when I can find the time. However, if that happens, I will maintain both the aesthetic, and the authentic routes as data sets in the package.</p>
+<p>The original author is not a marine ecologist, nor nautically inclined; rather, they appreciate the journey as a philosophical exploration of ecology.</p>
+<p>The goal of this package is to provide a readily available data set for cartographic activities — in particular, one composed of point and linestring geometries rather than the polygons typical of choropleth applications (such as the North Carolina SIDS data set that ships with <code>sf</code>). A further advantage of the data set is that it follows a sequential series of events, lending itself to story maps, interactive maps, and animations.</p>
+<p>Consider the package very much alive: I am happy to merge increasingly accurate collection localities or routes. I have only read <em>The Log from the Sea of Cortez</em>, and not <em>Sea of Cortez: A Leisurely Journal of Travel and Research</em>, or any of the other true catalogs from the voyage. I have also quickly poked through Brusca 2020 — a wonderful read that served as the definitive source for locations.</p>
+<p>The ‘route’ of the Western Flyer is liberally digitized and redrawn from the Penguin Classics 1995 edition of <em>The Log from the Sea of Cortez</em>, the accuracy of which I am unsure. I further embellished curvatures and shapes to make the data set aesthetically appealing. If you think you know the real route — as I imagine would have been recorded in the <em>Flyer</em>’s actual ship’s log — let me know and I’ll happily digitize it when I can find the time. If that happens, I will maintain both the aesthetic and the authentic routes as data sets in the package.</p>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
 </h2>
-<p>As mentioned, I use this data set for testing our cartographic approaches. If you are a marine biologist, into data viz, or mariner and think you have some insight - but are hesitant about this whole Github thing - shoot me an email and we can try and figure out how to incorporate your perspectives.</p>
+<p>I use this data set for testing our cartographic approaches. If you are a marine biologist, a mariner, or into data viz, and think you have some insight — but are hesitant about this whole Github thing — shoot me an email and we can figure out how to incorporate your perspective.</p>
 </div>
 <div class="section level2">
 <h2 id="download-files-directly">Download files directly<a class="anchor" aria-label="anchor" href="#download-files-directly"></a>
 </h2>
-<p>If you just want the data <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download class="external-link">you can grab it here</a></p>
+<p>If you just want the data, two formats are available:</p>
+<ul>
+<li>
+<strong>GeoPackage bundle</strong> — one zip containing a <code>.gpkg</code> per data set: <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download class="external-link">flyer-geodata.zip</a>
+</li>
+<li>
+<strong>GeoJSON</strong> — individual <code>.geojson</code> files (one per data set), browseable at <a href="https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson" class="external-link"><code>data_dl/geojson/</code></a>
+</li>
+</ul>
+<p>All layers are in EPSG:4326 (WGS 84). The <code>landcover_palette.csv</code> file included in both formats maps landcover classes to hex colors.</p>
 </div>
 <div class="section level2">
 <h2 id="works-cited">Works Cited<a class="anchor" aria-label="anchor" href="#works-cited"></a>
 </h2>
-<p>Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez Expedition, with annotated lists of species and collection sites”” <em>Journal of the Southwest</em> 62, no. 2 (2020): 218-334.</p>
+<p>Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez Expedition, with annotated lists of species and collection sites.” <em>Journal of the Southwest</em> 62, no. 2 (2020): 218-334.</p>
 <p><a href="https://naturalhistory.si.edu/sites/default/files/media/file/brusca2020seaofcortezexpeditionwithjswfrontmatter.pdf" class="external-link">freely available here</a></p>
 <p>Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy Burnett, and Jon Christensen. “Remembering the Gulf: changes to the marine communities of the Sea of Cortez since the Steinbeck and Ricketts expedition of 1940” <em>Frontiers in Ecology and the Environment</em> 6, no. 7 (2008): 372-379.</p>
 <p><a href="https://www.geo.arizona.edu/rcncrd/documents/Remembering_the_Gulf_Pub_Fe_08.pdf" class="external-link">An open-access <em>nearly</em> final version is here</a></p>
-<p>Steinbeck, John. <em>The log from the Sea of Cortez</em> Penguin, 1995</p>
+<p>Steinbeck, John. <em>The Log from the Sea of Cortez.</em> Penguin, 1995.</p>
 <p><a href="https://www.mapdevelopers.com/us-public-library-map.php" class="external-link">Available from your local library</a>, <a href="https://www.theindependentbookseller.com/bookstore-map.html" class="external-link">an independent bookstore</a>, or a <a href="https://stores.barnesandnoble.com/?view=map" class="external-link">Barnes &amp; Noble</a> near you.</p>
 </div>
 <div class="section level2">
 <h2 id="spatial-data-sources">Spatial Data Sources<a class="anchor" aria-label="anchor" href="#spatial-data-sources"></a>
 </h2>
 <p>CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of Mexico, September 2024’, National Commission for the Knowledge and Use of Biodiversity. Mexico City, Mexico.</p>
-<p>GEBCO Compilation Group (2024) GEBCO 2024 Grid (<a href="doi:10.5285/1c44ce99-0a0d-5f4f-" class="uri">doi:10.5285/1c44ce99-0a0d-5f4f-</a> e063-7086abc0ea0f).</p>
+<p>GEBCO Compilation Group (2024) GEBCO 2024 Grid (<a href="doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f" class="uri">doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f</a>).</p>
 <p>Robinson, N., Regetz, J., and Guralnick, R. P. (2014). EarthEnv-DEM90: A nearly-global, void-free, multi-scale smoothed, 90m digital elevation model from fused ASTER and SRTM data. ISPRS Journal of Photogrammetry and Remote Sensing, 87:2014, 57-67. Available at <a href="http://www.sciencedirect.com/science/article/pii/S0924271613002360" class="external-link uri">http://www.sciencedirect.com/science/article/pii/S0924271613002360</a></p>
 <p>Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover product for biodiversity and ecosystem modeling. Global Ecology and Biogeography 23(9): 1031-1045.</p>
 </div>
@@ -147,7 +158,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
