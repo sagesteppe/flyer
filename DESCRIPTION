@@ -22,6 +22,7 @@ Suggests:
     ggrepel,
     ggspatial,
     leaflet,
-    leaflet.extras2
+    leaflet.extras2,
+    yyjsonr
 VignetteBuilder: knitr
 URL: https://sagesteppe.github.io/flyer
