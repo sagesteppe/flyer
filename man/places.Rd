@@ -3,24 +3,24 @@
 \docType{data}
 \name{places}
 \alias{places}
-\title{Places which the Western Flyer passed through on Ricketts and Steinbecks journey to the sea of Cortez.}
+\title{Places the Western Flyer passed through on Ricketts and Steinbeck's journey to the Sea of Cortez.}
 \format{
-sf/tibble/dataframe with two date columns.
+An sf tibble with one row per stop.
 \describe{
-\item{location-espanol}{A currently used place name in spanish.}
-\item{location-english}{The name of the location used in the book.}
-\item{collect}{Boolean. Whether the crew collected specimens there.}
-\item{date_arrive}{The date the Western flyer arrived (or passed the place).}
-\item{date_depart}{The date the Western flyer departed, or passed the place.}
-\item{geometry}{The geometry of the place, not 100\% accurate, and often slightly off shore.}
+\item{location_espanol}{The current place name, in Spanish.}
+\item{location_english}{The place name used in the book.}
+\item{collect}{Logical. Whether the crew collected specimens there.}
+\item{date_arrive}{The date the Western Flyer arrived (or passed the place).}
+\item{date_depart}{The date the Western Flyer departed (or passed the place).}
+\item{geometry}{The point geometry -- not perfectly accurate, and often slightly offshore.}
 }
 }
 \usage{
 places
 }
 \description{
-A dataset with place names provided both following the text, and more modern Mexican place names in Spanish.
-Note that several of the book place names seem somewhat peculiar, but the localities seem well matched to the current names in spanish.
+A dataset providing both the place names used in the book and the modern Mexican equivalents in Spanish.
+Several of the book place names are a bit peculiar, but the localities match up well with the current Spanish names.
 }
 \examples{
 data(places)

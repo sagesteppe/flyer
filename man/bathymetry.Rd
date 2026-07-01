@@ -5,19 +5,19 @@
 \alias{bathymetry}
 \title{A stylized bathymetric data set of the Sea of Cortez and adjacent areas.}
 \format{
-sf/tibble/dataframe, with a single variable detailing the elevation in meters.
+An sf tibble, with a single attribute giving elevation in meters (depth is stored as negative elevation).
 \describe{
-\item{Depth}{Depth of the contour line in meters.}
-\item{geometry}{a sf linestring, bathymetric contours.}
+\item{elevation}{Elevation of the contour line, in meters -- negative values below sea level.}
+\item{geometry}{An sf linestring -- a bathymetric contour.}
 }
 }
 \usage{
 bathymetry
 }
 \description{
-A stylized dataset of bathymetric contours for mapping (not analytical) applications.
-Data were aggregated, contoured, had small pieces were removed, simplified, corner cut, and simplified again.
-The contours were generated from GEBCO Compilation Group (2024) GEBCO 2024 Grid (doi:10.5285/1c44ce99-0a0d-5f4f- e063-7086abc0ea0f).
+A stylized dataset of bathymetric contours, intended for mapping (not analytical) applications.
+The source raster was aggregated, contoured, filtered for small pieces, simplified, corner-cut, and simplified again.
+The contours were generated from GEBCO Compilation Group (2024) GEBCO 2024 Grid (doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f).
 }
 \examples{
 data(bathymetry)

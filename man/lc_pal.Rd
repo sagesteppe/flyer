@@ -5,13 +5,13 @@
 \alias{lc_pal}
 \title{Color palette for landcover data}
 \format{
-An object of class \code{character} of length 12.
+A named character vector of hex color codes, with names matching the levels of \code{landcover$class}.
 }
 \usage{
 lc_pal
 }
 \description{
-Colors from coolors, hand selected by me, to look OK.
+A hand-picked set of hex colors (via coolors.co) intended to pair reasonably with the \code{landcover} classes.
 }
 \examples{
 data(lc_pal)

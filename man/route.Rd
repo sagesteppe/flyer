@@ -3,20 +3,20 @@
 \docType{data}
 \name{route}
 \alias{route}
-\title{A stylized route of the Western Flyer on Ricketts and Steinbecks journey to the sea of Cortez.}
+\title{A stylized route of the Western Flyer on Ricketts and Steinbeck's journey to the Sea of Cortez.}
 \format{
-sf/tibble/dataframe, with a single variable to join to the 'places' data set (if desired).
+An sf tibble, with a single attribute that can be joined to the \code{places} data set (if desired).
 \describe{
-\item{Destination}{The name of locations used in the book. Can be used to join to the "places" dataset to get dates of travel.}
-\item{geometry}{a sf linestring, from the previous destination to the current one.}
+\item{destination}{The place name used in the book. Can be joined to \code{places$location_english} to pick up dates of travel.}
+\item{geometry}{An sf linestring, running from the previous destination to the current one.}
 }
 }
 \usage{
 route
 }
 \description{
-A dataset with a destination and a route to that destination.
-Note that the route is fictionalized from the book, and modified to be aesthetically pleasing, rather than nautically accurate.
+A dataset with one linestring segment per destination.
+Note that the route is fictionalized from the book and tweaked to be aesthetically pleasing, rather than nautically accurate.
 }
 \examples{
 data(route)

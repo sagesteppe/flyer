@@ -1,4 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml)
@@ -11,14 +12,14 @@ developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.re
 
 # flyer <img src="man/figures/flyer_hex_sticker.png" align="right" height="138" />
 
-Geographic data from Steinbeck and Ricketts 1940 trip to the Sea of
-Cortez. This is the original R package, which includes the data
-cleaning, while the python package just includes the data.
+Geographic data from Steinbeck and Ricketts’ 1940 expedition to the Sea
+of Cortez. This is the original R package, which includes the
+data-cleaning code; the Python package contains only the data.
 
 # Installation
 
-`flyer` is available only on github. It can be installed using remotes
-or devtools like so:
+`flyer` is available only on GitHub. It can be installed using `remotes`
+or `devtools` like so:
 
     install.packages('devtools')
     devtools::install_github('sagesteppe/flyer')
@@ -27,60 +28,65 @@ or devtools like so:
     install.packages('remotes') 
     remotes::install_github('sagesteppe/flyer')
 
-Once installed it can be attached for use like any other package from
-github or CRAN
+Once installed, it can be attached like any other package from GitHub or
+CRAN:
 
     library(flyer)
 
 ## Data Accuracy
 
 The original author is not a marine ecologist, nor nautically inclined;
-rather they appreciate the journey as a philosophical exploration of
+rather, they appreciate the journey as a philosophical exploration of
 ecology.
 
 The goal of this package is to provide a readily available data set for
-cartographic activities. In particular, a data set composed of point,
-and linestring geometries, rather than polygons for typical choropleth
-applications - such as the North Carolina SIDS data set which comes with
-`sf`. Additional advantages of the data set is that it follows a
-sequential series of events, allowing for intelligent use of story maps,
-interactive, or animations.
+cartographic activities — in particular, one composed of point and
+linestring geometries rather than the polygons typical of choropleth
+applications (such as the North Carolina SIDS data set that ships with
+`sf`). A further advantage of the data set is that it follows a
+sequential series of events, lending itself to story maps, interactive
+maps, and animations.
 
-Consider the package very alive, which is to say I am very happy to
-merge increasingly accurate collection localities, or routes. I have
-only read the *Log form the Sea of Cortez*, and not *Sea of Cortez: A
-Leisurely Journal of Travel and Research*, or any of the other true
-catalogs from the voyage. I have quickly poked through Brusca 2020, a
-wonderful read, which served as the definitive source for locations.
+Consider the package very much alive: I am happy to merge increasingly
+accurate collection localities or routes. I have only read *The Log from
+the Sea of Cortez*, and not *Sea of Cortez: A Leisurely Journal of
+Travel and Research*, or any of the other true catalogs from the voyage.
+I have also quickly poked through Brusca 2020 — a wonderful read that
+served as the definitive source for locations.
 
 The ‘route’ of the Western Flyer is liberally digitized and redrawn from
-Penguin Classics 1995 edition of *The Log from the Sea of Cortez*; of
-which I am not sure of the actual accuracy of. I further embellished
-curvatures and shapes to make the data set aesthetically appealing. If
-you think you know the real route, as I guess would have been supplied
-by the *Flyer* (actual nautical book), let me know and I am happy to try
-and digitize it when I can find the time. However, if that happens, I
-will maintain both the aesthetic, and the authentic routes as data sets
-in the package.
+the Penguin Classics 1995 edition of *The Log from the Sea of Cortez*,
+the accuracy of which I am unsure. I further embellished curvatures and
+shapes to make the data set aesthetically appealing. If you think you
+know the real route — as I imagine would have been recorded in the
+*Flyer*’s actual ship’s log — let me know and I’ll happily digitize it
+when I can find the time. If that happens, I will maintain both the
+aesthetic and the authentic routes as data sets in the package.
 
 ## Contributing
 
-As mentioned, I use this data set for testing our cartographic
-approaches. If you are a marine biologist, into data viz, or mariner and
-think you have some insight - but are hesitant about this whole Github
-thing - shoot me an email and we can try and figure out how to
-incorporate your perspectives.
+I use this data set for testing our cartographic approaches. If you are
+a marine biologist, a mariner, or into data viz, and think you have some
+insight — but are hesitant about this whole Github thing — shoot me an
+email and we can figure out how to incorporate your perspective.
 
 ## Download files directly
 
-If you just want the data
-<a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>you
-can grab it here</a>
+If you just want the data, two formats are available:
+
+- **GeoPackage bundle** — one zip containing a `.gpkg` per data set:
+  <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>flyer-geodata.zip</a>
+- **GeoJSON** — individual `.geojson` files (one per data set),
+  browseable at
+  [`data_dl/geojson/`](https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson)
+
+All layers are in EPSG:4326 (WGS 84). The `landcover_palette.csv` file
+included in both formats maps landcover classes to hex colors.
 
 ## Works Cited
 
 Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
-Expedition, with annotated lists of species and collection sites””
+Expedition, with annotated lists of species and collection sites.”
 *Journal of the Southwest* 62, no. 2 (2020): 218-334.
 
 [freely available
@@ -95,7 +101,7 @@ expedition of 1940” *Frontiers in Ecology and the Environment* 6, no. 7
 [An open-access *nearly* final version is
 here](https://www.geo.arizona.edu/rcncrd/documents/Remembering_the_Gulf_Pub_Fe_08.pdf)
 
-Steinbeck, John. *The log from the Sea of Cortez* Penguin, 1995
+Steinbeck, John. *The Log from the Sea of Cortez.* Penguin, 1995.
 
 [Available from your local
 library](https://www.mapdevelopers.com/us-public-library-map.php), [an
@@ -111,7 +117,7 @@ September 2024’, National Commission for the Knowledge and Use of
 Biodiversity. Mexico City, Mexico.
 
 GEBCO Compilation Group (2024) GEBCO 2024 Grid
-(<doi:10.5285/1c44ce99-0a0d-5f4f-> e063-7086abc0ea0f).
+(<doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f>).
 
 Robinson, N., Regetz, J., and Guralnick, R. P. (2014). EarthEnv-DEM90: A
 nearly-global, void-free, multi-scale smoothed, 90m digital elevation

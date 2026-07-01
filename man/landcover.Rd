@@ -5,9 +5,9 @@
 \alias{landcover}
 \title{Major landcover classes of Western Mexico}
 \format{
-sf/tibble/dataframe, with a handful of variables briefly describing each locality.
+An sf tibble with one row per landcover polygon.
 \describe{
-\item{class}{Name of the class, slightly modified in several instances. }
+\item{class}{Name of the landcover class (slightly renamed from the source in a few cases).}
 \item{geometry}{A simplified polygon geometry.}
 }
 }
@@ -15,7 +15,7 @@ sf/tibble/dataframe, with a handful of variables briefly describing each localit
 landcover
 }
 \description{
-A simplified data set of landcover types (for global usage) from EarthEnv.
+A simplified data set of landcover types, derived from the global EarthEnv product.
 Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover product for biodiversity and ecosystem modeling. Global Ecology and Biogeography 23(9): 1031-1045.
 }
 \examples{

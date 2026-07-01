@@ -7,12 +7,12 @@ Description: I often find that I need new geospatial data for playing around wit
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 LazyData: true
-Suggests: 
-    sf, 
+Suggests:
+    sf,
     dplyr,
     ggplot2,
     knitr,
@@ -20,6 +20,8 @@ Suggests:
     devtools,
     ggnewscale,
     ggrepel,
-    ggspatial
+    ggspatial,
+    leaflet,
+    leaflet.extras2
 VignetteBuilder: knitr
 URL: https://sagesteppe.github.io/flyer

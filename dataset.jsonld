@@ -1,0 +1,148 @@
+{
+  "@context": "https://schema.org/",
+  "@type": "Dataset",
+  "name": "flyer: Geographic data from the 1940 Ricketts-Steinbeck Sea of Cortez expedition",
+  "description": "Digitized locations, route, and supporting cartographic layers (land, landcover, bathymetry, topography, protected areas) from Ed Ricketts and John Steinbeck's 1940 collection trip to the Sea of Cortez, as described in The Log from the Sea of Cortez. Intended as sample geospatial data for cartographic examples and data-visualization tutorials.",
+  "url": "https://sagesteppe.github.io/flyer/",
+  "sameAs": "https://github.com/sagesteppe/flyer",
+  "identifier": "https://github.com/sagesteppe/flyer",
+  "creator": {
+    "@type": "Person",
+    "name": "Reed Clark Benkendorf",
+    "email": "reedbenkendorf2021@u.northwestern.edu",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Chicago Botanic Garden"
+    }
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true,
+  "keywords": [
+    "cartography",
+    "geospatial",
+    "sample data",
+    "Sea of Cortez",
+    "Gulf of California",
+    "Baja California",
+    "Steinbeck",
+    "Ricketts",
+    "Western Flyer",
+    "sf",
+    "R package",
+    "GeoJSON",
+    "GeoPackage",
+    "python"
+  ],
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "Gulf of California and Baja California, Mexico",
+    "geo": {
+      "@type": "GeoShape",
+      "box": "19.0 -121.0 34.5 -105.0"
+    }
+  },
+  "temporalCoverage": "1940-03-13/1940-04-13",
+  "datePublished": "2025-05-25",
+  "version": "0.0.1",
+  "inLanguage": "en",
+  "citation": [
+    "Steinbeck, John. The Log from the Sea of Cortez. Penguin, 1995.",
+    "Brusca, Richard C. \"The 1940 Ricketts-Steinbeck Sea of Cortez Expedition, with annotated lists of species and collection sites.\" Journal of the Southwest 62, no. 2 (2020): 218-334.",
+    "Sagarin, R. D., Gilly, W. F., Baxter, C. H., Burnett, N., & Christensen, J. \"Remembering the Gulf: changes to the marine communities of the Sea of Cortez since the Steinbeck and Ricketts expedition of 1940.\" Frontiers in Ecology and the Environment 6, no. 7 (2008): 372-379."
+  ],
+  "isBasedOn": [
+    {
+      "@type": "Dataset",
+      "name": "GEBCO 2024 Grid",
+      "url": "https://doi.org/10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f",
+      "creator": "GEBCO Compilation Group"
+    },
+    {
+      "@type": "Dataset",
+      "name": "EarthEnv-DEM90",
+      "url": "http://www.sciencedirect.com/science/article/pii/S0924271613002360",
+      "creator": "Robinson, N., Regetz, J., and Guralnick, R. P."
+    },
+    {
+      "@type": "Dataset",
+      "name": "EarthEnv Global 1-km Consensus Land-Cover",
+      "url": "https://doi.org/10.1111/geb.12182",
+      "creator": "Tuanmu, M.-N. and Jetz, W."
+    },
+    {
+      "@type": "Dataset",
+      "name": "Natural Earth",
+      "url": "https://www.naturalearthdata.com/"
+    },
+    {
+      "@type": "Dataset",
+      "name": "Federal Protected Natural Areas of Mexico (September 2024)",
+      "creator": "CONABIO CONANP, National Commission for the Knowledge and Use of Biodiversity"
+    }
+  ],
+  "distribution": [
+    {
+      "@type": "DataDownload",
+      "name": "flyer-geodata.zip",
+      "description": "Zipped GeoPackage bundle containing all spatial layers plus the landcover palette CSV.",
+      "encodingFormat": "application/zip",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "places.geojson",
+      "description": "Point stops the Western Flyer visited, with bilingual names and arrival/departure dates.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/places.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "route.geojson",
+      "description": "Linestring segments joining consecutive destinations along the expedition route.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/route.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "land.geojson",
+      "description": "Land polygons for Baja California, mainland Mexico, and adjacent USA, derived from Natural Earth.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/land.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "topography.geojson",
+      "description": "Stylized topographic contours (elevation in meters) for the region.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/topography.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "bathymetry.geojson",
+      "description": "Stylized bathymetric contours (depth as negative elevation in meters) for the Sea of Cortez.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/bathymetry.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "landcover.geojson",
+      "description": "Simplified landcover classes for Western Mexico, adapted from EarthEnv.",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/landcover.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "protected.geojson",
+      "description": "Federal protected natural areas of Mexico, from CONABIO CONANP (September 2024).",
+      "encodingFormat": "application/geo+json",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/protected.geojson"
+    },
+    {
+      "@type": "DataDownload",
+      "name": "landcover_palette.csv",
+      "description": "Class-to-hex-color mapping for the landcover data set.",
+      "encodingFormat": "text/csv",
+      "contentUrl": "https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/geojson/landcover_palette.csv"
+    }
+  ]
+}

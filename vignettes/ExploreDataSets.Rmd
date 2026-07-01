@@ -16,10 +16,10 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Introduction and quick start 
+# Introduction and quick start
 
-flyer is available on github, and should go to CRAN sometime. 
-It can be installed via either of  the following commands. 
+`flyer` is available on GitHub, and should make its way to CRAN eventually.
+It can be installed via either of the following commands.
 
 ```{r install package, eval = F}
 install.packages('devtools')
@@ -30,8 +30,8 @@ install.packages('remotes')
 remotes::install_github('sagesteppe/flyer')
 ```
 
-To explore the data we will load a couple packages for interacting with the data (sf, dplyr), and a whole slew of packages for plotting the data using ggplot2 (ggnewscale, ggrepel). 
-It might seem onerous to be installing all of these packages, but I bet once you see what they do you'll be quite excited to have them. 
+To explore the data we'll load a couple of packages for handling it (`sf`, `dplyr`), plus a slew of packages for plotting with `ggplot2` (`ggnewscale`, `ggrepel`, `ggspatial`).
+It might seem onerous to install all of these, but I bet once you see what they do you'll be quite excited to have them.
 
 ```{r setup, warning=FALSE, message=FALSE}
 library(flyer)
@@ -44,7 +44,7 @@ library(ggrepel) # for text based labels which move to minimize overlaps.
 library(ggspatial) # compasses and scale bars. 
 ```
 
-We'll modify the number of graticules right off the bat, note that the `pretty` function does not always return the requested `n`, so... 
+We'll modify the number of graticules right off the bat. Note that the `pretty` function does not always return the requested `n`, so we wrap it in a small helper.
 
 ```{r define a carto ggplot theme}
 graticNo <- function(polygon, nx, ny){
@@ -103,19 +103,17 @@ bb <-st_bbox(
 
 ```
 
-# the data sets 
+# The data sets
 
-The places visited by the collectors can be loaded using `places`, and the route they took can be loaded via `routes`.
-These are really the whole point of the package!
-And spoiler alert... 
-are very simple!
+The places visited by the collectors can be loaded via `places`, and the route they took via `route`.
+These are really the whole point of the package — and, spoiler alert, they're very simple!
 
-But before we pull up `places` and `routes` let's pull up the `land` data set so we have some context to plot them on. 
+But before we pull up `places` and `route`, let's pull up the `land` data set so we have some context to plot them on.
 
 
-### land 
+### land
 
-We can read in some polygons which depict land from `Natural Earth`, from the `rnaturalearth` package; note that I love this packages functionality, even if I get real forgetful of their API calls (theme argument?). 
+We can read in some polygons depicting land from Natural Earth, via the `rnaturalearth` package. I love this package's functionality, even if I get real forgetful of their API calls (theme argument?).
 
 ```{r add land}
 head(land)
@@ -127,7 +125,7 @@ ggplot() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) 
 ```
 
-For playing around with the data today, I don't want the different countries to be drawn separately so we can union them.  
+For playing around with the data today, I don't want the different countries drawn separately, so we can union them.
 
 ```{r union land}
 land <- st_union(land)
@@ -154,7 +152,7 @@ m <- m +
 m
 ```
 
-The places seem like they will be better treated as text labels - we can apply them with `ggrepel::geom_text_repel` which will move them to avoid conflicts with other plot elements. 
+The places seem like they'll be better treated as text labels — we can apply them with `ggrepel::geom_text_repel`, which will nudge them to avoid conflicts with other plot elements.
 
 ```{r plot places as text, warning=F}
 m <- m + 
@@ -180,11 +178,11 @@ m <- m +
 m
 ```
 
-Also, because the package is attached we can also just start using the data, which is currently held as a promise. 
-In other words we don't need to call `data(object)` on the data sets, we can just use them directly - such as viewing them by calling `head(object)`. 
-We are going to use this direct approach for the remainder of the vignette. 
+Because the package is attached, we can just start using the data — it's currently held as a promise.
+In other words, we don't need to call `data(object)` on the data sets; we can use them directly (for example, by calling `head(object)`).
+We'll use this direct approach for the remainder of the vignette.
 
-### route 
+### route
 
 ```{r show the routes, warning=F}
 head(route)
@@ -198,14 +196,14 @@ route <- left_join(
 
 ```
 
-The route object itself is pretty minimal, but relevant attributes can be brought in by joining it to places. 
+The `route` object itself is pretty minimal, but relevant attributes can be brought in by joining it to `places`.
 ```{r route head, warning=F}
 head(route)
 ```
 
-While some of the data for the start end of the trip is included, such as an entry when they are near Santa Barbara and that they started and returned to Monterey, most all data focuses on the Gulf of Mexico. 
-Basically, too much data would make the package too cumbersome to fit on CRAN. 
-In my mind the maximum map area reaches San Diego in the North
+While some of the data for the start and end of the trip is included — such as entries near Santa Barbara and the departure from and return to Monterey — most of it focuses on the Gulf of California.
+Basically, including too much data would make the package too cumbersome to fit on CRAN.
+In my mind, the maximum useful map area reaches San Diego in the north.
 
 ```{r}
 date_scale <- as.Date(quantile(as.numeric(route$date_arrive), na.rm = T, probs = c(0.1, 0.5, 0.9)))
@@ -246,11 +244,11 @@ m <- ggplot()  +
 m
 ```
 
-Now let's add some topography to make the land seem more natural. 
-We'll also ignore the administrative borders. 
+Now let's add some topography to make the land seem more natural.
+We'll also ignore the administrative borders.
 
-Note that we are going to go back to the drawing board to control the order which layers are added to the map.
-We'll still overwrite the variable m. 
+Note that we're going back to the drawing board to control the order in which layers are added to the map.
+We'll still overwrite the variable `m`.
 
 ```{r add topography}
 
@@ -288,7 +286,7 @@ m <- ggplot() +
 m
 ```
 
-We can plot the bathymetry data like this. 
+We can plot the bathymetry data like this.
 
 ```{r}
 ggplot() + 
@@ -298,12 +296,11 @@ ggplot() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4])) + 
   labs(title = 'bathymetry', subtitle = '+ land')
 ```
-And obviously we can rename it something like depth... :)
+And obviously we could rename it to something like depth :)
 
-On the other hand, the same scale can be used for topography and bathymetry together like this... I will use a divergent scale which makes sense to me... 
-I could see another *very* cool interpretation of using a continuous and counting everything from 0 at 4300 feet and adding the difference to the 'topography' data set. 
-Or, and much to my liking, we can convert the polylines of bathymetry to polygons, and use them to color the whole ocean!
-With darker areas being deeper hues of blue. 
+Alternatively, the same scale can be used for topography and bathymetry together, as shown below. I'll use a divergent scale, which makes sense to me here.
+Another *very* cool interpretation would be a continuous scale that counts everything from 0 at 4,300 feet and adds the difference to the `topography` data set.
+Or — much to my liking — we could convert the bathymetry polylines to polygons and use them to color the whole ocean, with darker areas as deeper hues of blue.
 
 ```{r and bathymetry}
 head(bathymetry)
@@ -329,12 +326,12 @@ ggplot() +
 ```
 
 
-## tangential data 
+## Tangential data
 
-While some of the last data sets are loosely related to the book, these two are... not at all related, but can be useful for cartography. 
+While some of the earlier data sets are loosely related to the book, these next two aren't related at all — but they can be useful for cartography.
 
-A simple landcover classification data set is available as `landcover`. 
-We also include some quick colors to help with mapping these classes. 
+A simple landcover classification data set is available as `landcover`.
+We also include some quick colors to help with mapping these classes.
 
 ```{r}
 ggplot() + 
@@ -346,7 +343,7 @@ ggplot() +
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 
-Additionally, information on protected areas of Mexico are also included. 
+Information on protected areas of Mexico is also included.
 
 ```{r Protected areas, warning = F}
 protected <- st_crop(protected, bb)
@@ -366,13 +363,13 @@ ggplot() +
     ) + 
   labs(x = NULL, y = NULL, title = 'protected', subtitle = '+ land') + 
 
-  theme_nautical()  #+ 
+  theme_nautical()  + 
   coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
 ```
 
-# putting it all together
+# Putting it all together
 
-We can make an OK map using some of the details below. 
+We can make an OK map using some of the details below.
 
 ```{r}
 ggplot() + 

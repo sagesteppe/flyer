@@ -5,9 +5,9 @@
 \alias{land}
 \title{Land and islands of Western Mexico}
 \format{
-sf/tibble/dataframe, with two multipolygons, one for each of the countries in the area.
+An sf tibble, with one multipolygon per country in the area.
 \describe{
-\item{Name}{Name of the country.}
+\item{name}{Name of the country.}
 \item{geometry}{A simplified multipolygon geometry.}
 }
 }
@@ -15,10 +15,10 @@ sf/tibble/dataframe, with two multipolygons, one for each of the countries in th
 land
 }
 \description{
-A simplified data set of land, and nations, (for global usage) from Natural Earth.
-Basically, combined the high res land data set with the minor islands data set.
-Islands, which do not contain administrative info from Natural Earth were assigned by being 'nearest' feature to a nation.
-Based on visual inspection the match is good; any mismatch is not my intention - \emph{viva la Mexico} and god bless the USA.
+A simplified data set of land polygons and their associated nations, adapted from Natural Earth's global products.
+Built by combining the high-resolution land data set with the minor islands data set.
+Islands that lacked administrative info in Natural Earth were assigned to their nearest nation.
+Based on visual inspection the match is good; any mismatch is not intentional -- \emph{viva la Mexico} and god bless the USA.
 "Made with Natural Earth. Free vector and raster map data @ naturalearthdata.com."
 }
 \examples{
