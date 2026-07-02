@@ -19,6 +19,7 @@
 #'	 geom_sf(data = places, aes(color = date_arrive)) +
 #'	 theme_minimal()
 #'
+
 "places"
 
 #' A stylized route of the Western Flyer on Ricketts and Steinbeck's journey to the Sea of Cortez.
@@ -101,7 +102,7 @@
 #' \describe{
 #'  \item{name}{Official name of the protected area.}
 #'  \item{date_established}{Date the preserve was established.}
-#'  \item{reserve_type}{A locally defined category assigned to each reserve. `Marine` and `Terrestrial` are reserved for areas with 100\% of their surface in that category; `Primarily Marine` and `Primarily Terrestrial` are used for mixed areas, based on which surface type dominates.}
+#'  \item{reserve_type}{A locally defined category assigned to each reserve. `Marine` and `Terrestrial` are reserved for areas with 100pct of their surface in that category; `Primarily Marine` and `Primarily Terrestrial` are used for mixed areas, based on which surface type dominates.}
 #'  \item{geometry}{A simplified multipolygon geometry.}
 #' }
 #'
@@ -112,6 +113,7 @@
 #' ggplot() +
 #'	 geom_sf(data = protected, aes(fill = reserve_type)) +
 #'	 theme_minimal()
+
 "protected"
 
 #' Major landcover classes of Western Mexico
@@ -130,6 +132,7 @@
 #' ggplot() +
 #'	 geom_sf(data = landcover, aes(fill = class)) +
 #'	 theme_minimal()
+
 "landcover"
 
 
@@ -152,6 +155,7 @@
 #' ggplot() +
 #'	 geom_sf(data = land, aes(fill = name)) +
 #'	 theme_minimal()
+
 "land"
 
 
@@ -168,4 +172,5 @@
 #' geom_sf(data = landcover, aes(fill = class)) +
 #'  scale_fill_manual(values = lc_pal) +
 #'  theme_minimal()
+
 "lc_pal"

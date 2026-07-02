@@ -118,3 +118,7 @@ leaflet(width = '100%', height = '650px') |>
     opacity = 0.9
   )
 ```
+
+```{r cleanup, include = FALSE}
+rm(route, places, date_domain, pal, legend_breaks, legend_labels)
+```

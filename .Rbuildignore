@@ -7,3 +7,10 @@
 ^docs$
 ^data_dl/
 ^pkgdown$
+Makefile
+README.rmd
+TODO.csv
+compress.sh
+dataset.jsonld
+flyer.Rproj
+.nojekyll

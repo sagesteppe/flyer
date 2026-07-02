@@ -9,7 +9,7 @@ An sf tibble, with a handful of attributes briefly describing each protected are
 \describe{
 \item{name}{Official name of the protected area.}
 \item{date_established}{Date the preserve was established.}
-\item{reserve_type}{A locally defined category assigned to each reserve. \code{Marine} and \code{Terrestrial} are reserved for areas with 100\\% of their surface in that category; \verb{Primarily Marine} and \verb{Primarily Terrestrial} are used for mixed areas, based on which surface type dominates.}
+\item{reserve_type}{A locally defined category assigned to each reserve. \code{Marine} and \code{Terrestrial} are reserved for areas with 100pct of their surface in that category; \verb{Primarily Marine} and \verb{Primarily Terrestrial} are used for mixed areas, based on which surface type dominates.}
 \item{geometry}{A simplified multipolygon geometry.}
 }
 }

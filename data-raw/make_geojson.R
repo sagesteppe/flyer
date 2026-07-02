@@ -29,7 +29,7 @@ writeLines(
   c(
     'flyer geospatial data — GeoJSON edition',
     '',
-    'One GeoJSON file per data set, mirroring the GPKG bundle in flyer-geodata.zip.',
+    'One GeoJSON file with all data set, mirroring the GPKG bundle in flyer-geodata.zip.',
     'landcover_palette.csv provides the class -> hex color mapping used with landcover.',
     '',
     'CRS: EPSG:4326 (WGS 84) for all layers.',
