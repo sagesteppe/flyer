@@ -89,18 +89,18 @@ stops.</p>
 entry.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sticker_pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  night        <span class="op">=</span> <span class="st">'#0F1E3C'</span>,  <span class="co"># deep navy background</span></span>
-<span>  ocean        <span class="op">=</span> <span class="st">'#152A5A'</span>,  <span class="co"># slightly lighter than night, for the plot panel</span></span>
-<span>  ocean_hi     <span class="op">=</span> <span class="st">'#3E5FA0'</span>,  <span class="co"># bathymetry hi end</span></span>
+<span>  night        <span class="op">=</span> <span class="st">'#00202e'</span>,  <span class="co"># deep navy background</span></span>
+<span>  ocean        <span class="op">=</span> <span class="st">'#152A5A'</span>,  <span class="co"># slightly lighter than night, for the plot panel </span></span>
+<span>  ocean_hi     <span class="op">=</span> <span class="st">'#37718E'</span>,  <span class="co"># bathymetry hi end</span></span>
 <span>  gold         <span class="op">=</span> <span class="st">'#E8A040'</span>,  <span class="co"># hex border / land primary</span></span>
-<span>  land_light   <span class="op">=</span> <span class="st">'#F5C078'</span>,  <span class="co"># land fill (lighter orange)</span></span>
+<span>  land_light   <span class="op">=</span> <span class="st">'#ffd380'</span>,  <span class="co"># land fill (lighter orange)</span></span>
 <span>  coral        <span class="op">=</span> <span class="st">'#E86A55'</span>,  <span class="co"># land border / warm accent</span></span>
 <span>  cream        <span class="op">=</span> <span class="st">'#F0E5B0'</span>,  <span class="co"># ship body / label text</span></span>
-<span>  mint         <span class="op">=</span> <span class="st">'#7BAA96'</span>,  <span class="co"># mast / topography</span></span>
-<span>  purple       <span class="op">=</span> <span class="st">'#4A2A72'</span>,  <span class="co"># route (dark end)</span></span>
+<span>  mint         <span class="op">=</span> <span class="st">'#74A57F'</span>,  <span class="co"># mast / topography</span></span>
+<span>  purple       <span class="op">=</span> <span class="st">'#531CB3'</span>,  <span class="co"># route (dark end)</span></span>
 <span>  lavender     <span class="op">=</span> <span class="st">'#C9A5F5'</span>,  <span class="co"># route (light end) / late-in-trip</span></span>
 <span>  star_gold    <span class="op">=</span> <span class="st">'#F5D060'</span>,  <span class="co"># city stars</span></span>
-<span>  star_pink    <span class="op">=</span> <span class="st">'#F28FB2'</span>   <span class="co"># tertiary highlight</span></span>
+<span>  star_pink    <span class="op">=</span> <span class="st">'#bc5090'</span>   <span class="co"># tertiary highlight</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -165,7 +165,11 @@ bounding box focused on the Sea of Cortez.</p>
 <span></span>
 <span><span class="va">places</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">st_crop</a></span><span class="op">(</span><span class="va">places</span>, <span class="va">bb</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">date_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">route</span><span class="op">$</span><span class="va">date_arrive</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">date_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">route</span><span class="op">$</span><span class="va">date_arrive</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
 <span><span class="va">date_lbls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Mar. "</span>, <span class="fl">16</span><span class="op">^</span><span class="va">th</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Mar. "</span>, <span class="fl">28</span><span class="op">^</span><span class="va">th</span><span class="op">)</span><span class="op">)</span>,</span>

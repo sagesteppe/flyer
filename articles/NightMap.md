@@ -26,18 +26,18 @@ entry.
 ``` r
 
 sticker_pal <- list(
-  night        = '#0F1E3C',  # deep navy background
-  ocean        = '#152A5A',  # slightly lighter than night, for the plot panel
-  ocean_hi     = '#3E5FA0',  # bathymetry hi end
+  night        = '#00202e',  # deep navy background
+  ocean        = '#152A5A',  # slightly lighter than night, for the plot panel 
+  ocean_hi     = '#37718E',  # bathymetry hi end
   gold         = '#E8A040',  # hex border / land primary
-  land_light   = '#F5C078',  # land fill (lighter orange)
+  land_light   = '#ffd380',  # land fill (lighter orange)
   coral        = '#E86A55',  # land border / warm accent
   cream        = '#F0E5B0',  # ship body / label text
-  mint         = '#7BAA96',  # mast / topography
-  purple       = '#4A2A72',  # route (dark end)
+  mint         = '#74A57F',  # mast / topography
+  purple       = '#531CB3',  # route (dark end)
   lavender     = '#C9A5F5',  # route (light end) / late-in-trip
   star_gold    = '#F5D060',  # city stars
-  star_pink    = '#F28FB2'   # tertiary highlight
+  star_pink    = '#bc5090'   # tertiary highlight
 )
 ```
 
@@ -106,7 +106,11 @@ bb <- st_bbox(
 
 places <- st_crop(places, bb)
 
-date_scale <- as.Date(quantile(as.numeric(route$date_arrive), na.rm = TRUE, probs = c(0.1, 0.5, 0.9)))
+date_scale <- as.Date(
+  quantile(
+    as.numeric(route$date_arrive), na.rm = TRUE, probs = c(0.1, 0.5, 0.9)
+    )
+  )
 date_lbls <- c(
   expression(paste("Mar. ", 16^th)),
   expression(paste("Mar. ", 28^th)),
