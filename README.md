@@ -2,11 +2,13 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/sagesteppe/flyer/actions/workflows/R-CMD-check.yaml)
-
+[![R build
+status](https://github.com/sagesteppe/flyer/workflows/R-CMD-check/badge.svg)](https://github.com/sagesteppe/flyer/actions)
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![](https://img.shields.io/badge/doi-10.5281/zenodo.21153326-orange.svg)](https://doi.org/10.5281/zenodo.21153326)
+[![](https://codecov.io/gh/sagesteppe/flyer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sagesteppe/flyer)
 
 <!-- badges: end -->
 
@@ -23,7 +25,7 @@ or `devtools` like so:
 
     install.packages('devtools')
     devtools::install_github('sagesteppe/flyer')
-
+    
     # remotes is very similar and a good alternative for this use case.
     install.packages('remotes') 
     remotes::install_github('sagesteppe/flyer')
@@ -74,34 +76,34 @@ email and we can figure out how to incorporate your perspective.
 
 If you just want the data, two formats are available:
 
-- **GeoPackage bundle** — one zip containing a `.gpkg` per data set:
-  <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>flyer-geodata.zip</a>
-- **GeoJSON** — individual `.geojson` files (one per data set),
-  browseable at
-  [`data_dl/geojson/`](https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson)
+  - **GeoPackage bundle** — one zip containing a `.gpkg` per data set:
+    <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>flyer-geodata.zip</a>
+  - **GeoJSON** — individual `.geojson` files (one per data set),
+    browseable at
+    [`data_dl/geojson/`](https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson)
 
 All layers are in EPSG:4326 (WGS 84). The `landcover_palette.csv` file
 included in both formats maps landcover classes to hex colors.
 
 ## Works Cited
 
-Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
-Expedition, with annotated lists of species and collection sites.”
-*Journal of the Southwest* 62, no. 2 (2020): 218-334.
+1)  Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
+    Expedition, with annotated lists of species and collection sites.”
+    *Journal of the Southwest* 62, no. 2 (2020): 218-334.
 
 [freely available
 here](https://naturalhistory.si.edu/sites/default/files/media/file/brusca2020seaofcortezexpeditionwithjswfrontmatter.pdf)
 
-Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy Burnett,
-and Jon Christensen. “Remembering the Gulf: changes to the marine
-communities of the Sea of Cortez since the Steinbeck and Ricketts
-expedition of 1940” *Frontiers in Ecology and the Environment* 6, no. 7
-(2008): 372-379.
+2)  Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy
+    Burnett, and Jon Christensen. “Remembering the Gulf: changes to the
+    marine communities of the Sea of Cortez since the Steinbeck and
+    Ricketts expedition of 1940” *Frontiers in Ecology and the
+    Environment* 6, no. 7 (2008): 372-379.
 
 [An open-access *nearly* final version is
 here](https://www.geo.arizona.edu/rcncrd/documents/Remembering_the_Gulf_Pub_Fe_08.pdf)
 
-Steinbeck, John. *The Log from the Sea of Cortez.* Penguin, 1995.
+3)  Steinbeck, John. *The Log from the Sea of Cortez.* Penguin, 1995.
 
 [Available from your local
 library](https://www.mapdevelopers.com/us-public-library-map.php), [an
@@ -112,19 +114,20 @@ you.
 
 ## Spatial Data Sources
 
-CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of Mexico,
-September 2024’, National Commission for the Knowledge and Use of
-Biodiversity. Mexico City, Mexico.
+1)  CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of
+    Mexico, September 2024’, National Commission for the Knowledge and
+    Use of Biodiversity. Mexico City, Mexico.
 
-GEBCO Compilation Group (2024) GEBCO 2024 Grid
-(<doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f>).
+2)  GEBCO Compilation Group (2024) GEBCO 2024 Grid
+    (<doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f>).
 
-Robinson, N., Regetz, J., and Guralnick, R. P. (2014). EarthEnv-DEM90: A
-nearly-global, void-free, multi-scale smoothed, 90m digital elevation
-model from fused ASTER and SRTM data. ISPRS Journal of Photogrammetry
-and Remote Sensing, 87:2014, 57-67. Available at
-<http://www.sciencedirect.com/science/article/pii/S0924271613002360>
+3)  Robinson, N., Regetz, J., and Guralnick, R. P. (2014).
+    EarthEnv-DEM90: A nearly-global, void-free, multi-scale smoothed,
+    90m digital elevation model from fused ASTER and SRTM data. ISPRS
+    Journal of Photogrammetry and Remote Sensing, 87:2014, 57-67.
+    Available at
+    <http://www.sciencedirect.com/science/article/pii/S0924271613002360>
 
-Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover
-product for biodiversity and ecosystem modeling. Global Ecology and
-Biogeography 23(9): 1031-1045.
+4)  Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover
+    product for biodiversity and ecosystem modeling. Global Ecology and
+    Biogeography 23(9): 1031-1045.
