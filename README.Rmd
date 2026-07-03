@@ -13,8 +13,7 @@ html_preview: false
 cat(
   badger::badge_github_actions('sagesteppe/flyer'), 
 	badger::badge_repostatus("Active"), 
-  badger::badge_doi("10.5281/zenodo.21153326", color = 'orange'),
-  badger::badge_codecov("sagesteppe/flyer", branch = "main")
+  badger::badge_doi("10.5281/zenodo.21153326", color = 'orange')
 )
 ```
 

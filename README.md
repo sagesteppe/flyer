@@ -8,7 +8,6 @@ status](https://github.com/sagesteppe/flyer/workflows/R-CMD-check/badge.svg)](ht
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![](https://img.shields.io/badge/doi-10.5281/zenodo.21153326-orange.svg)](https://doi.org/10.5281/zenodo.21153326)
-[![](https://codecov.io/gh/sagesteppe/flyer/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sagesteppe/flyer)
 
 <!-- badges: end -->
 
