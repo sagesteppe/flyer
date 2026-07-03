@@ -174,3 +174,37 @@
 #'  theme_minimal()
 
 "lc_pal"
+
+#' Species lists for collection sites
+#' 
+#' Species lists for collections sites from Brusco 2020 ('the manuscipt')
+#' @format an sf tibble with one row per collection
+#' \describe{
+#'  \item{scientific_name}{Name of the collection per the manuscript}
+#'  \item{type_specimen}{Marked as a type based on the manuscript}
+#'  \item{synonyms}{Synonym names mentioned in the manuscript}
+#'  \item{other_notes}{notes on the collection from the manuscript}
+#'  \item{questionable_id}{notes from the manuscript on identification status}
+#'  \item{site}{Collection site name per the manuscript}
+#'  \item{gbif_usage_key}{GBIF usage key for integration with GBIF}
+#'  \item{gbif_scientific_name}{GBIF used scientific name for the collection}
+#'  \item{gbif_match_type}{How the 'scientific_name' was resolved with GBIF}
+#'  \item{gbif_status}{Whether GBIF recognizes a particular name applied to the collection}
+#'  \item{gbif_url}{Hyperlink to the GBIF page for the resolved entry.}
+#'  \item{collection_site}{Collection site name per the manuscript}
+#'  \item{location_english}{flyer package name for the site from 'places'}
+#' }
+#' @examples
+#' data(collections)
+#' head(collections)
+#' 
+#' ## if you want to make it spatial
+#' data(places)
+#' collections_sf <- left_join(
+#'      collections, 
+#'      select(places, location_english, geometry),
+#'      by = 'location_english'
+#' ) |>
+#'   sf::st_as_sf()
+#' 
+"collections"
