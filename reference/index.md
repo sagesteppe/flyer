@@ -24,3 +24,5 @@ All data sets included in the package.
   and islands of Western Mexico
 - [`lc_pal`](https://sagesteppe.github.io/flyer/reference/lc_pal.md) :
   Color palette for landcover data
+- [`collections`](https://sagesteppe.github.io/flyer/reference/collections.md)
+  : Species lists for collection sites
