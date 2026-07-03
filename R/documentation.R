@@ -200,11 +200,12 @@
 #' 
 #' ## if you want to make it spatial
 #' data(places)
-#' collections_sf <- left_join(
+#' collections_sf <- dplyr::left_join(
 #'      collections, 
-#'      select(places, location_english, geometry),
+#'      dplyr::select(places, location_english, geometry),
 #'      by = 'location_english'
 #' ) |>
 #'   sf::st_as_sf()
 #' 
+
 "collections"

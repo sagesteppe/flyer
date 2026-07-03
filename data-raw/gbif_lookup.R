@@ -12,7 +12,7 @@ library(rgbif)
 
 # 1. Bind every Site*.csv in the working directory, tagging the source file
 getwd()
-p2d <- file.path('data-raw', 'species')
+p2d <- file.path( 'species')
 site_files <- file.path(p2d, list.files(p2d, pattern = "^Site\\d+\\.csv$"))
 
 species_all <- map_dfr(site_files, function(f) {
@@ -48,7 +48,7 @@ gbif_matches <- map_dfr(unique_names, function(nm) {
 })
 
 # 4. Join matches back on, build the clickable GBIF species page URL
-species_all1 <- species_all |>
+species_all <- species_all |>
   left_join(gbif_matches, by = "Clean_Name") |>
   mutate(
     gbif_url = if_else(!is.na(gbif_usageKey),
@@ -57,7 +57,7 @@ species_all1 <- species_all |>
   )
 
 ##
-name_links = read.csv(file.path('data-raw', 'species', 'collection_summary.csv')) |>
+name_links = read.csv(file.path('species', 'collection_summary.csv')) |>
   janitor::clean_names() |>
   select(collection_no, collection_site = location, location_english = simple_name) |>
   mutate(collection_no = as.character(collection_no))
@@ -71,5 +71,5 @@ species_all = species_all |>
 # 5. Write the combined, GBIF-linked table
 collections = species_all
 
-usethis::use_data(species_all, overwrite = TRUE)
-write_csv(collections, file.path('data_dl', 'collections.csv'))
+usethis::use_data(collections, overwrite = TRUE)
+write_csv(collections, file.path('..', 'data_dl', 'collections.csv'))
