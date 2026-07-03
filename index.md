@@ -1,9 +1,5 @@
 # flyer ![](reference/figures/flyer_hex_sticker.png)
 
-[![Project Status: Active - The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-
 Geographic data from Steinbeck and Ricketts’ 1940 expedition to the Sea
 of Cortez. This is the original R package, which includes the
 data-cleaning code; the Python package contains only the data.
@@ -81,23 +77,23 @@ included in both formats maps landcover classes to hex colors.
 
 ## Works Cited
 
-Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
-Expedition, with annotated lists of species and collection sites.”
-*Journal of the Southwest* 62, no. 2 (2020): 218-334.
+1.  Brusca, Richard C. “The 1940 Ricketts-Steinbeck Sea of Cortez
+    Expedition, with annotated lists of species and collection sites.”
+    *Journal of the Southwest* 62, no. 2 (2020): 218-334.
 
 [freely available
 here](https://naturalhistory.si.edu/sites/default/files/media/file/brusca2020seaofcortezexpeditionwithjswfrontmatter.pdf)
 
-Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy Burnett,
-and Jon Christensen. “Remembering the Gulf: changes to the marine
-communities of the Sea of Cortez since the Steinbeck and Ricketts
-expedition of 1940” *Frontiers in Ecology and the Environment* 6, no. 7
-(2008): 372-379.
+2.  Sagarin, Raphael D., William F. Gilly, Charles H. Baxter, Nancy
+    Burnett, and Jon Christensen. “Remembering the Gulf: changes to the
+    marine communities of the Sea of Cortez since the Steinbeck and
+    Ricketts expedition of 1940” *Frontiers in Ecology and the
+    Environment* 6, no. 7 (2008): 372-379.
 
 [An open-access *nearly* final version is
 here](https://www.geo.arizona.edu/rcncrd/documents/Remembering_the_Gulf_Pub_Fe_08.pdf)
 
-Steinbeck, John. *The Log from the Sea of Cortez.* Penguin, 1995.
+3.  Steinbeck, John. *The Log from the Sea of Cortez.* Penguin, 1995.
 
 [Available from your local
 library](https://www.mapdevelopers.com/us-public-library-map.php), [an
@@ -108,19 +104,20 @@ you.
 
 ## Spatial Data Sources
 
-CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of Mexico,
-September 2024’, National Commission for the Knowledge and Use of
-Biodiversity. Mexico City, Mexico.
+1.  CONABIO CONANP, (09/2024). ‘Federal Protected Natural Areas of
+    Mexico, September 2024’, National Commission for the Knowledge and
+    Use of Biodiversity. Mexico City, Mexico.
 
-GEBCO Compilation Group (2024) GEBCO 2024 Grid
-(<doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f>).
+2.  GEBCO Compilation Group (2024) GEBCO 2024 Grid
+    (<doi:10.5285/1c44ce99-0a0d-5f4f-e063-7086abc0ea0f>).
 
-Robinson, N., Regetz, J., and Guralnick, R. P. (2014). EarthEnv-DEM90: A
-nearly-global, void-free, multi-scale smoothed, 90m digital elevation
-model from fused ASTER and SRTM data. ISPRS Journal of Photogrammetry
-and Remote Sensing, 87:2014, 57-67. Available at
-<http://www.sciencedirect.com/science/article/pii/S0924271613002360>
+3.  Robinson, N., Regetz, J., and Guralnick, R. P. (2014).
+    EarthEnv-DEM90: A nearly-global, void-free, multi-scale smoothed,
+    90m digital elevation model from fused ASTER and SRTM data. ISPRS
+    Journal of Photogrammetry and Remote Sensing, 87:2014, 57-67.
+    Available at
+    <http://www.sciencedirect.com/science/article/pii/S0924271613002360>
 
-Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover
-product for biodiversity and ecosystem modeling. Global Ecology and
-Biogeography 23(9): 1031-1045.
+4.  Tuanmu, M.-N. and W. Jetz. 2014. A global 1-km consensus land-cover
+    product for biodiversity and ecosystem modeling. Global Ecology and
+    Biogeography 23(9): 1031-1045.
