@@ -82,108 +82,14 @@ stops.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="the-palette">The palette<a class="anchor" aria-label="anchor" href="#the-palette"></a>
-</h2>
-<p>The colors are picked to match the sticker. Anything you want to swap
-— say, the accent color for the route — just override the corresponding
-entry.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sticker_pal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  night        <span class="op">=</span> <span class="st">'#00202e'</span>,  <span class="co"># deep navy background</span></span>
-<span>  ocean        <span class="op">=</span> <span class="st">'#152A5A'</span>,  <span class="co"># slightly lighter than night, for the plot panel </span></span>
-<span>  ocean_hi     <span class="op">=</span> <span class="st">'#37718E'</span>,  <span class="co"># bathymetry hi end</span></span>
-<span>  gold         <span class="op">=</span> <span class="st">'#E8A040'</span>,  <span class="co"># hex border / land primary</span></span>
-<span>  land_light   <span class="op">=</span> <span class="st">'#ffd380'</span>,  <span class="co"># land fill (lighter orange)</span></span>
-<span>  coral        <span class="op">=</span> <span class="st">'#E86A55'</span>,  <span class="co"># land border / warm accent</span></span>
-<span>  cream        <span class="op">=</span> <span class="st">'#F0E5B0'</span>,  <span class="co"># ship body / label text</span></span>
-<span>  mint         <span class="op">=</span> <span class="st">'#74A57F'</span>,  <span class="co"># mast / topography</span></span>
-<span>  purple       <span class="op">=</span> <span class="st">'#531CB3'</span>,  <span class="co"># route (dark end)</span></span>
-<span>  lavender     <span class="op">=</span> <span class="st">'#C9A5F5'</span>,  <span class="co"># route (light end) / late-in-trip</span></span>
-<span>  star_gold    <span class="op">=</span> <span class="st">'#F5D060'</span>,  <span class="co"># city stars</span></span>
-<span>  star_pink    <span class="op">=</span> <span class="st">'#bc5090'</span>   <span class="co"># tertiary highlight</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="the-dark-theme">The dark theme<a class="anchor" aria-label="anchor" href="#the-dark-theme"></a>
-</h2>
-<p>A near-drop-in replacement for the light <code>theme_nautical</code>
-from the other vignette: same structure, but every element is repainted
-from the sticker palette.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">theme_nautical_night</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    aspect.ratio <span class="op">=</span> <span class="fl">4</span><span class="op">/</span><span class="fl">3</span>,</span>
-<span>    text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Optima"</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">cream</span><span class="op">)</span>,</span>
-<span></span>
-<span>    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">cream</span><span class="op">)</span>,</span>
-<span>    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">mint</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span>,</span>
-<span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span>, angle <span class="op">=</span> <span class="fl">45</span><span class="op">)</span>,</span>
-<span>    axis.ticks <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">mint</span><span class="op">)</span>,</span>
-<span></span>
-<span>    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">pink</span>, face <span class="op">=</span> <span class="st">'bold'</span><span class="op">)</span>,</span>
-<span>    plot.subtitle <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">1</span>, face <span class="op">=</span> <span class="st">'italic'</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">cream</span><span class="op">)</span>,</span>
-<span>    plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">mint</span>, face <span class="op">=</span> <span class="st">'italic'</span>, size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,</span>
-<span>    plot.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">night</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
-<span></span>
-<span>    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">ocean</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>    panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">gold</span>, fill <span class="op">=</span> <span class="cn">NA</span>, linewidth <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>,</span>
-<span>    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span></span>
-<span>      colour <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/alpha.html" class="external-link">alpha</a></span><span class="op">(</span><span class="va">sticker_pal</span><span class="op">$</span><span class="va">mint</span>, <span class="fl">0.3</span><span class="op">)</span>,</span>
-<span>      linetype <span class="op">=</span> <span class="st">'dotted'</span>,</span>
-<span>      linewidth <span class="op">=</span> <span class="fl">0.25</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span></span>
-<span>    legend.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">night</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">gold</span><span class="op">)</span>,</span>
-<span>    legend.key <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">night</span>, color <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span>,</span>
-<span>    legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">5</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">cream</span><span class="op">)</span>,</span>
-<span>    legend.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">9</span>, hjust <span class="op">=</span> <span class="fl">0.5</span>, color <span class="op">=</span> <span class="va">sticker_pal</span><span class="op">$</span><span class="va">cream</span><span class="op">)</span>,</span>
-<span>    legend.title.position <span class="op">=</span> <span class="st">'top'</span>,</span>
-<span>    legend.key.size <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"line"</span><span class="op">)</span>,</span>
-<span>    legend.position <span class="op">=</span> <span class="st">"bottom"</span>,</span>
-<span>    legend.spacing <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"line"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="preparing-the-data">Preparing the data<a class="anchor" aria-label="anchor" href="#preparing-the-data"></a>
-</h2>
-<p>Same route/places join used in the light-mode vignette, plus a
-bounding box focused on the Sea of Cortez.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">route</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
-<span>  <span class="va">route</span>,</span>
-<span>  <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_drop_geometry</a></span><span class="op">(</span><span class="va">places</span><span class="op">)</span>,</span>
-<span>  by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'destination'</span> <span class="op">=</span> <span class="st">'location_english'</span><span class="op">)</span></span>
-<span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html" class="external-link">relocate</a></span><span class="op">(</span><span class="va">geometry</span>, .after <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">last_col</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">bb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_bbox.html" class="external-link">st_bbox</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>xmin <span class="op">=</span> <span class="op">-</span><span class="fl">114</span>, xmax <span class="op">=</span> <span class="op">-</span><span class="fl">108.75</span>, ymin <span class="op">=</span> <span class="fl">22.5</span>, ymax <span class="op">=</span> <span class="fl">30.25</span><span class="op">)</span>,</span>
-<span>  crs <span class="op">=</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="fl">4326</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">places</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crop.html" class="external-link">st_crop</a></span><span class="op">(</span><span class="va">places</span>, <span class="va">bb</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">date_scale</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">route</span><span class="op">$</span><span class="va">date_arrive</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span>, probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="va">date_lbls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Mar. "</span>, <span class="fl">16</span><span class="op">^</span><span class="va">th</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Mar. "</span>, <span class="fl">28</span><span class="op">^</span><span class="va">th</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Apr. "</span>, <span class="fl">11</span><span class="op">^</span><span class="va">th</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
 <h2 id="the-map">The map<a class="anchor" aria-label="anchor" href="#the-map"></a>
 </h2>
-<p>Layered from the bottom up: bathymetry contours in cool blues, land
-in warm oranges (<code>gold</code> border on a lighter fill), topography
-contours in mint, the route as a purple gradient by arrival date, and
-the places as gold star-glyphs with cream labels on a dark backing.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Layered “from the bottom to the top”: bathymetry contours in cool
+blues, land in warm oranges (<code>gold</code> border on a lighter
+fill), topography contours in mint, the route as a purple gradient by
+arrival date, and the places as gold star-glyphs with cream labels on a
+dark backing.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span></span>
 <span>  <span class="co"># bathymetry from deep ocean to shallower shelves</span></span>
@@ -278,11 +184,6 @@ the places as gold star-glyphs with cream labels on a dark backing.</p>
 <span>    caption <span class="op">=</span> <span class="st">'"it is advisable to look from the tide pool to the stars\nand back to the tidepool again"'</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="NightMap_files/figure-html/night%20map-1.png" class="r-plt" alt="" width="480"></p>
-<p>Every color that drives the map lives in the <code>sticker_pal</code>
-list at the top of this vignette. Swapping a hex value there (say,
-brightening <code>land_light</code> or shifting <code>purple</code>
-toward blue) re-tints the entire figure without touching the geom
-code.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
