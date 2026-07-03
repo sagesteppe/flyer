@@ -22,7 +22,9 @@ Suggests:
     ggspatial,
     leaflet,
     leaflet.extras2,
-    yyjsonr
+    yyjsonr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://sagesteppe.github.io/flyer
 Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3

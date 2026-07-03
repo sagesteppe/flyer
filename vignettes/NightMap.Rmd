@@ -20,7 +20,8 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The `ExploreDataSets` vignette builds a static map with a light "nautical" theme. Here we redo that map in a dark mode, borrowing the palette from the package's hex sticker: a navy night sky, warm orange land, a purple route, and star markers for the collection stops.
+The `ExploreDataSets` vignette builds a static map with a light "nautical" theme. 
+Here we redo that map in a dark mode, borrowing the palette from the package's hex sticker: a navy night sky, warm orange land, a purple route, and star markers for the collection stops.
 
 ```{r setup}
 library(flyer)
@@ -31,11 +32,7 @@ library(ggrepel)
 library(ggspatial)
 ```
 
-# The palette
-
-The colors are picked to match the sticker. Anything you want to swap — say, the accent color for the route — just override the corresponding entry.
-
-```{r palette}
+```{r palette, echo =F}
 sticker_pal <- list(
   night        = '#00202e',  # deep navy background
   ocean        = '#152A5A',  # slightly lighter than night, for the plot panel 
@@ -52,11 +49,7 @@ sticker_pal <- list(
 )
 ```
 
-# The dark theme
-
-A near-drop-in replacement for the light `theme_nautical` from the other vignette: same structure, but every element is repainted from the sticker palette.
-
-```{r theme}
+```{r theme, echo =F}
 theme_nautical_night <- function() {
   theme(
     aspect.ratio = 4/3,
@@ -93,11 +86,7 @@ theme_nautical_night <- function() {
 }
 ```
 
-# Preparing the data
-
-Same route/places join used in the light-mode vignette, plus a bounding box focused on the Sea of Cortez.
-
-```{r prep}
+```{r prep, echo = F}
 route <- left_join(
   route,
   st_drop_geometry(places),
@@ -126,7 +115,7 @@ date_lbls <- c(
 
 # The map
 
-Layered from the bottom up: bathymetry contours in cool blues, land in warm oranges (`gold` border on a lighter fill), topography contours in mint, the route as a purple gradient by arrival date, and the places as gold star-glyphs with cream labels on a dark backing.
+Layered "from the bottom to the top": bathymetry contours in cool blues, land in warm oranges (`gold` border on a lighter fill), topography contours in mint, the route as a purple gradient by arrival date, and the places as gold star-glyphs with cream labels on a dark backing.
 
 ```{r night map}
 ggplot() +
@@ -223,8 +212,6 @@ ggplot() +
     caption = '"it is advisable to look from the tide pool to the stars\nand back to the tidepool again"'
   )
 ```
-
-Every color that drives the map lives in the `sticker_pal` list at the top of this vignette. Swapping a hex value there (say, brightening `land_light` or shifting `purple` toward blue) re-tints the entire figure without touching the geom code.
 
 ```{r cleanup, include = FALSE}
 rm(sticker_pal, theme_nautical_night, route, places, bb, date_scale, date_lbls)
