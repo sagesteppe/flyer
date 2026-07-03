@@ -29,7 +29,6 @@ jobs:
             any::testthat
 
           needs: coverage
-          dependencies: '"hard"' 
 
       - name: Test coverage
         run: |
