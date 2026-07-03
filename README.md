@@ -2,6 +2,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+checks](https://badges.cranchecks.info/summary/badger.svg)](https://cran.r-project.org/web/checks/check_results_badger.html)
 [![R build
 status](https://github.com/sagesteppe/flyer/workflows/R-CMD-check/badge.svg)](https://github.com/sagesteppe/flyer/actions)
 [![Project Status: Active - The project has reached a stable, usable
@@ -24,7 +26,7 @@ or `devtools` like so:
 
     install.packages('devtools')
     devtools::install_github('sagesteppe/flyer')
-    
+
     # remotes is very similar and a good alternative for this use case.
     install.packages('remotes') 
     remotes::install_github('sagesteppe/flyer')
@@ -75,11 +77,11 @@ email and we can figure out how to incorporate your perspective.
 
 If you just want the data, two formats are available:
 
-  - **GeoPackage bundle** — one zip containing a `.gpkg` per data set:
-    <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>flyer-geodata.zip</a>
-  - **GeoJSON** — individual `.geojson` files (one per data set),
-    browseable at
-    [`data_dl/geojson/`](https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson)
+- **GeoPackage bundle** — one zip containing a `.gpkg` per data set:
+  <a href="https://raw.githubusercontent.com/sagesteppe/flyer/main/data_dl/flyer-geodata.zip" download>flyer-geodata.zip</a>
+- **GeoJSON** — individual `.geojson` files (one per data set),
+  browseable at
+  [`data_dl/geojson/`](https://github.com/sagesteppe/flyer/tree/main/data_dl/geojson)
 
 All layers are in EPSG:4326 (WGS 84). The `landcover_palette.csv` file
 included in both formats maps landcover classes to hex colors.
